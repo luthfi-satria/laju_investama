@@ -17,6 +17,7 @@ import AdminCategory from '../components/admin/category/category';
 import AdminProduct from '../components/admin/product/product';
 import AdminProfile from '../components/admin/profile/adminProfile';
 import AdminEditUser from './../components/admin/user/editUser';
+import AdminInvestor from '../components/admin/investor/investor';
 
 export default function AppRouter(){
     const getToken = useLocalStorage('token',null);
@@ -48,6 +49,7 @@ export default function AppRouter(){
                             <Route path={RouteURL.USERS.PATH} element={<AdminUser/>}></Route>
                             <Route path={RouteURL.USERS.PATH+'/:id'} element={<AdminEditUser/>}></Route>
                             <Route path={RouteURL.USERGROUP.PATH} element={<AdminUsergroup/>}></Route>
+                            <Route path={RouteURL.INVESTOR.PATH} element={<AdminInvestor/>}></Route>
                             <Route path={RouteURL.CATEGORY.PATH} element={<AdminCategory/>}></Route>
                             <Route path={RouteURL.PRODUCT.PATH} element={<AdminProduct/>}></Route>
                             <Route path='dashboard/profile' element={<AdminProfile/>}></Route>

@@ -3,7 +3,7 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
-const ShowSweetAlert = (prop) => {
+const ShowSweetAlert = (prop, callback = false) => {
     let swalProp = {
         showCloseButton: true,
         customClass:{
@@ -16,6 +16,9 @@ const ShowSweetAlert = (prop) => {
         swalProp = {...swalProp, ...prop}
     }
 
+    if(callback){
+        return MySwal.fire(swalProp);
+    }
     MySwal.fire(swalProp);
 }
 

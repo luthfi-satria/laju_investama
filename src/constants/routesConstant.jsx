@@ -16,63 +16,91 @@ const RouteURL = {
     DASHBOARD: {
         PATH: '/dashboard',
         HELMET: {
-            title: 'ADMIN',
+            title: 'Portal Admin',
         },
         AUTHORIZE: true,
     },
         SETTINGS: {
             PATH: '/dashboard/setting',
             HELMET: {
-                title: 'Setting'
+                title: 'Pengaturan Sistem'
             },
             AUTHORIZE: true,
         },
         MENU: {
             PATH: '/dashboard/menu',
             HELMET: {
-                title: 'Menu'
+                title: 'Kelola Menu'
             },
             AUTHORIZE: true,
         },
         MENU_ACCESS: {
             PATH: '/dashboard/menu_access',
             HELMET: {
-                title: 'Kontrol Akses'
+                title: 'Kelola Kontrol Akses'
             },
             AUTHORIZE: true,
         },
         USERGROUP: {
             PATH: '/dashboard/usergroup',
             HELMET: {
-                title: 'Grup User'
+                title: 'Kelola Grup User'
             },
             AUTHORIZE: true,
         },
         USERS: {
             PATH: '/dashboard/user',
             HELMET: {
-                title: 'user'
+                title: 'Kelola User'
             },
             AUTHORIZE: true,
         },
         ADD_USERS: {
             PATH: '/dashboard/user/add',
             HELMET: {
-                title: 'Add User'
+                title: 'Tambah User Baru'
+            },
+            AUTHORIZE: true,
+        },
+        INVESTOR: {
+            PATH: '/dashboard/investor',
+            HELMET: {
+                title: 'Kelola Investor'
             },
             AUTHORIZE: true,
         },
         PRODUCT: {
             PATH: '/dashboard/product',
             HELMET: {
-                title: 'Produk'
+                title: 'Kelola Produk'
+            },
+            AUTHORIZE: true,
+        },
+        TRANSAKSI: {
+            PATH: '/dashboard/transaksi',
+            HELMET: {
+                title: 'Kelola Transaksi'
+            },
+            AUTHORIZE: true,
+        },
+        KREDIT: {
+            PATH: '/dashboard/kredit',
+            HELMET: {
+                title: 'Kelola Pengajuan Kredit'
             },
             AUTHORIZE: true,
         },
         CATEGORY: {
             PATH: '/dashboard/category',
             HELMET: {
-                title: 'Kategori Produk'
+                title: 'Kelola Kategori Produk'
+            },
+            AUTHORIZE: true,
+        },
+        REPORT: {
+            PATH: '/dashboard/report',
+            HELMET: {
+                title: 'Laporan'
             },
             AUTHORIZE: true,
         },

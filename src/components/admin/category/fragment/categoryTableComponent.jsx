@@ -2,21 +2,18 @@ import { useCallback, useEffect, useState } from 'react';
 import Pagination from '../../../pagination';
 import axios from 'axios';
 import ButtonAction from '../../../buttonAction';
-import UserFilterComponent from './userFilterComponent';
-import RouteURL from '../../../../constants/routesConstant';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as CryptoJS from 'crypto-js';
+import CategoryFilterComponent from './categoryFilterComponent';
 
-export default function UserTableComponent({
+export default function CategoryTableComponent({
     token,
     apiErrorHandling,
     deleteTable,
+    editTable,
+    restoration,
     successRes=false,
     filter,
     setFilter
 }){
-    const hasHKey = import.meta.env.VITE_HASH_KEY;
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState(false);
 
@@ -35,7 +32,7 @@ export default function UserTableComponent({
         if(filter || successRes){
             setIsLoading(true);
             try{
-                AxiosHttp('get','/api/user')
+                AxiosHttp('get','/api/category')
                 .then(({data}) => {
                     setData(data.data);
                 })
@@ -46,7 +43,7 @@ export default function UserTableComponent({
                     setTimeout(()=>{
                         setIsLoading(false);
                     }, 2000);
-                })
+                });
             }
             catch(err){
                 // console.log('ERR', err);
@@ -64,20 +61,18 @@ export default function UserTableComponent({
         setFilter({...filter, page: Number(e)});
     }
 
-    const rerouting = (id) => {
-        const cryptoString = CryptoJS.DES.encrypt(JSON.stringify(id), hasHKey.toString(CryptoJS.enc.Utf8));
-        const LinkUrl =  RouteURL.USERS.PATH+'/'+ encodeURIComponent(cryptoString);
-        return LinkUrl;
+    const customClass = (data) => {
+        let customClass = '';
+        customClass += data.deleted_at ? 'opacity-40 ' : '';
+        return customClass;
     }
-
     return(
         <>
         <div className='overflow-auto'>
             <div className="w-full mb-12 px-4">
-                <UserFilterComponent 
+                <CategoryFilterComponent 
                     filter={filter}
                     setFilter={setFilter}
-                    axiosHttp={AxiosHttp}
                 />
                 {/* table */}
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-teal-950 text-white">
@@ -89,25 +84,10 @@ export default function UserTableComponent({
                                         Nama
                                     </th>
                                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Username
+                                        Deskripsi
                                     </th>
                                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Email
-                                    </th>
-                                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Telepon
-                                    </th>
-                                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Kelamin
-                                    </th>
-                                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Group
-                                    </th>
-                                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Level
-                                    </th>
-                                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Status
+                                        Urutan
                                     </th>
                                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Action
@@ -116,37 +96,37 @@ export default function UserTableComponent({
                             </thead>
                             <tbody className=''>
                                 {data?.items?.length ? (data.items.map((items, index) => (
-                                    <tr className='px-4' key={index}>
-                                        <td className='px-4 py-2 min-w-[200px]'>{items?.profile?.name}</td>
-                                        <td className='px-4 py-2 min-w-[150px]'>{items?.username}</td>
-                                        <td className='px-4 py-2 min-w-[150px]'>{items?.profile?.email}</td>
-                                        <td className='px-4 py-2 min-w-[200px]'>{items?.profile?.phone}</td>
-                                        <td className='px-4 py-2 min-w-[100px]'>{items?.profile?.gender}</td>
-                                        <td className='px-4 py-2 min-w-[100px]'>{items?.usergroup?.name}</td>
-                                        <td className='px-4 py-2 min-w-[100px]'>{items?.usergroup?.level}</td>
+                                    <tr className={`px-4 ${customClass(items)}`} key={index}>
+                                        <td className='px-4 py-2 min-w-[200px]'>{items?.name}</td>
+                                        <td className='px-4 py-2 min-w-[200px]'>{items?.description}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{items?.sequence}</td>
                                         <td className='px-4 py-2 min-w-[200px]'>
-                                            {items?.profile?.verify_at ? <span className='text-white ring-2 ring-white px-2 rounded-md bg-green-400'>Terverifikasi</span> : <span className='bg-white text-gray-700 rounded-md px-2'>Belum Diverifikasi</span>}
-                                        </td>
-                                        <td className='px-4 py-2 min-w-[200px]'>
-                                            <Link 
-                                                to={rerouting(items.id)} 
-                                                target='_blank'
-                                                className='px-2 py-1 border border-white rounded-md mr-2 hover:bg-green-500'
-                                            >
-                                                <FontAwesomeIcon icon={'edit'}/>
-                                            </Link>
-                                            
                                             <ButtonAction
-                                                label='delete'
-                                                type='delete'
-                                                handleClick={()=>deleteTable(items)}
+                                                label='Edit'
+                                                type='edit'
+                                                handleClick={()=>editTable(items)}
                                             />
+                                            {items?.deleted_at ? (
+                                                <ButtonAction
+                                                    label={'Restore'}
+                                                    type='restore'
+                                                    icon='rotate-right'
+                                                    iconClass='w-4 h-4 inline-block ml-1 mr-1 text-yellow-500 hover:text-yellow-700'
+                                                    handleClick={()=>restoration(items)}
+                                                />
+                                            ) : (
+                                                <ButtonAction
+                                                    label='delete'
+                                                    type='delete'
+                                                    handleClick={()=>deleteTable(items)}
+                                                />
+                                            )}
                                         </td>
                                     </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={9} className='px-4 py-4 text-center'>
+                                        <td colSpan={8} className='px-4 py-4 text-center'>
                                             Data tidak ditemukan...
                                         </td>
                                     </tr>
@@ -154,7 +134,7 @@ export default function UserTableComponent({
                             </tbody>
                             <tfoot>
                                 <tr className='bg-teal-800 border-t border-white'>
-                                    <td className='px-4' colSpan={9}>
+                                    <td className='px-4' colSpan={8}>
                                     <Pagination
                                         loading={isLoading}
                                         page={filter.page}

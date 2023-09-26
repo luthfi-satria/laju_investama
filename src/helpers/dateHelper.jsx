@@ -11,3 +11,9 @@ export function UTCToLocaleDate(date, format = 'intl'){
     }
     return reformat;
 }
+
+export function CompareDates(startDate, endDate){
+    const firstDate = new Date(startDate);
+    const secondDate = new Date(endDate);
+    return firstDate < secondDate;
+}

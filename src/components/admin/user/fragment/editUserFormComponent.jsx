@@ -1,20 +1,21 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ShowSweetAlert from "../../../../helpers/showAlert";
 
 export default function EditUserFormComponent({
-    account,
+    account={},
     setAccount,
     axiosHandler
 }){
     const [errArray, setErrArray] = useState(false);
     const [loader, setLoader] = useState(false);
     const [updateStatus, setUpdateStatus] = useState(false);
+
     const handleProfile = (e) => {
         const profile = account.profile;
         const updateProfile = {...profile, [e.target.name]:e.target.value}
         setAccount({...account, ['profile']: updateProfile});
     }
-    
+   
     const updateProfile = () => {
         const profile = account.profile;
         delete profile.user_id;
@@ -57,6 +58,10 @@ export default function EditUserFormComponent({
         },5000);
     }
 
+    const InitializeForm = (property) => {
+        return account?.profile?.[property] || '';
+    }
+
     return (
         <>
             <div 
@@ -75,7 +80,7 @@ export default function EditUserFormComponent({
                             name="name" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Nama lengkap..."
-                            value={account?.profile ? account.profile?.name : ''}
+                            value={InitializeForm('name')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -99,7 +104,7 @@ export default function EditUserFormComponent({
                             name="alamat" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Alamat lengkap..."
-                            value={account?.profile && account.profile.alamat ? account.profile?.alamat : ''}
+                            value={InitializeForm('alamat')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -123,7 +128,7 @@ export default function EditUserFormComponent({
                             name="kelurahan" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Kelurahan..."
-                            value={account.profile && account.profile.kelurahan ? account.profile.kelurahan : ''}
+                            value={InitializeForm('kelurahan')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -147,7 +152,7 @@ export default function EditUserFormComponent({
                             name="kecamatan" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Kecamatan..."
-                            value={account.profile && account.profile.kecamatan ? account.profile.kecamatan : ''}
+                            value={InitializeForm('kecamatan')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -171,7 +176,7 @@ export default function EditUserFormComponent({
                             name="kota" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Kota..."
-                            value={account.profile && account.profile.kota ? account.profile.kota : ''}
+                            value={InitializeForm('kota')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -195,7 +200,7 @@ export default function EditUserFormComponent({
                             name="email" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Alamat Email..."
-                            value={account.profile && account.profile.email ? account.profile.email : ''}
+                            value={InitializeForm('email')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -219,7 +224,7 @@ export default function EditUserFormComponent({
                             name="phone" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Phone..."
-                            value={account.profile && account.profile.phone ? account.profile.phone : ''}
+                            value={InitializeForm('phone')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -242,7 +247,7 @@ export default function EditUserFormComponent({
                             name="gender" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Jenis Kelamin..."
-                            value={account.profile && account.profile.gender ? account.profile.gender : ''}
+                            value={InitializeForm('gender')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         >
@@ -270,7 +275,7 @@ export default function EditUserFormComponent({
                             name="dob_place" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Tempat Lahir..."
-                            value={account.profile && account.profile.dob_place ? account.profile.dob_place : ''}
+                            value={InitializeForm('dob_place')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -294,7 +299,7 @@ export default function EditUserFormComponent({
                             name="dob" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Tanggal Lahir..."
-                            value={account.profile && account.profile.dob ? account.profile.dob : ''}
+                            value={InitializeForm('dob')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -317,7 +322,7 @@ export default function EditUserFormComponent({
                             name="marital_status" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Status pernikahan..."
-                            value={account.profile && account.profile.marital_status ? account.profile.marital_status : ''}
+                            value={InitializeForm('marital_status')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         >
@@ -344,7 +349,7 @@ export default function EditUserFormComponent({
                             id="inp_education"
                             name="education" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
-                            value={account.profile && account.profile.education ? account.profile.education : ''}
+                            value={InitializeForm('education')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         >
@@ -376,7 +381,7 @@ export default function EditUserFormComponent({
                             name="ktp" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Nomor KTP..."
-                            value={account.profile && account.profile.ktp ? account.profile.ktp : ''}
+                            value={InitializeForm('ktp')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -400,7 +405,7 @@ export default function EditUserFormComponent({
                             name="masa_berlaku" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Tanggal Lahir..."
-                            value={account.profile && account.profile.masa_berlaku ? account.profile.masa_berlaku : ''}
+                            value={InitializeForm('masa_berlaku')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         />
@@ -422,7 +427,7 @@ export default function EditUserFormComponent({
                             id="inp_kepemilikan"
                             name="status_kepemilikan" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
-                            value={account.profile && account.profile.status_kepemilikan ? account.profile.status_kepemilikan : ''}
+                            value={InitializeForm('status_kepemilikan')}
                             onChange={(e) => handleProfile(e)}
                             autoComplete="off"
                         >
@@ -457,7 +462,7 @@ export default function EditUserFormComponent({
                                 name="verify_at" 
                                 className="sr-only peer"
                                 value=''
-                                defaultChecked={account?.profile && typeof account.profile.verify_at != 'undefined' ? true: false}
+                                defaultChecked={account?.profile && typeof InitializeForm('verify_at') != 'undefined' ? true: false}
                                 onChange={(e)=>{
                                     setAccount({...account, ['profile']: {...account.profile, ['verify_at']: String(e.target.checked)}})
                                 }}
