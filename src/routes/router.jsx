@@ -27,7 +27,7 @@ export default function AppRouter(){
             <div>
                 <HelmetProvider>
                     <Helmet>
-                        <title>SDIT</title>
+                        <title>PT. Laju Investama</title>
                         <meta charSet='utf-8'/>
                         <link rel="icon" type="image/x-icon" href={icon}></link>
                     </Helmet>
@@ -35,7 +35,7 @@ export default function AppRouter(){
                 <BrowserRouter>
                     <Routes>
 
-                        <Route element={<HomeLayout/>}>
+                        <Route element={<HomeLayout token={getToken}/>}>
                             <Route path={RouteURL.HOMEPAGE.PATH} element={<HomePage/>}>
                             </Route>
                         </Route>

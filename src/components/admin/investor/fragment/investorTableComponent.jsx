@@ -18,6 +18,7 @@ export default function InvestorTableComponent({
     setFilter
 }){
     const [isLoading, setIsLoading] = useState(false);
+    const [triggerFind, setTriggerFind] = useState(true);
     const [data, setData] = useState(false);
 
     const AxiosHttp = useCallback((method, urlPath, params=null)=>{
@@ -32,7 +33,7 @@ export default function InvestorTableComponent({
     },[filter, token]);
     
     useEffect(()=>{
-        if(filter || successRes){
+        if((triggerFind && filter) || successRes){
             setIsLoading(true);
             try{
                 AxiosHttp('get','/api/investor')
@@ -45,7 +46,8 @@ export default function InvestorTableComponent({
                 }).finally(() => {
                     setTimeout(()=>{
                         setIsLoading(false);
-                    }, 2000);
+                        setTriggerFind(false);
+                    }, 1000);
                 });
             }
             catch(err){
@@ -53,7 +55,7 @@ export default function InvestorTableComponent({
                 apiErrorHandling(err.response.data.message[0].constraint[0]);
             }
         }
-    },[filter, successRes, AxiosHttp, apiErrorHandling]);
+    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerFind]);
 
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);
@@ -78,6 +80,7 @@ export default function InvestorTableComponent({
                     filter={filter}
                     setFilter={setFilter}
                     axiosHttp={AxiosHttp}
+                    triggerFind={setTriggerFind}
                 />
                 {/* table */}
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-teal-950 text-white">

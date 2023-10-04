@@ -1,6 +1,7 @@
 export default function CategoryFilterComponent({
     filter,
     setFilter,
+    triggerFind,
 }){
     return (
         <>
@@ -30,11 +31,14 @@ export default function CategoryFilterComponent({
                                     id="src_clear" 
                                     type='reset'
                                     className='border border-white bg-red-500 px-2 py-1 rounded-l-md mt-5 w-1/2 hover:bg-red-600'
-                                    onClick={()=>setFilter({
-                                        page: 1,
-                                        limit: 10,
-                                        includeDeleted: 'true',
-                                    })}
+                                    onClick={()=>{
+                                        setFilter({
+                                            page: 1,
+                                            limit: 10,
+                                            includeDeleted: 'true',
+                                        });
+                                        triggerFind(true);
+                                    }}
                                 >
                                     Hapus
                                 </button>
@@ -42,6 +46,10 @@ export default function CategoryFilterComponent({
                                     id="src_btn" 
                                     type='button'
                                     className='border border-white px-2 py-1 rounded-r-md mt-5 w-1/2 bg-teal-700 hover:bg-teal-500'
+                                    onClick={()=>{
+                                        setFilter({...filter, page:1});
+                                        triggerFind(true);
+                                    }}
                                 >
                                     Cari
                                 </button>

@@ -33,7 +33,7 @@ export default function AdminLayout({token}){
             <div className="relative bg-gradient-to-br bg-teal-600">
                 <NavbarComponent
                     navbarImg={NavbarLogo}
-                    appTitle={'ALKAUTSAR'}
+                    appTitle={'Laju Investama'}
                     appMenu={AppMenu}
                 />
                 <div className="relative lg:pt-24 pl-2 pb-32 pt-12">

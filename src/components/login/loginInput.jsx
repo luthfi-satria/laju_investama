@@ -1,4 +1,4 @@
-const fixedInputClass="w-full -ml-10 pl-2 pr-3 py-2 text-teal-600 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+const fixedInputClass="w-full -ml-10 pl-2 pr-3 py-2 text-teal-600 border-b border-gray-200 outline-none focus:border-indigo-500"
 
 export default function LoginInput({
     handleChange,

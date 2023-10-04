@@ -37,6 +37,7 @@ export function IntlCurrency(nStr, format = 'id-ID'){
     const Cur = new Intl.NumberFormat(format, {
         style: 'currency',
         currency: 'IDR',
+        minimumFractionDigits: 0,
     });
     const reform = Cur.format(nStr);
     return reform;

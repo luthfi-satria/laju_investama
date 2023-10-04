@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import loginFields from "../constants/loginConstant";
 import LoginInput from './../components/login/loginInput';
-import SDITLogo from '../assets/images/logo/sdit.svg';
+import LajuInvest from './../assets/images/logo/lajuinvestama.png';
 import RouteURL from "../constants/routesConstant";
 import ValidateInput from "../helpers/validationHelper";
 import axios from "axios";
@@ -9,6 +9,10 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { useLocalStorage } from "../hooks/appHooks";
 import {useNavigate} from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { library } from "@fortawesome/fontawesome-svg-core";
+
 const fields = loginFields;
 let fieldsState = {};
 let errorState = {};
@@ -19,7 +23,8 @@ fields.forEach(element =>{
     }
 );
 
-export default function LoginPage({userData}){
+export default function LoginPage(){
+    library.add(fas);
     const [loading, setLoading] = useState(false)
     const [loginState, setLoginState] = useState(fieldsState);
     const [validError, setValidError] = useState(errorState);
@@ -28,10 +33,10 @@ export default function LoginPage({userData}){
     const navigate = useNavigate();
 
     useEffect(()=>{
-        if(userData){
+        if(token){
             navigate(RouteURL.HOMEPAGE.PATH, {replace: true});
         }
-    })
+    },[token, navigate])
 
     const handleChange=(e)=>{
         setLoginState({...loginState,[e.target.id]:e.target.value})
@@ -40,10 +45,12 @@ export default function LoginPage({userData}){
     const handleSubmit=(e)=>{
         e.preventDefault();
         setLoading(true);
-        const validate = validation();
-        if(validate == true){
-            authenticateUser();
-        }
+        setTimeout(()=>{
+            const validate = validation();
+            if(validate == true){
+                authenticateUser();
+            }
+        },1000);
     }
 
     const showAlert = (prop) => {
@@ -121,66 +128,66 @@ export default function LoginPage({userData}){
     }
     
     return(
-        <div className="min-w-screen min-h-screen bg-gradient-to-b from-teal-400 flex items-center justify-center px-5 py-5">
-            <div className="bg-teal-500 text-white rounded-lg shadow-xl w-full overflow-hidden" style={{maxWidth:'500px'}}>
-                <div className="md:flex w-full">
-                    <div className="hidden md:block w-2/5 bg-white">
-                        <img src={SDITLogo} className="object-contain h-full w-full"/>
-                    </div>
-                    <div className="w-full md:w-3/5 py-2 px-3 md:px-3">
-                        <div className="text-center mb-10">
-                            <h1 className="font-bold text-base text-white">LOGIN</h1>
-                            <p>Enter your login account</p>
+        <>
+            <div className="min-w-screen min-h-screen bg-gradient-to-b from-teal-400 to-transparent flex items-center justify-center">
+                <div className="w-full bg-gray-50 flex content-center justify-center shadow-inner shadow-gray-500">
+                    <div className="w-3/4 grid md:grid-cols-2">
+                        <div className="px-5 py-5">
+                            <h1 className="font-bold text-gray-400 text-3xl text-center">PT. LAJU INVESTAMA</h1>
+                            <div 
+                                alt="Login into PT. Laju Investama Application" 
+                                className="w-full p-4 min-h-[300px] bg-cover bg-no-repeat bg-center hidden md:block"
+                                style={{
+                                    backgroundImage: `url(${LajuInvest})`
+                                }}
+                            >
+                            </div>
                         </div>
-                        <div>
-                            <form onSubmit={handleSubmit}>
-                                {
-                                    fields.map((field) => 
-                                        <LoginInput
-                                            key={field.id}
-                                            handleChange={handleChange}
-                                            value={loginState[field.id]}
-                                            labelText={field.labelText}
-                                            labelFor={field.labelFor}
-                                            id={field.id}
-                                            name={field.name}
-                                            type={field.type}
-                                            isRequired={field.isRequired}
-                                            placeholder={field.placeholder}
-                                            customClass=''
-                                            errorMessage={validError[field.id]}
-                                        />    
-                                    )
-                                }
-                                <div className="flex -mx-3">
-                                    <div className="w-full px-3 mb-5">
-                                        <button className="border-2 border-white block w-full mx-auto hover:bg-teal-700 focus:bg-teal-700 text-white rounded-lg px-3 py-1 font-semibold">
-                                            {!loading && <span className='indicator-label'>Login</span>}
-                                            {loading && (
-                                                <span className='indicator-progress' style={{display: 'block'}}>
-                                                Mohon Tunggu...
-                                                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                                                </span>
-                                            )}
-                                        </button>
-                                    </div>
+                        <div className="bg-white px-10 py-5 mb-5 sm:mb-0 shadow-md shadow-teal-600">
+                            <h3 className="font-bold text-xl border-b border-gray-300 text-gray-600 px-2 py-2 mb-5">
+                                LOG IN
+                            </h3>
+                            <div>
+                                {fields.map((field) => (
+                                    <LoginInput
+                                    key={field.id}
+                                    handleChange={handleChange}
+                                    value={loginState[field.id]}
+                                    labelText={field.labelText}
+                                    labelFor={field.labelFor}
+                                    id={field.id}
+                                    name={field.name}
+                                    type={field.type}
+                                    isRequired={field.isRequired}
+                                    placeholder={field.placeholder}
+                                    customClass=''
+                                    errorMessage={validError[field.id]}
+                                />
+                                ))}
+                                <div>
+                                    <button
+                                        onClick={handleSubmit}
+                                        className="font-bold w-full bg-teal-400 px-5 py-2 text-white hover:bg-teal-600 border-2 border-teal-200"
+                                    >
+                                        <FontAwesomeIcon icon='unlock' className="w-4 h-3 mr-2 text-white" />
+                                        {loading ? 'Mohon Tunggu...' : 'Log In'}
+                                    </button>
                                 </div>
-                                <div className="flex -mx-3">
+                                <div>
                                     <div className="w-full px-3 mb-5 text-right">
-                                        <a href={RouteURL.REGISTER.PATH} className="cursor-pointer hover:text-teal-900 focus:text-teal-900">
+                                        Belum punya akun? 
+                                        <a 
+                                        href={RouteURL.REGISTER.PATH} 
+                                        className="ml-2 text-gray-500 cursor-pointer hover:text-blue-500 font-semibold focus:text-teal-900">
                                             Register
                                         </a>
-                                        <span className="mx-2">|</span>
-                                        <a href={RouteURL.FORGOT_PASSWORD.PATH} className="cursor-pointer hover:text-teal-900 focus:text-teal-900">
-                                            Forgot Password
-                                        </a>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

@@ -354,12 +354,13 @@ export default function EditUserFormComponent({
                             autoComplete="off"
                         >
                             <option>----</option>
-                            <option>SD</option>
-                            <option>SLTP</option>
-                            <option>SLTA</option>
-                            <option>Sarjana</option>
-                            <option>Magister</option>
-                            <option>Doktoral</option>
+                            <option value={'Sekolah Dasar'}>SD</option>
+                            <option value={'Sekolah Lanjutan Tingkat Pertama'}>SLTP</option>
+                            <option value={'Sekolah Lanjutan Tingkat Akhir'}>SLTA</option>
+                            <option value={'Diploma 3'}>Diploma 3</option>
+                            <option value={'Sarjana'}>Sarjana</option>
+                            <option value={'Magister'}>Magister</option>
+                            <option value={'Doktoral'}>Doktoral</option>
                         </select>
                         {errArray?.education !='' && (
                             <div className="text-red-500 text-xs w-full first-letter:uppercase">

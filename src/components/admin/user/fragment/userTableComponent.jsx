@@ -18,6 +18,7 @@ export default function UserTableComponent({
 }){
     const hasHKey = import.meta.env.VITE_HASH_KEY;
     const [isLoading, setIsLoading] = useState(false);
+    const [triggerSrc, setTriggerSrc] = useState(true);
     const [data, setData] = useState(false);
 
     const AxiosHttp = useCallback((method, urlPath, params=null)=>{
@@ -27,12 +28,12 @@ export default function UserTableComponent({
             headers: {
                 Authorization: 'Bearer '+token
             },
-            params: (params) || filter
+            params: params || filter
         });
     },[filter, token]);
     
     useEffect(()=>{
-        if(filter || successRes){
+        if((triggerSrc && filter) || successRes){
             setIsLoading(true);
             try{
                 AxiosHttp('get','/api/user')
@@ -45,6 +46,7 @@ export default function UserTableComponent({
                 }).finally(() => {
                     setTimeout(()=>{
                         setIsLoading(false);
+                        setTriggerSrc(false);
                     }, 2000);
                 })
             }
@@ -53,7 +55,7 @@ export default function UserTableComponent({
                 apiErrorHandling(err.response.data.message[0].constraint[0]);
             }
         }
-    },[filter, successRes, AxiosHttp, apiErrorHandling]);
+    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerSrc]);
 
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);
@@ -78,6 +80,7 @@ export default function UserTableComponent({
                     filter={filter}
                     setFilter={setFilter}
                     axiosHttp={AxiosHttp}
+                    triggerFind={setTriggerSrc}
                 />
                 {/* table */}
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-teal-950 text-white">

@@ -1,40 +1,55 @@
-export default function ProductCard(){
+import { IntlCurrency } from './../../../helpers/converterHelper';
+import defaultProductImg from '../../../assets/images/noproduct_img.png';
+
+export default function ProductCard({
+    productData,
+    CreateIcon,
+}){
+    const baseUrl = import.meta.env.VITE_APIURL;
+
+    const convImg = (data) => {
+        return data?.image ? baseUrl+'/api/product/image/'+data.id+'/'+data.name : defaultProductImg;
+    }
     return(
         <>
-        <div className="bg-white h-auto flex items-center justify-center">
-            <div id="id1" className="w-full max-w-sm bg-gray border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <a href="#">
+        <div className="bg-gray h-auto flex items-center justify-center mt-3">
+            <div id="id1" className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a href="#" className=''>
                     <div className="grid grid-cols-1">
-                        <div className="bg-gray-300 h-64 flex items-center justify-center">
-                            PRODUK IMAGE
+                        <div className="bg-gray-50 h-full rounded-md flex items-center justify-center">
+                            <img 
+                                src={convImg(productData)}
+                                alt={productData?.name}
+                                className={'min-h-[222px]'}
+                            />
                         </div>
                     </div>
                 </a>
                 <div className="px-5 pb-5">
                     <a href="#">
-                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">NAMA PRODUK</h5>
+                        <h5 className="text-lg mt-2 font-semibold tracking-tight text-gray-900 dark:text-white truncate">
+                            {productData?.name}
+                        </h5>
                     </a>
-                    <div className="flex items-center mt-2.5 mb-5">
-                        <svg className="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
+                    
+                    <div className="flex items-center justify-between mt-5">
+                        <div className="w-full text-right text-xl font-bold text-gray-500 dark:text-white">
+                            {IntlCurrency(productData?.harga_jual)}
+                        </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                        <span className="text-3xl font-bold text-gray-900 dark:text-white">HARGA PRODUK</span>
-                        <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
+                    <div className='flex items-center justify-between'>
+                        <button
+                            className='text-white ring-1 ring-teal-500 bg-teal-500 w-1/2 px-2 py-2 mt-2 hover:bg-teal-600'
+                        >
+                            {CreateIcon('shopping-cart','mr-2')}
+                            Cart
+                        </button>
+                        <button
+                            className='text-gray ring-1 ring-slate-400 bg-white w-1/2 px-2 py-2 mt-2 hover:bg-slate-200'
+                        >
+                            {CreateIcon('heart','text-red-500 mr-2')}
+                            Wish
+                        </button>
                     </div>
                 </div>
             </div>

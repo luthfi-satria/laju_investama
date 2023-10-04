@@ -12,6 +12,7 @@ export default function UsergroupTableComponent({
 }){
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState(false);
+    const [triggerFind, setTriggerFind] = useState(true);
     const [filter, setFilter] = useState({
         page: 1,
         limit: 10
@@ -29,7 +30,7 @@ export default function UsergroupTableComponent({
     },[filter, token]);
     
     useEffect(()=>{
-        if(filter || successRes){
+        if((triggerFind && filter) || successRes){
             try{
                 FetchTable()
                 .then(({data}) => {
@@ -40,6 +41,7 @@ export default function UsergroupTableComponent({
                     apiErrorHandling(err.response.data.message);
                 }).finally(() => {
                     setIsLoading(true);
+                    setTriggerFind(false);
                 })
             }
             catch(err){
@@ -47,7 +49,7 @@ export default function UsergroupTableComponent({
                 apiErrorHandling(err.response.data.message[0].constraint[0]);
             }
         }
-    },[filter, successRes, FetchTable, apiErrorHandling]);
+    },[filter, successRes, FetchTable, apiErrorHandling, triggerFind]);
 
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);
@@ -99,10 +101,13 @@ export default function UsergroupTableComponent({
                                         id="src_clear" 
                                         type='reset'
                                         className='border border-white bg-red-500 px-2 py-1 rounded-l-md mt-5 w-1/2 hover:bg-red-600'
-                                        onClick={()=>setFilter({
+                                        onClick={()=>{
+                                            setFilter({
                                             page: 1,
                                             limit: 10
-                                        })}
+                                            });
+                                            setTriggerFind(true);
+                                        }}
                                     >
                                         Hapus
                                     </button>
@@ -110,6 +115,10 @@ export default function UsergroupTableComponent({
                                         id="src_btn" 
                                         type='button'
                                         className='border border-white px-2 py-1 rounded-r-md mt-5 w-1/2 bg-teal-700 hover:bg-teal-500'
+                                        onClick={() => {
+                                            setFilter({...filter, page: 1});
+                                            setTriggerFind(true);
+                                        }}
                                     >
                                         Cari
                                     </button>
