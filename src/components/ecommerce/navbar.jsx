@@ -19,11 +19,13 @@ export default function CommerceNavbar({
       title: 'Register',
       path: 'register',
       loginRequired: false,
+      allowedUserLevel: ['owner','organisasi','public']
     },
     {
       title: 'Login',
       path: 'login',
       loginRequired: false,
+      allowedUserLevel: ['owner','organisasi','public']
     },
     {
       title: 'Dashboard',
@@ -53,7 +55,7 @@ export default function CommerceNavbar({
                 <div className="relative inline-block text-xs leading-6 text-left whitespace-nowrap px-0 py-2">
                   {headerNavLink.map((items, index)=>{
                     const reqLogin = token && token != '' ? true : false;
-                    if(items.loginRequired == reqLogin && (items?.allowedUserLevel && profile && items?.allowedUserLevel.includes(profile?.level))){
+                    if(items.loginRequired == reqLogin && (items?.allowedUserLevel && items?.allowedUserLevel.includes(profile?.level || 'public'))){
                       return (
                         <Link 
                           key={index}
