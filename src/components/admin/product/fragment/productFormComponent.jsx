@@ -14,7 +14,7 @@ export default function ProductFormComponent({
     }
 
     const convertImgUrl = (data) => {
-        return data?.image ? baseUrl+'/api/product/image/'+data.id+'/'+data.image : DEFAULTIMG;
+        return data?.image ? baseUrl+'/api/product/'+data.id+'/image/'+data.image : DEFAULTIMG;
     }
 
     const handleChangeImage = (e, inputData) => {

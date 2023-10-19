@@ -5,13 +5,15 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 export default function HomeLayout({
-    token = ''
+    token = '',
+    profile,
+    RouteURL,
 }){
     library.add(fas);
-
+    const location = useLocation();
     const srcField = useMemo(() => ({
         page: 1,
         limit: 10,
@@ -20,42 +22,41 @@ export default function HomeLayout({
         category_id: [],
         harga_min: 0,
         harga_max: null,
-        stock_status: '',
+        stock_status: 'tersedia',
         order_by: '',
         orientation: 'ASC',
     }),[]);
 
     const [search, setSearch] = useState(srcField);
     const [category, setCategory] = useState(false);
-    const [authorization, setAuthorization] = useState(false);
     const [toggleSidebar, setToggleSidebar] = useState(false);
     const [refreshProduct, setRefreshProduct] = useState(false);
+    const [totalCart, setTotalCart] = useState(0);
     const [product, setProduct] = useState(false);
     const [loader, setLoader] = useState(false);
 
-    useEffect(()=>{},[srcField]);
-
-    useEffect(()=>{
-        if(!authorization && token != ''){
-            setAuthorization({
-                Authorization: 'Bearer '+ token,
-            })
-        }
-    },[token, authorization]);
+    useEffect(()=>{},[srcField, totalCart]);
 
     const axiosRequest = useCallback((method, path, param={}, data={}, headers={})=>{
-        return axios({
+        const option = {
             method: method,
             url: import.meta.env.VITE_APIURL+'/'+path,
-            headers: {
-                ...authorization,
-                ...headers
-            },
             params: param,
             data: data,
-        });
-    }, []);
+        };
 
+        if(token && token != ''){
+            option.headers = {Authorization: 'Bearer '+token};
+        }
+
+        if(Object.keys(headers).length > 0){
+            option.headers = {...option.headers, headers};
+        }
+
+        return axios(option);
+    }, [token]);
+
+    // GET CATEGORY
     useEffect(()=>{
         if(!category){
             axiosRequest('get', 'api/category', {
@@ -68,13 +69,13 @@ export default function HomeLayout({
                 }
                 setCategory(data?.data);
             })
-            .catch((err) => {
-                console.log('ERR', err);
-                throw err;
-            })
+            .catch((error)=>{
+                console.log(error);
+            });
         }
     },[category, axiosRequest]);
 
+    // SCROLL FUNCTION
     window.onscroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
             if(product){
@@ -117,6 +118,22 @@ export default function HomeLayout({
         }
     }, [search, axiosRequest, product, refreshProduct]);
 
+    // GET CART TOTAL
+    useEffect(()=>{
+        if(token && token != '' && profile){
+            axiosRequest('get', 'api/cart/total')
+            .then(({data}) => {
+                if(data.statusCode == 400){
+                    throw data;
+                }
+                setTotalCart(data?.data?.total);
+            })
+            .catch((error) => {
+                console.log('ERROR', error);
+            });
+        }
+    },[token, profile, axiosRequest]);
+
     const newIcon = (icon, classes) => {
         return <FontAwesomeIcon icon={icon} className={classes}/>;
     }
@@ -141,36 +158,46 @@ export default function HomeLayout({
         setRefreshProduct(true);
         setSearch({...search, ...srcField});
     }
+    
     return(
         <>
             <div id="ecommerce">
                 <CommerceNavbar
                     token={token}
+                    RouteURL={RouteURL}
                     search={search}
                     setSearch={setSearch}
                     createIcon={newIcon}
                     showSidebar={showSidebar}
                     setRefreshProduct={setRefreshProduct}
+                    profile={profile}
+                    totalCart={totalCart}
+                    currentPath={location}
                 />
-                <EcommerceSidebar
-                    createIcon={newIcon}
-                    AxiosRequest={axiosRequest}
-                    Category={category}
-                    Search={search}
-                    SetSearch={setSearch}
-                    ToggleSidebar={toggleSidebar}
-                    setRefreshProduct={setRefreshProduct}
-                    ResetFilter={resetFilter}
-                />
+                {location?.pathname == '/' && (
+                    <EcommerceSidebar
+                        createIcon={newIcon}
+                        AxiosRequest={axiosRequest}
+                        Category={category}
+                        Search={search}
+                        SetSearch={setSearch}
+                        ToggleSidebar={toggleSidebar}
+                        setRefreshProduct={setRefreshProduct}
+                        ResetFilter={resetFilter}
+                    />
+                )}
                 <Outlet context={{
                         AxiosRequest: axiosRequest,
+                        profile: profile,
                         search: search,
                         setSearch: setSearch,
                         CreateIcon: newIcon,
                         product: product,
                         setProduct: setProduct,
                         orderProduct: orderProduct,
-                        IsLoading: loader
+                        IsLoading: loader,
+                        TotalCart: totalCart,
+                        SetTotalCart: setTotalCart,
                     }
                 }/>
             </div>

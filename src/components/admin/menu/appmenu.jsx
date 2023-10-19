@@ -1,10 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 import AppmenuComponent from "./fragment/appmenuComponent";
 
-export default function AdminMenu(){
-    const auth = useOutletContext();
+export default function AdminMenu({
+    token,
+    RouteURL
+}){
     return(
         <>
             <HelmetProvider>
@@ -21,7 +21,7 @@ export default function AdminMenu(){
                     </div>
                 </div>
                 <div className="px-4 flex-auto">
-                    <AppmenuComponent auth={auth}/>
+                    <AppmenuComponent token={token}/>
                 </div>
             </div>
         </>

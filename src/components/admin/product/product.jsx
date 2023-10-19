@@ -1,11 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 import ProductComponent from "./fragment/productComponent";
 
-export default function AdminProduct(){
-    const token = useOutletContext();
-
+export default function AdminProduct({
+    token,
+    RouteURL
+}){
     return(
         <>
             <HelmetProvider>

@@ -1,10 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 import UsergroupComponent from "./fragment/usergroupComponent";
 
-export default function AdminUsergroup(){
-    const token = useOutletContext();
+export default function AdminUsergroup({
+    token,
+    RouteURL,
+}){
     return(
         <>
             <HelmetProvider>

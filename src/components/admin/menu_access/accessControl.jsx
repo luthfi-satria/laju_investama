@@ -1,9 +1,9 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 
-export default function AdminAccessControl(){
-    const auth = useOutletContext();
+export default function AdminAccessControl({
+    token,
+    RouteURL
+}){
     return(
         <>
             <HelmetProvider>

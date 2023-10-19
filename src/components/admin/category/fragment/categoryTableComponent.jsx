@@ -57,10 +57,12 @@ export default function CategoryTableComponent({
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);
         setFilter({...filter, limit: option, page: 1});
+        setTriggerFind(true);
     }
 
     const changePage = (e) => {
         setFilter({...filter, page: Number(e)});
+        setTriggerFind(true);
     }
 
     const customClass = (data) => {

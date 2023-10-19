@@ -15,7 +15,7 @@ export const FetchAdminMenu = (token) => {
     });
 
     useEffect(()=>{
-      if(needRequest){
+      if(token && needRequest){
         const APIURL = import.meta.env.VITE_APIURL+'/api/access/user';
         axios.get(APIURL, {
           headers: {

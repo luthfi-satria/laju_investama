@@ -4,11 +4,12 @@ import defaultProductImg from '../../../assets/images/noproduct_img.png';
 export default function ProductCard({
     productData,
     CreateIcon,
+    AddToCart,
 }){
     const baseUrl = import.meta.env.VITE_APIURL;
 
     const convImg = (data) => {
-        return data?.image ? baseUrl+'/api/product/image/'+data.id+'/'+data.name : defaultProductImg;
+        return data?.image ? baseUrl+'/api/product/'+data.id+'/image/'+data.image : defaultProductImg;
     }
     return(
         <>
@@ -20,7 +21,7 @@ export default function ProductCard({
                             <img 
                                 src={convImg(productData)}
                                 alt={productData?.name}
-                                className={'min-h-[222px]'}
+                                className={'h-[222px]'}
                             />
                         </div>
                     </div>
@@ -40,6 +41,7 @@ export default function ProductCard({
                     <div className='flex items-center justify-between'>
                         <button
                             className='text-white ring-1 ring-teal-500 bg-teal-500 w-1/2 px-2 py-2 mt-2 hover:bg-teal-600'
+                            onClick={()=>AddToCart(productData)}
                         >
                             {CreateIcon('shopping-cart','mr-2')}
                             Cart

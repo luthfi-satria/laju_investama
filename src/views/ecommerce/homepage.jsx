@@ -2,7 +2,17 @@ import { useOutletContext } from "react-router-dom"
 import ProductList from "../../components/ecommerce/product/produkList";
 
 export default function HomePage(){
-    const {orderProduct, product, setProduct, CreateIcon, IsLoading} = useOutletContext();
+    const {
+        orderProduct,
+        profile, 
+        product, 
+        setProduct, 
+        CreateIcon, 
+        IsLoading, 
+        AxiosRequest,
+        TotalCart,
+        SetTotalCart,
+    } = useOutletContext();
     return(
         <>
             <div 
@@ -31,6 +41,10 @@ export default function HomePage(){
                     SetProductList={setProduct}
                     CreateIcon={CreateIcon}
                     IsLoading={IsLoading}
+                    AxiosRequest={AxiosRequest}
+                    TotalCart={TotalCart}
+                    SetTotalCart={SetTotalCart}
+                    profile={profile}
                 />
             </div>
         </>

@@ -6,6 +6,8 @@ const MySwal = withReactContent(Swal);
 const ShowSweetAlert = (prop, callback = false) => {
     let swalProp = {
         showCloseButton: true,
+        showCancelButton: true,
+        cancelButtonColor: '#ef4444',
         customClass:{
             actions: 'text-center',
             icon: 'text-xs'

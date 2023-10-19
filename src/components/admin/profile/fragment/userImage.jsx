@@ -4,7 +4,7 @@ export default function UserImage({
     return (
         <img
         src={url}
-        className={`shadow-xl object-cover ring-2 ring-white rounded-full h-auto min-h-[100px] min-w-[100px] align-middle border-none absolute -m-16 lg:-ml-16 max-w-150-px bg-white`}
+        className={`shadow-xl object-cover ring-2 z-10 ring-white rounded-full w-40 h-40 align-middle border-none absolute -m-16 lg:-ml-16 bg-white`}
         />
     );
 }

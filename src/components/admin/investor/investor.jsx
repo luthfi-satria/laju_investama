@@ -1,10 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 import InvestorComponent from "./fragment/investorComponent";
 
-export default function AdminInvestor(){
-    const token = useOutletContext();
+export default function AdminInvestor({
+    token,
+    RouteURL
+}){
 
     return(
         <>

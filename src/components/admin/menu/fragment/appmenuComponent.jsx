@@ -3,11 +3,10 @@ import "../../../../assets/css/appmenuTreeComponent.css";
 import AppTree from "./appTree";
 import { useState } from "react";
 import AppTreeModal from "./appTreeModal";
-import { useOutletContext } from "react-router-dom";
 
-export default function AppmenuComponent(){
-    const token = useOutletContext();
-
+export default function AppmenuComponent({
+    token
+}){
     const config = {
         method: 'get',
         url: import.meta.env.VITE_APIURL+'/api/appmenu',

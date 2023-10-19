@@ -1,4 +1,3 @@
-import { useOutletContext } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import DataRekomendasi from './fragment/data_rekomendasi';
 import DataPekerjaan from './fragment/data_pekerjaan';
@@ -6,8 +5,7 @@ import DataProfile from './fragment/data_profile';
 import axios from 'axios';
 import ShowSweetAlert from "../../../helpers/showAlert";
 
-export default function AdminProfile(){
-    const token = useOutletContext();
+export default function AdminProfile({token}){
     const [panel, setPanel] = useState({
         show: true,
         context: 'data-pribadi'

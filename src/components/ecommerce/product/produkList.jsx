@@ -1,11 +1,41 @@
 import ProductCard from "./productCard";
 import ProductNotFound from '../../../assets/images/product_notfound.png';
+import ShowSweetAlert from "../../../helpers/showAlert";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductList({
     Product,
     CreateIcon,
-    IsLoading
+    IsLoading,
+    AxiosRequest,
+    TotalCart,
+    SetTotalCart,
+    profile,
 }){
+    const navigate = useNavigate();
+    const addToCart = (items) => {
+        if(!profile){
+            navigate('/login',{replace:true})
+        }
+        else{
+            AxiosRequest('post','api/cart',{}, {
+                product_id: items?.id,
+                qty: 1,
+            })
+            .then(({data}) => {
+                if(data.statusCode == 400){
+                    throw data;
+                }
+                SetTotalCart(TotalCart + 1);
+                ShowSweetAlert({
+                    icon: 'success',
+                    title: 'Sukses',
+                    text: 'item sudah masuk keranjang'
+                });
+            });
+        }
+    }
+
     return(
         <>
             <div id="ProductList">
@@ -20,12 +50,13 @@ export default function ProductList({
                     <div 
                         className="overflow-hidden bg-white p-8"
                     >
-                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                             {Product && Product.total > 0 && Product?.items.map((items, index)=>(
                                 <ProductCard
                                     key={index}
                                     productData={items}
                                     CreateIcon={CreateIcon}
+                                    AddToCart={addToCart}
                                 />
                             ))} 
                         </div>

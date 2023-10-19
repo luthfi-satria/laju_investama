@@ -1,10 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 import AdminSettingComponent from './fragment/settingComponent';
 
-export default function AdminSettings(){
-    const token = useOutletContext();
+export default function AdminSettings({
+    token,
+    RouteURL
+}){
     return(
         <>
             <HelmetProvider>

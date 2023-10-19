@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { NumericalOnly } from "../../../../helpers/converterHelper";
-import { UTCToLocaleDate } from "../../../../helpers/dateHelper";
+import DefaultImg from '../../../../assets/images/userDefault.png';
 import UserImage from "./userImage";
 
 export default function DataProfile({
@@ -13,7 +13,7 @@ export default function DataProfile({
     setUpdateStatus,
 }){
     const [userProfile, setUserProfile] = useState(null);
-    const [userImg, setUserImg] = useState(false);
+    const [userImg, setUserImg] = useState(DefaultImg);
     const [loader, setLoader] = useState(false);
     const [errArray, setErrArray] = useState(false);
     const baseUrl = import.meta.env.VITE_APIURL;
@@ -26,7 +26,9 @@ export default function DataProfile({
                     throw(data);
                 }
                 setUserProfile(data.data);
-                setUserImg(baseUrl+'/api/user/photo/'+data.data.id+'/'+data.data.profile.photo);
+                if(data?.data?.profile?.photo){
+                    setUserImg(baseUrl+'/api/user/'+data?.data?.id+'/photo/'+data?.data?.profile?.photo);
+                }
             });
         }
     }, [axiosHandler, userProfile, baseUrl]);
@@ -85,7 +87,7 @@ export default function DataProfile({
                 throw(data);
             }
             setTimeout(() => {
-                setUserImg(baseUrl+'/api/user/photo/'+userProfile.id+'/'+data.data.photo);
+                setUserImg(baseUrl+'/api/user/'+userProfile.id+'/photo/'+data.data.photo);
             }, 1000);
         });
     }
@@ -95,30 +97,32 @@ export default function DataProfile({
             {/* FOTO PROFILE */}
             <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                    <div className='relative'>
+                    <div className='relative w-full flex items-center justify-center'>
                         <UserImage
                             url={userProfile && userImg}
                         />
-                        <label 
-                            htmlFor="inp_photo"
-                            className="absolute ring-1 ring-slate-300 -top-1 rounded-lg cursor-pointer left-0 -mr-3 bg-slate-50 opacity-10 hover:opacity-50 hover:bg-gray-500 hover:text-white px-2 py-1 text-gray-600"
-                            title="ganti foto"
-                        >
-                            <input 
-                                type="file"
-                                name="photo"
-                                id="inp_photo"
-                                className="hidden"
-                                onChange={(e) => handleChangeImage(e)}
+                        <div className="z-[12] w-auto relative">
+                            <label 
+                                htmlFor="inp_photo"
+                                className="absolute ring-1 ring-slate-300 -top-5 rounded-lg cursor-pointer -left-5 bg-slate-50 opacity-10 hover:opacity-80 hover:bg-gray-500 hover:text-white px-2 py-1 text-gray-600"
                                 title="ganti foto"
-                            />
-                            <FontAwesomeIcon icon="camera-retro" />
-                        </label>
+                            >
+                                <input 
+                                    type="file"
+                                    name="photo"
+                                    id="inp_photo"
+                                    className="hidden"
+                                    onChange={(e) => handleChangeImage(e)}
+                                    title="ganti foto"
+                                />
+                                <FontAwesomeIcon icon="camera-retro" className="text-3xl" />
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
             {/* PROFILE */}
-            <div className="mt-10 py-2 border-t border-blueGray-200">
+            <div className="mt-24 sm:mt-10 py-2 border-t border-blueGray-200">
                 <h3 
                     className='relative font-semibold uppercase bg-gradient-to-br px-4 py-2 bg-gray-200 border border-gray-400 cursor-pointer hover:bg-gray-300'
                     onClick={()=>setPanel({
@@ -236,7 +240,7 @@ export default function DataProfile({
                                 name="masa_berlaku" 
                                 className="sm:col-span-3 text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                                 placeholder="Masa berlaku KTP..."
-                                value={userProfile?.profile?.masa_berlaku ? UTCToLocaleDate(userProfile.profile.masa_berlaku) : ''}
+                                defaultValue={userProfile?.profile?.masa_berlaku}
                                 onChange={(e) => handleProfile(e)}
                                 autoComplete="off"
                             />
@@ -268,7 +272,7 @@ export default function DataProfile({
                                     name="dob" 
                                     className="w-full md:w-2/5 md:inline-block text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                                     placeholder="Tanggal lahir..."
-                                    value={userProfile?.profile?.dob ? UTCToLocaleDate(userProfile.profile.dob) : ''}
+                                    defaultValue={userProfile?.profile?.dob}
                                     onChange={(e) => handleProfile(e)}
                                     autoComplete="off"
                                 />
@@ -355,14 +359,14 @@ export default function DataProfile({
                                 name="marital_status" 
                                 className="sm:col-span-3 text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                                 placeholder="Status Pernikahan..."
-                                value={userProfile?.profile?.marital_status ? userProfile.profile.marital_status : ''}
+                                value={userProfile?.profile?.marital_status}
                                 onChange={(e) => handleProfile(e)}
                                 autoComplete="off"
                             >
                                 <option>----</option>
-                                <option>Belum menikah</option>
-                                <option>Menikah</option>
-                                <option>Bercerai</option>
+                                <option value={'Belum Menikah'}>Belum menikah</option>
+                                <option value={'Menikah'}>Menikah</option>
+                                <option value={'Bercerai'}>Bercerai</option>
                             </select>
                         </div>
                         {errArray?.marital_status !='' && (

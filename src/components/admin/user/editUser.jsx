@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import ShowSweetAlert from "../../../helpers/showAlert";
 import EditUserFormComponent from "./fragment/editUserFormComponent";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LoginAccountFORM from "./fragment/loginAccountForm";
 
 export default function AdminEditUser(){

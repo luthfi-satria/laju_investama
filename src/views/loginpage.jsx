@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import loginFields from "../constants/loginConstant";
 import LoginInput from './../components/login/loginInput';
 import LajuInvest from './../assets/images/logo/lajuinvestama.png';
-import RouteURL from "../constants/routesConstant";
 import ValidateInput from "../helpers/validationHelper";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { useLocalStorage } from "../hooks/appHooks";
 import {useNavigate} from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -23,18 +21,21 @@ fields.forEach(element =>{
     }
 );
 
-export default function LoginPage(){
+export default function LoginPage({
+    token,
+    setToken,
+    RouteURL
+}){
     library.add(fas);
     const [loading, setLoading] = useState(false)
     const [loginState, setLoginState] = useState(fieldsState);
     const [validError, setValidError] = useState(errorState);
-    const [token, setToken] = useLocalStorage("token", false);
     const MySwal = withReactContent(Swal);
     const navigate = useNavigate();
 
     useEffect(()=>{
         if(token){
-            navigate(RouteURL.HOMEPAGE.PATH, {replace: true});
+            navigate('../', {replace: true});
         }
     },[token, navigate])
 
@@ -77,7 +78,8 @@ export default function LoginPage(){
                 ({data}) => {
                     setLoading(false);
                     setToken(data.data.token);
-                    window.location = RouteURL.HOMEPAGE.PATH;
+                    navigate('../', {replace: true});
+                    // window.location = RouteURL.HOMEPAGE.PATH;
                 }
             ).catch((error) => {
                 let errorRes = {};

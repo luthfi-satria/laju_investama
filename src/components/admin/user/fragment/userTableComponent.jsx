@@ -60,15 +60,17 @@ export default function UserTableComponent({
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);
         setFilter({...filter, limit: option, page: 1});
+        setTriggerSrc(true);
     }
 
     const changePage = (e) => {
         setFilter({...filter, page: Number(e)});
+        setTriggerSrc(true);
     }
 
     const rerouting = (id) => {
         const cryptoString = CryptoJS.DES.encrypt(JSON.stringify(id), hasHKey.toString(CryptoJS.enc.Utf8));
-        const LinkUrl =  RouteURL.USERS.PATH+'/'+ encodeURIComponent(cryptoString);
+        const LinkUrl =  encodeURIComponent(cryptoString);
         return LinkUrl;
     }
 

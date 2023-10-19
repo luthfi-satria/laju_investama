@@ -1,12 +1,12 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 import UserComponent from "./fragment/userComponent";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function AdminUser(){
-    const token = useOutletContext();
+export default function AdminUser({
+    token,
+    RouteURL
+}){
     const [usergroup, setUsergroup] = useState(false);
 
     useEffect(()=>{

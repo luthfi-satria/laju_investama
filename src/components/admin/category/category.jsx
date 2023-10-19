@@ -1,10 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext } from 'react-router-dom';
 import CategoryComponent from "./fragment/categoryComponent";
 
-export default function AdminCategory(){
-    const token = useOutletContext();
+export default function AdminCategory({
+    token,
+    RouteURL,
+}){
 
     return(
         <>
