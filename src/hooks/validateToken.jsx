@@ -6,7 +6,7 @@ export const ValidateToken = (token) => {
     const [validToken, setValidToken] = useState(false);
 
     const requestValidToken = useCallback(() => {
-        const APIURL = import.meta.env.VITE_APIURL+'/auth/validate-token';
+        const APIURL = import.meta.env.VITE_APIURL+'/api/auth/validate-token';
         return axios.get(APIURL, {
           headers: {
             Authorization: 'Bearer '+token

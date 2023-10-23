@@ -72,7 +72,7 @@ export default function LoginPage({
     }
 
     const authenticateUser = () =>{
-        const APIURL = import.meta.env.VITE_APIURL+'/auth/login';
+        const APIURL = import.meta.env.VITE_APIURL+'/api/auth/login';
         axios.post(APIURL, loginState)
             .then(
                 ({data}) => {
