@@ -205,6 +205,11 @@ export default function MyOrderComponent(){
                                     key={index}
                                     to={item.to}
                                     className="rounded-md px-4 py-2 text-ellipsis min-h-[70px] flex items-center justify-center max-[200px] bg-gray-200 mr-2 border-2 border-gray-500 hover:bg-gray-300"
+                                    onClick={() => {
+                                        setFilter({...filter, status: item.status})
+                                        setTitle(item.title)
+                                        setRefresh(true);
+                                    }}
                                 >
                                     <div className="text-gray-600 font-semibold">{item.title}</div>
                                 </Link>
