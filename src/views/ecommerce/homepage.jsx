@@ -17,7 +17,7 @@ export default function HomePage(){
         <>
             <div 
                 id="main_display"
-                className="mt-44 -ml-1 sm:mt-32 sm:ml-[15rem] lg:ml-[21rem] px-4 py-4 h-full min-h-screen"
+                className="mt-52 -ml-1 sm:mt-32 sm:ml-[15rem] lg:ml-[21rem] px-4 py-4 h-full min-h-screen"
             >
                 {/* ORDER SECTION */}
                 <div

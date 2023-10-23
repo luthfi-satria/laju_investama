@@ -199,7 +199,7 @@ export default function MyOrderComponent(){
                         </div>
 
                         {/* MENUS ON MOBILE */}
-                        <div className="w-full max-w-sm px-4 pb-4 overflow-auto flex items-start justify-between sm:hidden">
+                        <div className="w-full max-w-md px-4 pb-4 overflow-auto flex items-start justify-between sm:hidden">
                             {sideMenu.map((item, index) => (
                                 <Link
                                     key={index}

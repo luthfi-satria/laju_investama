@@ -1,7 +1,7 @@
 import NavbarComponent from "../../components/admin/navbarComponents";
 import NavbarLogo from '../../assets/images/logo/sdit.svg';
 import AsideComponent from "../../components/admin/asideComponent";
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { FetchAdminMenu } from "../../hooks/adminMenuHooks";

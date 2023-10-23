@@ -1,6 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RouteURL from "../../../constants/routesConstant";
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as CryptoJS from 'crypto-js';
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -8,9 +7,11 @@ import ShowSweetAlert from "../../../helpers/showAlert";
 import EditUserFormComponent from "./fragment/editUserFormComponent";
 import LoginAccountFORM from "./fragment/loginAccountForm";
 
-export default function AdminEditUser(){
+export default function AdminEditUser({
+    token,
+    RouteURL,
+}){
     const hashKey = import.meta.env.VITE_HASH_KEY;
-    const token = useOutletContext();
     const {id} = useParams();
 
     const decryptId = () => {
