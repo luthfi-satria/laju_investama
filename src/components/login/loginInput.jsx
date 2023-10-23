@@ -16,7 +16,7 @@ export default function LoginInput({
     return(
       <div className="flex -mx-3 text-left">
         <div className="w-full px-3 mb-3">
-          <label htmlFor={labelFor} className="text-xs font-semibold px-1">
+          <label htmlFor={labelFor} className="text-xs font-semibold px-1 capitalize">
             {labelText}
           </label>
           <div className="flex">
@@ -32,7 +32,7 @@ export default function LoginInput({
               placeholder={placeholder}
             />
           </div>
-            <div className="flex text-white tex-xs font-semibold px-1">{errorMessage}</div>
+            <div className="flex text-red-400 text-xs font-semibold px-1">{errorMessage}</div>
         </div>
       </div>
     )

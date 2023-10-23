@@ -12,6 +12,7 @@ import MyCart from '../components/ecommerce/cart/myCart';
 import MyOrderComponent from '../components/ecommerce/order/orderComponent';
 import PembayaranComponent from '../components/ecommerce/pembayaran/pembayaran';
 import PengaturanProfile from '../components/ecommerce/pengaturan/pengaturan';
+import RegistrationPage from '../views/registration';
 
 export default function AppRouter(){
     const [token, setToken] = useLocalStorage('token',null);
@@ -55,6 +56,9 @@ export default function AppRouter(){
                                 RouteURL={RouteURL}
                             />}
                         />
+                        <Route path={RouteURL.REGISTER.PATH} element={
+                            <RegistrationPage/>
+                        } />
                     </Routes>
                 </BrowserRouter>
             </div>
