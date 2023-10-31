@@ -77,7 +77,7 @@ export default function InvestorTableComponent({
     return(
         <>
         <div className='overflow-auto'>
-            <div className="w-full mb-12 px-4">
+            <div className="w-full mb-12">
                 <InvestorFilterComponent 
                     filter={filter}
                     setFilter={setFilter}

@@ -19,6 +19,7 @@ export default function AdminRouter({
     const AdminInvestor = lazy(() => import('../components/admin/investor/investor'));
     const AdminSettings = lazy(() => import("../components/admin/setting/setting"));
     const AdminTransaksi = lazy(() => import('../components/admin/transaksi/transaksi'));
+    const KreditKendaraan = lazy(() => import('../components/admin/kredit/kredit'));    
     return (
         <>
         <Suspense>
@@ -94,6 +95,13 @@ export default function AdminRouter({
                 />}></Route>
 
                 <Route path={RouteURL.TRANSAKSI.PATH} element={<AdminTransaksi 
+                    token={token}
+                    RouteURL={RouteURL}
+                    profile={profile}
+                    setProfile={setProfile}
+                />}></Route>
+
+                <Route path={RouteURL.KREDIT.PATH} element={<KreditKendaraan 
                     token={token}
                     RouteURL={RouteURL}
                     profile={profile}

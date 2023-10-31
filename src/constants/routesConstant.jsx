@@ -84,7 +84,7 @@ const RouteURL = {
             AUTHORIZE: true,
         },
         KREDIT: {
-            PATH: 'kredit',
+            PATH: 'kredit/*',
             HELMET: {
                 title: 'Kelola Pengajuan Kredit'
             },

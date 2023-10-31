@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CurrencyInput from "react-currency-input-field";
 
 export default function InvestorFormComponent({
     formData,
@@ -88,21 +89,54 @@ export default function InvestorFormComponent({
                     </div>
                 </div>
 
+                {/* NO INVESTASI */}
+                <div className="grid sm:grid-cols-3 gap-2 mb-2">
+                    <div className="">
+                        <label className='text-sm sm:text-right' htmlFor='inp_no_inv'>No Investasi</label>
+                    </div>
+                    <div className="col-span-2">
+                        <input 
+                            type="text" 
+                            id="inp_no_inv"
+                            name="nomor_investasi" 
+                            className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
+                            placeholder="Nomor investasi..."
+                            value={InitializeForm('no_investasi')}
+                            onChange={(e) => {
+                                    handleChange({...formData, no_investasi: Number(e.target.value)})
+                                }
+                            }
+                            autoComplete="off"
+                        />
+                        {error?.no_investasi !='' && (
+                            <div className="text-red-500 text-xs w-full first-letter:uppercase">
+                                {error?.no_investasi}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 {/* NILAI */}
                 <div className="grid sm:grid-cols-3 gap-2 mb-2">
                     <div className="">
                         <label className='text-sm sm:text-right' htmlFor='inp_nilai'>Nilai</label>
                     </div>
                     <div className="col-span-2">
-                        <input 
-                            type="text" 
+                        <CurrencyInput 
                             id="inp_nilai"
                             name="nilai" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Nominal investasi..."
                             value={InitializeForm('nilai')}
-                            onChange={(e) => {
-                                    handleChange({...formData, nilai: Number(e.target.value)})
+                            decimalsLimit={0}
+                            groupSeparator="."
+                            decimalSeparator=","
+                            intlConfig={{
+                                locale: 'id-ID',
+                                currency: 'IDR',
+                            }}
+                            onValueChange={(value) => {
+                                    handleChange({...formData, nilai: Number(value)})
                                 }
                             }
                             autoComplete="off"

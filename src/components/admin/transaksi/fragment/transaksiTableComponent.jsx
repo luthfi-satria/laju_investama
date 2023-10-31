@@ -138,7 +138,7 @@ export default function TransaksiTableComponent({
     return (
         <>
             <div>
-                <div className="text-right mb-4 mr-4">
+                <div className="text-right mb-4">
                     <button 
                         className="border-2 border-white uppercase px-2 py-2 rounded-md text-white hover:bg-teal-900 leading-4"
                         onClick={()=>printReport()}

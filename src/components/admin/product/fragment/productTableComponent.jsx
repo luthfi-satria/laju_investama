@@ -86,7 +86,7 @@ export default function ProductTableComponent({
     return(
         <>
         <div className='overflow-auto'>
-            <div className="w-full mb-12 px-4">
+            <div className="w-full mb-12">
                 <ProductFilterComponent 
                     filter={filter}
                     setFilter={setFilter}

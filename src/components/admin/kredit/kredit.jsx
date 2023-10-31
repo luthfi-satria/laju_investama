@@ -2,9 +2,10 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import ShowSweetAlert from "../../../helpers/showAlert";
-import TransaksiTableComponent from "./fragment/transaksiTableComponent";
 import { Route, Routes } from "react-router-dom";
-import TransaksiDetailComponent from "./fragment/transaksiDetailComponent";
+import KreditTableComponent from "./fragment/kreditTableComponent";
+import KreditDetailComponent from './fragment/kreditDetailComponent';
+import KreditFormComponent from "./fragment/kreditFormComponent";
 
 export default function AdminTransaksi({
     token,
@@ -46,14 +47,14 @@ export default function AdminTransaksi({
         <>
             <HelmetProvider>
                 <Helmet>
-                    <title>{RouteURL.TRANSAKSI.HELMET.title}</title>
+                    <title>{RouteURL.KREDIT.HELMET.title}</title>
                 </Helmet>
             </HelmetProvider>
             <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                 <div className="flex flex-wrap items-center">
                     <div className="relative w-full max-w-full flex-grow flex-1">
                         <h3 className="uppercase text-blueGray-400 mb-1 text-2xl text-white font-semibold py-2 border-b border-white">
-                            {RouteURL.TRANSAKSI.HELMET.title}
+                            {RouteURL.KREDIT.HELMET.title}
                         </h3>
                     </div>
                 </div>
@@ -64,24 +65,38 @@ export default function AdminTransaksi({
                     </div>
                     )}
                     <div className="grid-1 text-sm">
-                        <div className='overflow-auto py-4'>
+                        <div className='overflow-auto'>
                             <div className="w-full mb-12">
                                 <Routes>
                                     <Route path='' element={
-                                        <TransaksiTableComponent 
+                                        <KreditTableComponent 
                                             token={token} 
                                             axiosRequest={axiosRequest}
                                             errorHandler={errorHandler}
                                             errResponseHandler={errResponseHandler}                        
                                         />
-                                    }></Route>
-                                    <Route path="detail/*" element={
-                                        <TransaksiDetailComponent
+                                    }/>
+                                    <Route path="baru" element={
+                                        <KreditFormComponent
                                             axiosRequest={axiosRequest}
                                             errorHandler={errorHandler}
                                             errResponseHandler={errResponseHandler}
                                         />
-                                    }></Route>
+                                    }/>
+                                    <Route path="detail/*" element={
+                                        <KreditDetailComponent
+                                            axiosRequest={axiosRequest}
+                                            errorHandler={errorHandler}
+                                            errResponseHandler={errResponseHandler}
+                                        />
+                                    }/>
+                                    <Route path="edit/*" element={
+                                        <KreditFormComponent
+                                            axiosRequest={axiosRequest}
+                                            errorHandler={errorHandler}
+                                            errResponseHandler={errResponseHandler}
+                                        />
+                                    }/>
                                 </Routes>
                             </div>
                         </div>

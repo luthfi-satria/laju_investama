@@ -73,7 +73,7 @@ export default function CategoryTableComponent({
     return(
         <>
         <div className='overflow-auto'>
-            <div className="w-full mb-12 px-4">
+            <div className="w-full mb-12">
                 <CategoryFilterComponent 
                     filter={filter}
                     setFilter={setFilter}

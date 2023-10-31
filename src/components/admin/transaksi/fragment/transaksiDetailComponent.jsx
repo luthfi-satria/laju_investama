@@ -60,6 +60,12 @@ export default function TransaksiDetailComponent({
                                     <span className="font-semibold">{items?.product?.name}</span>
                                     <span className="float-right text-gray-400">{items?.product?.description || 'tidak ada deskripsi'}</span>
                                     <p className="text-lg font-bold">{IntlCurrency(items?.harga)}</p>
+                                    <p className="font-semibold text-gray-400">
+                                        Qty: 
+                                        <span className="font-normal text-lg text-gray-700 ml-2">
+                                            {items?.qty}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         ))}

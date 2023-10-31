@@ -7,8 +7,8 @@ import ShowSweetAlert from "../../../helpers/showAlert";
 export default function PembayaranComponent() {
     const {
         AxiosRequest,
+        profile,
     } = useOutletContext();
-    
     const location = useLocation();
     const navigate = useNavigate();
     const [kodeTransaksi, setKodeTransaksi] = useState(location.pathname.split('/')[2]);
@@ -83,7 +83,7 @@ export default function PembayaranComponent() {
                         className="mt-8 space-y-3 rounded-lg px-2 py-4 border sm:px-6 max-h-[50vh] overflow-auto"
                     >
                         {/* ITEM DETAILS */}
-                        {orderDetail && orderDetail?.details.map((items, index) => (
+                        {orderDetail && orderDetail?.details?.map((items, index) => (
                             <div 
                                 key={index}
                                 className="flex flex-row rounded-lg bg-white">
@@ -95,7 +95,16 @@ export default function PembayaranComponent() {
                                 <div className="flex w-full flex-col px-4 py-4">
                                     <span className="font-semibold">{items?.product?.name}</span>
                                     <span className="float-right text-gray-400">{items?.product?.description || 'tidak ada deskripsi'}</span>
-                                    <p className="text-lg font-bold">{IntlCurrency(items?.harga)}</p>
+                                    <p className="text-lg font-bold">
+                                        {IntlCurrency(items?.harga)}
+                                    </p>
+                                    <p className="font-semibold text-gray-400">
+                                        Qty: 
+                                        <span className="font-normal text-lg text-gray-700 ml-2">
+                                            {items?.qty}
+                                        </span>
+                                    </p>
+
                                 </div>
                             </div>
                         ))}
@@ -131,13 +140,15 @@ export default function PembayaranComponent() {
                         >
                             <option value={'CASH'}>TUNAI</option>
                             <option value={'TRANSFER'}>TRANSFER</option>
-                            <option value={'SALARY DEDUCTION'}>POTONG GAJI</option>
+                            {profile?.level != 'public' && (
+                                <option value={'SALARY DEDUCTION'}>POTONG GAJI</option>
+                            )}
                         </select>
                         {pembayaran.payment_method == 'CASH' && (
                             <p className="text-gray-500 mt-2 px-4">Silahkan klik <b>selesaikan pembayaran</b> dan lakukan pembayaran langsung melalui staff yang bertugas</p>
                         )}
 
-                        {pembayaran.payment_method == 'SALARY DEDUCTION' && (
+                        {pembayaran.payment_method == 'SALARY DEDUCTION' && profile?.level != 'public' (
                             <p className="text-gray-500 mt-2 px-4">Silahkan klik <b>selesaikan pembayaran</b> dan pembayaran akan langsung memotong gaji bulanan</p>
                         )}
 

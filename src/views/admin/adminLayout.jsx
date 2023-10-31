@@ -1,7 +1,7 @@
 import NavbarComponent from "../../components/admin/navbarComponents";
 import NavbarLogo from '../../assets/images/logo/sdit.svg';
 import AsideComponent from "../../components/admin/asideComponent";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { FetchAdminMenu } from "../../hooks/adminMenuHooks";
@@ -9,12 +9,17 @@ import AdminRouter from "../../routes/adminRouter";
 
 export default function AdminLayout({token, profile, RouteURL, setProfile}){
     const navigate = useNavigate();
-
+    const currLocation = useLocation().pathname.split('/');
+    
     useEffect(()=>{
         if(!token && !profile){
-            navigate(RouteURL.LOGIN.PATH, {replace: true})
+            let path = '';
+            for(let i = 0; i < (currLocation.length - 2); i++){
+                path += '../';
+            }
+            navigate(path+RouteURL.LOGIN.PATH, {replace: true})
         }
-    });
+    },[token, profile, navigate, RouteURL, currLocation]);
 
     const adminMenu = FetchAdminMenu(token);
 

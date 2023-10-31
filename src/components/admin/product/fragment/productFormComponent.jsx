@@ -1,3 +1,4 @@
+import CurrencyInput from 'react-currency-input-field';
 import DEFAULTIMG from '../../../../assets/images/defaultImg.svg';
 
 export default function ProductFormComponent({
@@ -147,14 +148,20 @@ export default function ProductFormComponent({
                         <label className='text-sm sm:text-right' htmlFor='inp-harga_beli'>Harga Beli</label>
                     </div>
                     <div className="col-span-2">
-                        <input 
-                            type="number" 
+                        <CurrencyInput 
                             id="inp-harga_beli"
                             name="harga_beli" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Harga Beli..."
                             value={InitializeForm('harga_beli')}
-                            onChange={(e) => handleChange({...formData, harga_beli: Number(e.target.value)})}
+                            decimalsLimit={0}
+                            groupSeparator="."
+                            decimalSeparator=","
+                            intlConfig={{
+                                locale: 'id-ID',
+                                currency: 'IDR',
+                            }}
+                            onValueChange={(value) => handleChange({...formData, harga_beli: Number(value)})}
                             autoComplete="off"
                         />
                         {error?.harga_beli !='' && (
@@ -171,14 +178,20 @@ export default function ProductFormComponent({
                         <label className='text-sm sm:text-right' htmlFor='inp-harga_jual'>Harga Jual</label>
                     </div>
                     <div className="col-span-2">
-                        <input 
-                            type="number" 
+                        <CurrencyInput 
                             id="inp-harga_jual"
                             name="harga_jual" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Harga Jual..."
                             value={InitializeForm('harga_jual')}
-                            onChange={(e) => handleChange({...formData, harga_jual: Number(e.target.value)})}
+                            decimalsLimit={0}
+                            groupSeparator="."
+                            decimalSeparator=","
+                            intlConfig={{
+                                locale: 'id-ID',
+                                currency: 'IDR',
+                            }}
+                            onValueChange={(value) => handleChange({...formData, harga_jual: Number(value)})}
                             autoComplete="off"
                         />
                         {error?.harga_jual !='' && (
@@ -195,14 +208,16 @@ export default function ProductFormComponent({
                         <label className='text-sm sm:text-right' htmlFor='inp-stok'>Stok Tersedia</label>
                     </div>
                     <div className="col-span-2">
-                        <input 
-                            type="number" 
+                        <CurrencyInput 
                             id="inp-stok"
                             name="stok" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Stok tersedia..."
                             value={InitializeForm('stok') || 1}
-                            onChange={(e) => handleChange({...formData, stok: Number(e.target.value)})}
+                            decimalsLimit={0}
+                            groupSeparator="."
+                            decimalSeparator="," 
+                            onValueChange={(value) => handleChange({...formData, stok: Number(value)})}
                             autoComplete="off"
                         />
                         {error?.stok !='' && (
@@ -219,14 +234,16 @@ export default function ProductFormComponent({
                         <label className='text-sm sm:text-right' htmlFor='inp-min_stok'>Minimal Stok</label>
                     </div>
                     <div className="col-span-2">
-                        <input 
-                            type="number" 
+                        <CurrencyInput 
                             id="inp-min_stok"
                             name="min_stok" 
                             className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
                             placeholder="Minimal stok yang harus disimpan..."
                             value={InitializeForm('min_stok') || 1}
-                            onChange={(e) => handleChange({...formData, min_stok: Number(e.target.value)})}
+                            decimalsLimit={0}
+                            groupSeparator="."
+                            decimalSeparator=","
+                            onValueChange={(value) => handleChange({...formData, min_stok: Number(value)})}
                             autoComplete="off"
                         />
                         {error?.stok !='' && (
