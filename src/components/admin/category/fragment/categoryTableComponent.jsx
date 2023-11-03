@@ -139,20 +139,6 @@ export default function CategoryTableComponent({
                                     </tr>
                                 )}
                             </tbody>
-                            <tfoot>
-                                <tr className='bg-teal-800 border-t border-white'>
-                                    <td className='px-4' colSpan={8}>
-                                    <Pagination
-                                        loading={isLoading}
-                                        page={filter.page}
-                                        limit={Number(filter.limit)}
-                                        setPage={changePage}
-                                        setPerPage={changeLimitOption}
-                                        maxData={data?.total || 0}
-                                        />
-                                    </td>
-                                </tr>
-                            </tfoot>
                         </table>
                         {isLoading && (
                             <div className='absolute z-10 flex items-center justify-center top-0 w-full bg-black opacity-70 h-full'>
@@ -160,6 +146,14 @@ export default function CategoryTableComponent({
                             </div>
                         )}
                     </div>
+                    <Pagination
+                    loading={isLoading}
+                    page={filter.page}
+                    limit={Number(filter.limit)}
+                    setPage={changePage}
+                    setPerPage={changeLimitOption}
+                    maxData={data?.total || 0}
+                    />
                 </div>
             </div>
         </div>

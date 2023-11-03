@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import ReportComponent from "../components/admin/report/reportComponent";
 
 export default function AdminRouter({
     RouteURL,
@@ -20,7 +21,8 @@ export default function AdminRouter({
     const AdminSettings = lazy(() => import("../components/admin/setting/setting"));
     const AdminTransaksi = lazy(() => import('../components/admin/transaksi/transaksi'));
     const KreditKendaraan = lazy(() => import('../components/admin/kredit/kredit'));
-    const HistoryKredit = lazy(() => import('../components/admin/kredit/history_kredit'));    
+    const HistoryKredit = lazy(() => import('../components/admin/kredit/history_kredit'));  
+    const AdminReport = lazy(() => import('../components/admin/report/reportComponent'));  
     return (
         <>
         <Suspense>
@@ -110,6 +112,13 @@ export default function AdminRouter({
                 />}></Route>
 
                 <Route path={'/kredit_history/*'} element={<HistoryKredit 
+                    token={token}
+                    RouteURL={RouteURL}
+                    profile={profile}
+                    setProfile={setProfile}
+                />}></Route>
+
+                <Route path={'/report/*'} element={<ReportComponent 
                     token={token}
                     RouteURL={RouteURL}
                     profile={profile}

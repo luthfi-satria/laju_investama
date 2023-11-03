@@ -132,7 +132,7 @@ export default function UserComponent({token, usergroup}){
                 </div>
             )}
             <div className="grid-1 text-sm">
-                <div className="text-right mb-4 mr-4">
+                <div className="text-right mb-4">
                     <button 
                         className="mr-2 border-2 border-white uppercase px-2 py-2 rounded-md text-white hover:bg-teal-900 leading-4"
                         onClick={()=>addNewFunc('Tambah User')}

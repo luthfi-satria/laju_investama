@@ -63,12 +63,6 @@ export default function UsergroupComponent({token}){
         setSubmmited(true);
     }
 
-    useEffect(()=>{
-        if(isSubmitted){
-            axiosSubmit();
-        }
-    }, [isSubmitted, axiosSubmit]);
-
     const axiosSubmit = useCallback(() => {
         axios({
             method: formMethod.method,
@@ -114,6 +108,13 @@ export default function UsergroupComponent({token}){
             // setShowModal(false);
         });
     },[formMethod, token, assignData]);
+
+    useEffect(()=>{
+        if(isSubmitted){
+            axiosSubmit();
+        }
+    }, [isSubmitted, axiosSubmit]);
+
 
     return(
         <>

@@ -77,8 +77,6 @@ export default function DashboardComponent({
         }
     },[statistic, axiosRequest, errorHandler]);
 
-    console.log('STATISTIC', statistic);
-
     const handleCounter = (items) => {
         let total = 0;
         const desc = [];
@@ -101,7 +99,7 @@ export default function DashboardComponent({
 
             if(items.key == 'product'){
                 const stats = statistic?.product?.stokHabis;
-                desc.push(<div key={`product_stok`} className="text-sm text-grey-400 font-bold">Stok Habis:</div>)
+                desc.push(<div key={`product_stok`} className="text-sm text-grey-400 font-bold">Stok habis</div>)
                 if(stats.length > 0){
                     let i = 1;
                     for(const el of stats){
@@ -152,7 +150,7 @@ export default function DashboardComponent({
         }else if(items.key == 'kredit'){
             total = statistic?.kredit?.active_outcome;
             const stats = statistic?.kredit?.stats;
-            desc.push(<div key={`kredit`} className="text-sm text-grey-400 font-bold">Kredit terjadi</div>)
+            desc.push(<div key={`kredit`} className="text-sm text-grey-400 font-bold">Kredit aktif</div>)
             if(stats?.length > 0){
                 let i = 1;
                 for(const el of stats){
@@ -172,10 +170,11 @@ export default function DashboardComponent({
             }
         }else if(items.key == 'tagihan'){
             let stats = statistic?.tagihan?.stats;
-            desc.push(<div key={`tagihan`} className="text-sm text-grey-400 font-bold">tagihan masuk (7 Hari)</div>)
+            desc.push(<div key={`tagihan`} className="text-sm text-grey-400 font-bold">Tagihan masuk 7 hari terakhir</div>)
             if(stats?.length > 0){
                 let i = 1;
                 for(const el of stats){
+                    total += el?.total_bayar_in_week;
                     desc.push(
                     <div key={`kredit${i}`} className="grid grid-cols-3 gap-2">
                         <div 

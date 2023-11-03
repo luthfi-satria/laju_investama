@@ -1,7 +1,6 @@
 import {useMemo} from 'react';
 
 const Pagination = ({
-    loading, 
     limit, 
     setPerPage, 
     page, 
@@ -29,10 +28,10 @@ const Pagination = ({
   }, [pageNum, page]);
 
   return (
-    <div className='block sm:flex items-center justify-between px-4 py-3 sm:px-6'>
+    <div className='block sm:flex items-center justify-between px-4 py-3 border-t-2 border-white'>
       <div className='mb-4 w-md-auto w-100 align-items-center'>
-        <div className="block sm:flex sm:flex-1 sm:items-center sm:justify-between">
-            <div className='position-relative mr-2'>
+        <div className="flex items-center justify-stretch">
+            <div className='relative mr-2'>
                 <select
                     id="opt_pagination"
                     className='block sm:w-full rounded-md border-0 px-1.5 py-1 text-gray-500 sm:max-w-xs sm:text-sm sm:leading-6'
@@ -49,16 +48,16 @@ const Pagination = ({
             </div>
             <div className=''>
                 <p className='text-sm'>
-                    Menampilkan 
-                    <span className='px-2'>
+                    Show 
+                    <span className='px-[4px]'>
                         {(page - 1) * limit + 1}
                     </span>
-                    /
-                    <span className='px-2'>
+                    ~
+                    <span className='px-[4px]'>
                         {Math.min(maxData, (page) * limit + 1)}{' '}
                     </span>
                     dari
-                    <span className='px-2'>{maxData} entri</span>
+                    <span className='px-[4px]'>{maxData} data</span>
                 </p>
             </div>
         </div>
@@ -93,7 +92,7 @@ const Pagination = ({
                         x === undefined ? (
                         <button 
                             disabled={true} 
-                            className='page-item disabled cursor-not-allowed' 
+                            className='px-4 py-2 ring-1 ring-inset ring-gray-300 page-item disabled cursor-not-allowed' 
                             key={`${i}-dot`}
                         >
                             ...

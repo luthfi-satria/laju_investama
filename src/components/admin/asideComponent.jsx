@@ -2,6 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 export default function AsideComponent({AppMenu}){
     library.add(fas);
 
@@ -16,13 +17,22 @@ export default function AsideComponent({AppMenu}){
         for(const a of items){
             if(a && a.menus.parent_id == parent){
                 const child = asideTree(items, a.menus.id);
+                const linkProp = {
+                    key: a.menus.name, 
+                    href: a.menus.api_url,
+                    title: a.menus.label,
+                    onClick: () => setSubMenu('child_'+a.menus.name),
+                };
+                if(child != ''){
+                    linkProp.href = '#';
+                }else{
+                    delete linkProp.onClick;
+                }
                 result.push(
                     <li key={a.menus.id} className='mt-2 flex items-center px-4 duration-300 cursor-pointer hover:bg-teal-600'>
                         <a 
-                            key={a.menus.name}
-                            href={child == '' ? a.menus.api_url: '#'}
+                            {...linkProp}
                             className="flex w-full py-2 items-center text-xs"
-                            title={a.menus.label}
                         >
                             {issetIcon(a.menus.icon)}
                             <span className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'>
@@ -71,6 +81,21 @@ export default function AsideComponent({AppMenu}){
                     <hr className="mt-7 pt-2 lg:min-w-full"/>
                     <h6 className="lg:min-w-full text-white text-sm uppercase font-bold block px-4 pt-1 pb-4 no-underline">Admin Dashboard</h6>
                     <ul className="sidebar lg:left-0 w-full overflow-y-auto text-white">
+                        <li className='mt-2 flex items-center px-4 duration-300 cursor-pointer hover:bg-teal-600'>
+                            <Link
+                                to={''}
+                                className='flex w-full py-2 items-center text-xs'
+                                title='dashboard'
+                                replace={true}
+                            >
+                                <FontAwesomeIcon icon={'home'} className='text-center w-5 text-sm opacity-75' />
+                                <span
+                                    className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'
+                                >
+                                    Dashboard
+                                </span>
+                            </Link>
+                        </li>
                         {AppMenu && asideTree(AppMenu)}
                     </ul>
                 </div>

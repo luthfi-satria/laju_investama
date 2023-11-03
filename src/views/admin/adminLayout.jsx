@@ -33,13 +33,13 @@ export default function AdminLayout({token, profile, RouteURL, setProfile}){
                 </Helmet>
             </HelmetProvider>
             <AsideComponent AppMenu={AppMenu}/>
-            <div className="relative bg-gradient-to-br bg-teal-600">
+            <div className="relative">
                 <NavbarComponent
                     navbarImg={NavbarLogo}
                     appTitle={'Laju Investama'}
                     appMenu={AppMenu}
                 />
-                <div className="relative lg:pt-24 pl-2 pb-32 pt-12">
+                <div className="relative lg:pt-24 pl-2 pb-32 pt-12 bg-gradient-to-br bg-teal-600 min-h-[689px]">
                     <div className="lg:ml-64 sm:ml-2">
                         {/* <Outlet context={token}/> */}
                         <AdminRouter

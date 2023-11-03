@@ -3,6 +3,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import NavbarConstant from "../../constants/admin/navbarConstant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 
 function classNames(...classes) {
@@ -23,13 +24,25 @@ export default function NavbarComponent({
         for(const a of items){
             if(a && a.menus.parent_id == parent){
                 const child = asideTree(items, a.menus.id);
+                const linkProp = {
+                    key: a.menus.name, 
+                    href: a.menus.api_url,
+                    title: a.menus.label,
+                    onClick: () => setSubMenu('child_'+a.menus.name),
+                };
+                if(child != ''){
+                    linkProp.href = '#';
+                }else{
+                    delete linkProp.onClick;
+                }
                 result.push(
-                    <li key={a.menus.id} className='mt-2 flex items-center px-4 duration-300 cursor-pointer hover:bg-teal-600'>
+                    <li 
+                        key={a.menus.id} 
+                        className='mt-2 flex items-center px-4 duration-300 cursor-pointer hover:bg-teal-600'
+                    >
                         <a 
-                            key={a.menus.name}
-                            href={child == '' ? a.menus.api_url: '#'}
+                            {...linkProp}
                             className="flex w-full py-2 items-center text-xs"
-                            title={a.menus.label}
                         >
                             {issetIcon(a.menus.icon)}
                             <span className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'>
@@ -150,22 +163,24 @@ export default function NavbarComponent({
 
                 <Disclosure.Panel className="lg:hidden">
                     <div className="space-y-1 px-2 pb-3 pt-2">
-                    {appMenu && asideTree(appMenu)}
-                    {/* {appMenu && appMenu.map((item) => (
-                        item &&
-                        <Disclosure.Button
-                        key={item.menus.id}
-                        as="a"
-                        href={item.menus.api_url}
-                        className={classNames(
-                            'text-gray-300 hover:bg-gray-700 hover:text-white',
-                            'block rounded-md px-3 py-2 text-base font-medium'
-                        )}
-                        aria-current='page'
-                        >
-                        {item.menus.label}
-                        </Disclosure.Button>
-                    ))} */}
+                        <ul className="border-t-2 border-white">
+                            <li className='mt-2 flex items-center px-4 duration-300 cursor-pointer hover:bg-teal-600'>
+                                <Link
+                                    to={''}
+                                    className='flex w-full py-2 items-center text-xs'
+                                    title='dashboard'
+                                    replace={true}
+                                >
+                                    <FontAwesomeIcon icon={'home'} className='text-center w-5 text-sm opacity-75' />
+                                    <span
+                                        className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'
+                                    >
+                                        Dashboard
+                                    </span>
+                                </Link>
+                            </li>
+                            {appMenu && asideTree(appMenu)}
+                        </ul>
                     </div>
                 </Disclosure.Panel>
                 </>

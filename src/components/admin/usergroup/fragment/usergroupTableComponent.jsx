@@ -67,7 +67,7 @@ export default function UsergroupTableComponent({
     return(
         <>
         <div className='overflow-auto'>
-            <div className="w-full mb-12 px-4">
+            <div className="w-full mb-12">
                 <div className='relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-teal-950 text-white'>
                     <div className="block w-full overflow-x-auto">
                         {/* FILTER */}
@@ -179,22 +179,16 @@ export default function UsergroupTableComponent({
                                     </tr>
                                 )}
                             </tbody>
-                            <tfoot>
-                                <tr className='bg-teal-800 border-t border-white'>
-                                    <td className='px-4' colSpan={4}>
-                                    <Pagination
-                                        loading={isLoading}
-                                        page={filter.page}
-                                        limit={Number(filter.limit)}
-                                        setPage={changePage}
-                                        setPerPage={changeLimitOption}
-                                        maxData={data?.total || 0}
-                                        />
-                                    </td>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
+                    <Pagination
+                    loading={isLoading}
+                    page={filter.page}
+                    limit={Number(filter.limit)}
+                    setPage={changePage}
+                    setPerPage={changeLimitOption}
+                    maxData={data?.total || 0}
+                    />
                 </div>
             </div>
         </div>
