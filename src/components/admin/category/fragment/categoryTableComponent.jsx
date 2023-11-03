@@ -11,6 +11,7 @@ export default function CategoryTableComponent({
     editTable,
     restoration,
     successRes=false,
+    setSuccessRes,
     filter,
     setFilter
 }){
@@ -44,6 +45,7 @@ export default function CategoryTableComponent({
                     setTimeout(()=>{
                         setIsLoading(false);
                         setTriggerFind(false);
+                        setSuccessRes(false);
                     }, 1000);
                 });
             }
@@ -52,7 +54,7 @@ export default function CategoryTableComponent({
                 apiErrorHandling(err.response.data.message[0].constraint[0]);
             }
         }
-    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerFind]);
+    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerFind, setSuccessRes]);
 
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);

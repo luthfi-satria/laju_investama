@@ -67,7 +67,7 @@ export default function UsergroupComponent({token}){
         if(isSubmitted){
             axiosSubmit();
         }
-    }, [isSubmitted]);
+    }, [isSubmitted, axiosSubmit]);
 
     const axiosSubmit = useCallback(() => {
         axios({
@@ -138,6 +138,7 @@ export default function UsergroupComponent({token}){
                     editTable={(data) => updateFunc(data)}
                     deleteTable={(data) => deleteFunc(data)} 
                     successRes={successRes}
+                    setSuccessRes={setSuccessRes}
                 />
 
                 {showModal && (

@@ -1,6 +1,6 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import NavbarConstant from "../../constants/admin/navbarConstant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -13,7 +13,62 @@ export default function NavbarComponent({
     appTitle,
     appMenu
 }){
+    const [subMenu, setSubMenu] = useState('');
     const navbarFields = NavbarConstant;
+    const issetIcon = (icon) => {
+        return icon != null ? (<FontAwesomeIcon icon={icon} className='text-center w-5 text-sm opacity-75'/>): '';
+    }
+    function asideTree(items, parent = null){
+        const result = [];
+        for(const a of items){
+            if(a && a.menus.parent_id == parent){
+                const child = asideTree(items, a.menus.id);
+                result.push(
+                    <li key={a.menus.id} className='mt-2 flex items-center px-4 duration-300 cursor-pointer hover:bg-teal-600'>
+                        <a 
+                            key={a.menus.name}
+                            href={child == '' ? a.menus.api_url: '#'}
+                            className="flex w-full py-2 items-center text-xs"
+                            title={a.menus.label}
+                        >
+                            {issetIcon(a.menus.icon)}
+                            <span className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'>
+                                {a.menus.label}
+                            </span>
+                        </a>
+                        {child != '' && (
+                            <span className='text-sm w-5 text-right py-2' onClick={()=>setSubMenu('child_'+a.menus.name)}>
+                                {issetIcon(subMenu == 'child_'+a.menus.name ? 'chevron-down' : 'chevron-right')}
+                            </span>
+                        )}
+                    </li>
+                );
+
+                {child != '' && result.push(
+                    <ul 
+                        key={'child_'+a.menus.name} 
+                        className={`text-sm mt-2 w-full pl-10 ${subMenu == 'child_'+a.menus.name ? '': 'hidden'}`}>
+                            <li key={a.menus.id} className='mt-2 flex items-center px-4 duration-300 cursor-pointer hover:bg-teal-600'>
+                                <a 
+                                key={a.menus.name}
+                                href={a.menus.api_url}
+                                className="flex w-3/4 py-2 items-center text-xs"
+                                title={a.menus.label}
+                                >
+                                    {issetIcon(a.menus.icon)}
+                                    <span className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'>
+                                        {a.menus.label}
+                                    </span>
+                                </a>
+                            </li>
+                        {child}
+                    </ul>
+                )}
+
+            }
+        }
+        return result;
+    }
     return(
         <>
             {/* navbar component */}
@@ -95,7 +150,8 @@ export default function NavbarComponent({
 
                 <Disclosure.Panel className="lg:hidden">
                     <div className="space-y-1 px-2 pb-3 pt-2">
-                    {appMenu && appMenu.map((item) => (
+                    {appMenu && asideTree(appMenu)}
+                    {/* {appMenu && appMenu.map((item) => (
                         item &&
                         <Disclosure.Button
                         key={item.menus.id}
@@ -109,7 +165,7 @@ export default function NavbarComponent({
                         >
                         {item.menus.label}
                         </Disclosure.Button>
-                    ))}
+                    ))} */}
                     </div>
                 </Disclosure.Panel>
                 </>

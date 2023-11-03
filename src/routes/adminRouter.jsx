@@ -19,7 +19,8 @@ export default function AdminRouter({
     const AdminInvestor = lazy(() => import('../components/admin/investor/investor'));
     const AdminSettings = lazy(() => import("../components/admin/setting/setting"));
     const AdminTransaksi = lazy(() => import('../components/admin/transaksi/transaksi'));
-    const KreditKendaraan = lazy(() => import('../components/admin/kredit/kredit'));    
+    const KreditKendaraan = lazy(() => import('../components/admin/kredit/kredit'));
+    const HistoryKredit = lazy(() => import('../components/admin/kredit/history_kredit'));    
     return (
         <>
         <Suspense>
@@ -102,6 +103,13 @@ export default function AdminRouter({
                 />}></Route>
 
                 <Route path={RouteURL.KREDIT.PATH} element={<KreditKendaraan 
+                    token={token}
+                    RouteURL={RouteURL}
+                    profile={profile}
+                    setProfile={setProfile}
+                />}></Route>
+
+                <Route path={'/kredit_history/*'} element={<HistoryKredit 
                     token={token}
                     RouteURL={RouteURL}
                     profile={profile}

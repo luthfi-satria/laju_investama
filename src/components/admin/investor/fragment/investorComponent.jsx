@@ -117,7 +117,16 @@ export default function InvestorComponent({
         const insertData = {...initialData, ...assignData};
         delete insertData.nama;
         axiosRequest('post', 'api/investor', {}, insertData)
-        .then(({data}) => responseHandler(data))
+        .then(({data}) => {
+            console.log(data);
+            if(data.statusCode == 406){
+                ShowSweetAlert({
+                    title: 'Info',
+                    text: data?.error,
+                });
+            }
+            responseHandler(data);
+        })
         .catch((err)=>errResponseHandler(err))
         .finally(()=>{
             setTimeout(() => {

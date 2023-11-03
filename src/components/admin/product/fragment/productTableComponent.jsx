@@ -12,6 +12,7 @@ export default function ProductTableComponent({
     editTable,
     restoration,
     successRes=false,
+    setSuccessRes,
     filter,
     setFilter,
     category,
@@ -47,6 +48,7 @@ export default function ProductTableComponent({
                     setTimeout(()=>{
                         setIsLoading(false);
                         setTriggerFind(false);
+                        setSuccessRes(false);
                     }, 1000);
                 });
             }
@@ -55,7 +57,7 @@ export default function ProductTableComponent({
                 apiErrorHandling(err.response.data.message[0].constraint[0]);
             }
         }
-    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerFind]);
+    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerFind, setSuccessRes]);
 
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);

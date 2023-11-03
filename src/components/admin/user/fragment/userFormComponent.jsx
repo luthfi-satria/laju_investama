@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import UserRegistrationForm from './../../../../constants/admin/user/userRegistrationConstant';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function UserForm({
     formData,
     handleChange,
@@ -7,6 +8,7 @@ export default function UserForm({
     usergroupField
 }){
     const [LoginAccount, setLoginAccount] = useState(false);
+    const [passwordType, setPasswordType] = useState('password');
 
     useEffect(()=>{
         if(!LoginAccount){
@@ -18,16 +20,24 @@ export default function UserForm({
         <>
             <div className="">
             {LoginAccount && LoginAccount.map((items, index) => {
-                    if(items.type == 'text'){
+                    if(items.type == 'text' || items.type == 'password'){
                         return (
                             <div key={index} className='grid sm:grid-cols-3 gap-2 mb-2'>
                                 <label htmlFor={`inp_${items.name}`} 
                                     className="text-sm text-right">
                                         {items.label}
                                 </label>
-                                <div className='sm:col-span-2 '>
+                                <div className='sm:col-span-2 relative'>
+                                    {items.type == 'password' && (
+                                        <div 
+                                            className="absolute right-0 mr-2 top-2 cursor-pointer text-gray-500"
+                                            onClick={()=>setPasswordType(passwordType == 'text' ? 'password' : 'text')}
+                                        >
+                                        <FontAwesomeIcon icon={'eye'}/>
+                                        </div>
+                                    )}
                                     <input
-                                        type={items.type}
+                                        type={items.type == 'password' ? passwordType : items.type}
                                         name={items.name}
                                         id={`inp_${items.name}`}
                                         className={`w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500 ${items.name == 'user_type' ? 'bg-gray-200' : ''}`}

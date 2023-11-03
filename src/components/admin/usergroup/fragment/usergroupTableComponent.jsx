@@ -8,7 +8,8 @@ export default function UsergroupTableComponent({
     apiErrorHandling,
     editTable,
     deleteTable,
-    successRes=false
+    successRes=false,
+    setSuccessRes,
 }){
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState(false);
@@ -42,6 +43,7 @@ export default function UsergroupTableComponent({
                 }).finally(() => {
                     setIsLoading(true);
                     setTriggerFind(false);
+                    setSuccessRes(false);
                 })
             }
             catch(err){
@@ -49,7 +51,7 @@ export default function UsergroupTableComponent({
                 apiErrorHandling(err.response.data.message[0].constraint[0]);
             }
         }
-    },[filter, successRes, FetchTable, apiErrorHandling, triggerFind]);
+    },[filter, successRes, FetchTable, apiErrorHandling, triggerFind, setSuccessRes]);
 
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);

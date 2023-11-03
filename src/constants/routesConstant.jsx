@@ -14,7 +14,7 @@ const RouteURL = {
         AUTHORIZE: false,
     },
     DASHBOARD: {
-        PATH: 'dashboard',
+        PATH: '',
         HELMET: {
             title: 'Portal Admin',
         },

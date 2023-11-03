@@ -19,7 +19,7 @@ const UserRegistrationForm = (data) => {
             label: 'Telepon',
         },
         {
-            type: 'text',
+            type: 'password',
             name: 'password',
             placeholder: 'Password...',
             label: 'Password',

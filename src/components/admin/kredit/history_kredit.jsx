@@ -3,14 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import ShowSweetAlert from "../../../helpers/showAlert";
 import { Route, Routes } from "react-router-dom";
-import KreditTableComponent from "./fragment/kreditTableComponent";
-import KreditDetailComponent from './fragment/kreditDetailComponent';
-import KreditFormComponent from "./fragment/kreditFormComponent";
-import KreditPaymentComponent from "./fragment/kreditPaymentFormComponent";
+import HistoryKreditTable from "./history_kreditTable";
 
-export default function AdminKredit({
+export default function AdminHistoryKredit({
     token,
-    RouteURL
 }){
     const [apiError, setApiError] = useState(false);
 
@@ -48,14 +44,14 @@ export default function AdminKredit({
         <>
             <HelmetProvider>
                 <Helmet>
-                    <title>{RouteURL.KREDIT.HELMET.title}</title>
+                    <title>RIWAYAT ANGSURAN KREDIT</title>
                 </Helmet>
             </HelmetProvider>
             <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                 <div className="flex flex-wrap items-center">
                     <div className="relative w-full max-w-full flex-grow flex-1">
                         <h3 className="uppercase text-blueGray-400 mb-1 text-2xl text-white font-semibold py-2 border-b border-white">
-                            {RouteURL.KREDIT.HELMET.title}
+                            RIWAYAT ANGSURAN KREDIT
                         </h3>
                     </div>
                 </div>
@@ -70,39 +66,11 @@ export default function AdminKredit({
                             <div className="w-full mb-12">
                                 <Routes>
                                     <Route path='' element={
-                                        <KreditTableComponent 
+                                        <HistoryKreditTable 
                                             token={token} 
                                             axiosRequest={axiosRequest}
                                             errorHandler={errorHandler}
                                             errResponseHandler={errResponseHandler}                        
-                                        />
-                                    }/>
-                                    <Route path="baru" element={
-                                        <KreditFormComponent
-                                            axiosRequest={axiosRequest}
-                                            errorHandler={errorHandler}
-                                            errResponseHandler={errResponseHandler}
-                                        />
-                                    }/>
-                                    <Route path="payment" element={
-                                        <KreditPaymentComponent
-                                            axiosRequest={axiosRequest}
-                                            errorHandler={errorHandler}
-                                            errResponseHandler={errResponseHandler}
-                                        />
-                                    }/>
-                                    <Route path="detail/*" element={
-                                        <KreditDetailComponent
-                                            axiosRequest={axiosRequest}
-                                            errorHandler={errorHandler}
-                                            errResponseHandler={errResponseHandler}
-                                        />
-                                    }/>
-                                    <Route path="edit/*" element={
-                                        <KreditFormComponent
-                                            axiosRequest={axiosRequest}
-                                            errorHandler={errorHandler}
-                                            errResponseHandler={errResponseHandler}
                                         />
                                     }/>
                                 </Routes>

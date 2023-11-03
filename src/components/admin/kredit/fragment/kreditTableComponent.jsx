@@ -70,7 +70,7 @@ export default function KreditTableComponent({
         axiosRequest('get', 'api/kredit/print/report', {responseType: 'blob', params: filter})
         .then((response) => {
             if(response.status == 200){
-                fileDownload(response.data, 'data_order','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                fileDownload(response.data, 'data_pengajuan_kredit','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             }
         });
     }    
@@ -147,7 +147,7 @@ export default function KreditTableComponent({
                         Buat Pengajuan
                     </Link>
                     <Link 
-                        to={'pembayaran'}
+                        to={'payment'}
                         className="border-2 mr-2 bg-orange-700 border-white uppercase px-2 py-2 rounded-md text-white hover:bg-orange-800 leading-4"
                         replace={true}
                     >

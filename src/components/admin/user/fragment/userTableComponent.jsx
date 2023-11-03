@@ -3,7 +3,6 @@ import Pagination from '../../../pagination';
 import axios from 'axios';
 import ButtonAction from '../../../buttonAction';
 import UserFilterComponent from './userFilterComponent';
-import RouteURL from '../../../../constants/routesConstant';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as CryptoJS from 'crypto-js';
@@ -13,6 +12,7 @@ export default function UserTableComponent({
     apiErrorHandling,
     deleteTable,
     successRes=false,
+    setSuccessRes,
     filter,
     setFilter
 }){
@@ -47,6 +47,7 @@ export default function UserTableComponent({
                     setTimeout(()=>{
                         setIsLoading(false);
                         setTriggerSrc(false);
+                        setSuccessRes(false);
                     }, 2000);
                 })
             }
@@ -55,7 +56,7 @@ export default function UserTableComponent({
                 apiErrorHandling(err.response.data.message[0].constraint[0]);
             }
         }
-    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerSrc]);
+    },[filter, successRes, AxiosHttp, apiErrorHandling, triggerSrc, setSuccessRes]);
 
     const changeLimitOption = (e) => {
         const option = Number(e.target.value);

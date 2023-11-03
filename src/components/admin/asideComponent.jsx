@@ -6,9 +6,9 @@ export default function AsideComponent({AppMenu}){
     library.add(fas);
 
     const [subMenu, setSubMenu] = useState('');
-
+    
     const issetIcon = (icon) => {
-        return icon != null ? <FontAwesomeIcon icon={icon} className='text-center w-5 text-sm opacity-75'/>: '';
+        return icon != null ? (<FontAwesomeIcon icon={icon} className='text-center w-5 text-sm opacity-75'/>): '';
     }
 
     function asideTree(items, parent = null){
@@ -22,9 +22,10 @@ export default function AsideComponent({AppMenu}){
                             key={a.menus.name}
                             href={child == '' ? a.menus.api_url: '#'}
                             className="flex w-full py-2 items-center text-xs"
+                            title={a.menus.label}
                         >
                             {issetIcon(a.menus.icon)}
-                            <span className='text-[15px] ml-2'>
+                            <span className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'>
                                 {a.menus.label}
                             </span>
                         </a>
@@ -45,9 +46,10 @@ export default function AsideComponent({AppMenu}){
                                 key={a.menus.name}
                                 href={a.menus.api_url}
                                 className="flex w-3/4 py-2 items-center text-xs"
+                                title={a.menus.label}
                                 >
                                     {issetIcon(a.menus.icon)}
-                                    <span className='text-[15px] ml-2'>
+                                    <span className='text-[15px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap'>
                                         {a.menus.label}
                                     </span>
                                 </a>

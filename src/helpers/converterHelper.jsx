@@ -42,3 +42,25 @@ export function IntlCurrency(nStr, format = 'id-ID'){
     const reform = Cur.format(nStr);
     return reform;
 }
+
+export function FormatNumber(num, format='internasional', precision = 0) {
+    const flag = {
+        'internasional' : ['K','M','B','T'],
+        'indonesia': ['Rb', 'Juta', 'Miliar','Triliun'],
+    }
+    const map = [
+      { suffix: flag[format][3], threshold: 1e12 },
+      { suffix: flag[format][2], threshold: 1e9 },
+      { suffix: flag[format][1], threshold: 1e6 },
+      { suffix: flag[format][0], threshold: 1e3 },
+      { suffix: '', threshold: 1 },
+    ];
+  
+    const found = map.find((x) => Math.abs(num) >= x.threshold);
+    if (found) {
+      const formatted = (num / found.threshold).toFixed(precision) +' '+ found.suffix;
+      return formatted;
+    }
+  
+    return num;
+  }

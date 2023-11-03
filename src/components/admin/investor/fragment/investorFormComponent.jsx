@@ -103,7 +103,7 @@ export default function InvestorFormComponent({
                             placeholder="Nomor investasi..."
                             value={InitializeForm('no_investasi')}
                             onChange={(e) => {
-                                    handleChange({...formData, no_investasi: Number(e.target.value)})
+                                    handleChange({...formData, no_investasi: e.target.value})
                                 }
                             }
                             autoComplete="off"

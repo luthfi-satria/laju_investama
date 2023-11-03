@@ -42,7 +42,6 @@ export default function KreditFormComponent({
     const [Konsumen, setKonsumen] = useState(false);
     const [field, setField] = useState(defaultField);
     const [error, setError] = useState(defaultField);
-    const [currency, setCurrency] = useState(defaultField);
     const [loadFirst, setLoadFirst] = useState(true);
 
     useEffect(() => {},[field]);

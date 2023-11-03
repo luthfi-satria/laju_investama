@@ -97,6 +97,7 @@ export default function UserComponent({token, usergroup}){
         }).finally(() => {
             setTimeout(() => {
                 setSubmmited(false);
+                setSuccessRes(false);
             }, 1000);
             // setShowModal(false);
         });
@@ -152,6 +153,7 @@ export default function UserComponent({token, usergroup}){
                     apiErrorHandling={errorHandler}
                     deleteTable={(data) => deleteFunc(data)} 
                     successRes={successRes}
+                    setSuccessRes={setSuccessRes}
                     filter={filter}
                     setFilter={setFilter}
                 />
