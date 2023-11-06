@@ -88,7 +88,7 @@ export default function NavbarComponent({
             <Disclosure as="nav" className="bg-gradient-to-r bg-teal-950 fixed top-0 z-50 w-full text-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             {({ open }) => (
                 <>
-                <div id='mynavbar' className="mx-auto max-w-7xl px-2 lg:px-8">
+                <div id='mynavbar' className="mx-auto max-w-7xl px-2">
                     <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center lg:hidden">
                         {/* Mobile menu button*/}
@@ -105,11 +105,11 @@ export default function NavbarComponent({
                     <div className="flex flex-1 items-center justify-center lg:items-stretch lg:justify-start">
                         <div className="flex flex-shrink-0 items-center">
                             <img
-                                className="h-8 w-auto"
+                                className="h-12 w-auto"
                                 src={navbarImg}
                                 alt={appTitle}
                             />
-                            <span className="text-bold capitalize font-semibold leading-2 text-lg text-yellow-200 tracking-widest">
+                            <span className="text-bold capitalize font-semibold leading-2 text-2xl font-serif -ml-4 text-yellow-200 tracking-widest">
                                 {appTitle}
                             </span>
                         </div>
