@@ -48,7 +48,7 @@ export default function ProductComponent({
                 Authorization: 'Bearer '+token,
                 ...headers
             },
-            param: param,
+            params: param,
             data: data,
         });
     }, [token]);
