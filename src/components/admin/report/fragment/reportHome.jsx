@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { FormatNumber } from "../../helpers/converterHelper";
-import StatusOrder from '../../constants/statusOrder';
+import { useEffect, useState } from "react";
+import StatusOrder from "../../../../constants/statusOrder";
+import { FormatNumber } from "../../../../helpers/converterHelper";
 
-export default function DashboardComponent({
-    token
+export default function ReportHome({
+    axiosRequest,
+    errorHandler,
 }){
     const summary = [
         {
@@ -47,23 +47,6 @@ export default function DashboardComponent({
     ];
 
     const [statistic, setStatistic] = useState(false);
-    const [apiError, setApiError] = useState(false);
-
-    const axiosRequest = useCallback((method, path, config={}, headers={})=>{
-        return axios({
-            method: method,
-            url: import.meta.env.VITE_APIURL+'/'+path,
-            headers: {
-                Authorization: 'Bearer '+token,
-                ...headers
-            },
-            ...config,
-        });
-    }, [token]);
-
-    const errorHandler = useCallback((msg)=>{
-        setApiError({...apiError, error:true, message: msg});
-    },[apiError]);
 
     useEffect(() => {
         if(!statistic){

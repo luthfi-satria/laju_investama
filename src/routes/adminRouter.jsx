@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import ReportComponent from "../components/admin/report/reportComponent";
 
 export default function AdminRouter({
     RouteURL,
@@ -118,7 +117,7 @@ export default function AdminRouter({
                     setProfile={setProfile}
                 />}></Route>
 
-                <Route path={'/report/*'} element={<ReportComponent 
+                <Route path={'/report/*'} element={<AdminReport 
                     token={token}
                     RouteURL={RouteURL}
                     profile={profile}

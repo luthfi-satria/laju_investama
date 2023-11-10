@@ -1,5 +1,6 @@
 import CurrencyInput from 'react-currency-input-field';
 import DEFAULTIMG from '../../../../assets/images/defaultImg.svg';
+import Select from 'react-select';
 
 export default function ProductFormComponent({
     formData,
@@ -70,20 +71,21 @@ export default function ProductFormComponent({
                         <label className='text-sm sm:text-right' htmlFor='inp-kategori'>Kategori Produk</label>
                     </div>
                     <div className="col-span-2">
-                        <select 
+                        <Select 
                             type="text" 
                             id="inp-kategori"
                             name="kategori" 
-                            className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
-                            onChange={(e) => handleChange({...formData, ['category_id']: Number(e.target.value)})}
-                            value={Number(formData?.category_id) || ''}
+                            className="w-full text-gray text-xs outline-none focus:border-gray-500"
+                            onChange={(value) => handleChange({...formData, category_id: Number(value?.id)})}
+                            // defaultValue={Number(formData?.category_id) || ''}
+                            value={category?.items?.find(op => {
+                                return op.id == formData?.category_id;
+                            })}
                             autoComplete='off'
-                        >
-                            <option value={''}>Pilih Kategori</option>
-                            {category && category?.items.map((items, index) => (
-                                <option value={items.id} key={index}>{items.name}</option>
-                            ))}
-                        </select>
+                            options={category?.items}
+                            getOptionLabel={(option) => option.name}
+                            getOptionValue={(option) => option.id}
+                        />
                         {error?.category_id !='' && (
                             <div className="text-red-500 text-xs w-full first-letter:uppercase">
                                 {error?.category_id}

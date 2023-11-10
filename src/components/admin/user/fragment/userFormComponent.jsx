@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import UserRegistrationForm from './../../../../constants/admin/user/userRegistrationConstant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Select from 'react-select'
 export default function UserForm({
     formData,
     handleChange,
@@ -12,7 +13,17 @@ export default function UserForm({
 
     useEffect(()=>{
         if(!LoginAccount){
-            setLoginAccount(() => UserRegistrationForm({usergroup: usergroupField}));
+            const optionObj = [];
+            if(usergroupField){
+                for(const items of usergroupField){
+                    optionObj.push({
+                        key: items.id,
+                        value: String(items.id),
+                        label: `${items.level} - ${items.name}`,
+                    });
+                }
+            }
+            setLoginAccount(() => UserRegistrationForm({usergroup: optionObj}));
         }
     },[usergroupField, LoginAccount]);
 
@@ -65,24 +76,25 @@ export default function UserForm({
                                         {items.label}
                                 </label>
                                 <div className='sm:col-span-2 '>
-                                    <select
+                                    <Select
                                         name={items.name}
                                         id={`inp_${items.name}`}
-                                        className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-500"
-                                        value={formData[items.name]}
-                                        // onChange={(e)=>{
-                                            // const userType = e.target.options[e.target.selectedIndex].getAttribute('data-level');
-                                            // document.getElementById('inp_user_type').value = userType;
-                                            // handleChange({...formData, ['user_type']: userType, [e.target.name]: e.target.value});
-                                        // }}
-                                        onChange={(e) => handleChange({...formData, [e.target.name]: e.target.value})}
+                                        className="w-full text-xs"
+                                        defaultValue={items?.option?.find(op => {
+                                            return op.value == formData[items.name];
+                                        })}
+                                        onChange={({value}) => handleChange({...formData, [items.name]: value})}
                                         autoComplete="off"
-                                    >
-                                        <option value=''>------</option>
-                                        {items?.option && items.option.map((opt, index) => (
-                                            <option value={opt.id} data-level={opt.level} key={index}>{opt.level} - {opt.name}</option>
-                                        ))}
-                                    </select>
+                                        placeholder="Pilih grup..."
+                                        options={items?.option}
+                                    />
+                                    {error[items.name] !='' && (
+                                        <div className="text-red-500 text-xs w-full grid first-letter:uppercase">
+                                            <div className="">
+                                                {error[items.name]}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         );

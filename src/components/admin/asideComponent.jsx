@@ -2,11 +2,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 export default function AsideComponent({AppMenu}){
     library.add(fas);
 
     const [subMenu, setSubMenu] = useState('');
+    const urlpath = useLocation().pathname;
     
     const issetIcon = (icon) => {
         return icon != null ? (<FontAwesomeIcon icon={icon} className='text-center w-5 text-sm opacity-75'/>): '';

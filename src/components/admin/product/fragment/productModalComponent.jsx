@@ -33,7 +33,7 @@ export default function ProductModalComponent({
                             </button>
                         </div>
                         {/*body*/}
-                        <div className="relative p-6 flex-auto bg-white">
+                        <div className="relative p-6 flex-auto bg-white max-h-[400px] overflow-auto">
                             {successRes != '' && 
                                 <div
                                     className="absolute bg-red-200 border border-red-300 -top-10 right-5 whitespace-nowrap rounded-[0.27rem] px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none"
