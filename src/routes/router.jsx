@@ -13,6 +13,7 @@ import MyOrderComponent from '../components/ecommerce/order/orderComponent';
 import PembayaranComponent from '../components/ecommerce/pembayaran/pembayaran';
 import PengaturanProfile from '../components/ecommerce/pengaturan/pengaturan';
 import RegistrationPage from '../views/registration';
+import WishListComponent from '../components/ecommerce/wish/wishlist';
 
 export default function AppRouter(){
     const [token, setToken] = useLocalStorage('token',null);
@@ -37,6 +38,7 @@ export default function AppRouter(){
                         />}>
                             <Route path={RouteURL.HOMEPAGE.PATH} element={<HomePage/>}/>
                             <Route path={RouteURL.CART.PATH} element={<MyCart/>}/>
+                            <Route path={RouteURL.WISHLIST.PATH} element={<WishListComponent/>}/>
                             <Route path={RouteURL.ORDER.PATH+'/*'} element={<MyOrderComponent/>}/>
                             <Route path={'pembayaran/*'} element={<PembayaranComponent/>}/>
                             <Route path={RouteURL.PENGATURAN.PATH} element={<PengaturanProfile/>}/>

@@ -1,83 +1,63 @@
-import { Link, useLocation, useOutletContext } from "react-router-dom";
+import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import userDefault from '../../../assets/images/userDefault.png';
 import { useEffect, useMemo, useState } from "react";
-import OrderTransaction from "./orderTransaksi";
 import ShowSweetAlert from "../../../helpers/showAlert";
+import WishDataComponent from "./wishdata";
 
-export default function MyOrderComponent(){
+export default function WishListComponent(){
     const {
         CreateIcon,
         profile,
         AxiosRequest,
     } = useOutletContext();
+    const navigate = useNavigate();
     const location = useLocation().pathname.split('/');
-    const [title, setTitle] = useState(false);
-    const [transaksi, setTransaksi] = useState(false);
+    const [wish, setWish] = useState(false);
     const [totalData, setTotalData] = useState(0);
-    const [refresh, setRefresh] = useState(false);    
-    const defaultFilter = useMemo(() => ({
-        page: 1,
-        limit: 10,
-        platform: 'ecommerce',
-        status: location[2] ? location[2] : '',
-        kode_transaksi: '',
-        payment_method: '',
-        date_start: '',
-        date_end: '',
-        order_by: 'created_at',
-        orientation: 'DESC',
-    }),[location]);
-    
-    const [filter, setFilter] = useState(defaultFilter);
-    
-    // SCROLL FUNCTION
-    window.onscroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop + 1 === document.documentElement.offsetHeight) {
-            if(transaksi){
-                const total = totalData || 0;
-                const limit = filter.limit;
-                const page = filter.page;
-                if(total > (page * limit)){
-                    setFilter({...filter, page: page+1});
-                    setRefresh(true);
-                }
-            }
-        }
-    }
+    const [refresh, setRefresh] = useState(false);
     const sideMenu = useMemo(() => [
         {
-            to: '/order',
+            to: '../order',
             status: '',
             title: 'Daftar Transaksi',
         },
         {
-            to: '/order/waiting',
+            to: '../order/waiting',
             status: 'waiting',
             title: 'Menunggu Pembayaran',
         },
         {
-            to: '/order/paid',
+            to: '../order/paid',
             status: 'paid',
             title: 'Sudah dibayar',
         },
         {
-            to: '/order/proceed',
+            to: '../order/proceed',
             status: 'proceed',
             title: 'Diproses',
         },
         {
-            to: '/order/success',
+            to: '../order/success',
             status: 'success',
             title: 'Berhasil',
         },
         {
-            to: '/order/canceled',
+            to: '../order/canceled',
             status: 'canceled',
             title: 'Dibatalkan',
         }
     ],[]);
+    const defaultFilter = useMemo(() => ({
+        page: 1,
+        limit: 10,
+        order_by: 'created_at',
+        orientation: 'DESC',
+    }),[]);
+    const [filter, setFilter] = useState(defaultFilter);
 
-    const errResponseHandler = (err) => {        
+    const errResponseHandler = (err) => {
+        console.log(err);
+        
         ShowSweetAlert({
             icon: 'warning',
             title: 'Request Error',
@@ -86,21 +66,21 @@ export default function MyOrderComponent(){
     }
 
     useEffect(() => {
-        if(!transaksi || refresh){
-            AxiosRequest('get','api/order', filter, {})
+        if(!wish || refresh){
+            AxiosRequest('get','api/wish', filter, {})
             .then(({data}) => {
                 if(data.statusCode == 400){
                     throw(data);
                 }
 
                 if(data?.data?.page == 1){
-                    setTransaksi(data?.data?.items);
+                    setWish(data?.data?.items);
                     setTotalData(data?.data?.total);
                 }
                 else{
                     const newItems = data?.data?.items;
-                    const mergeItems = transaksi.concat(newItems);
-                    setTransaksi(mergeItems);
+                    const mergeItems = wish.concat(newItems);
+                    setWish(mergeItems);
                 }                
             }).catch((error) => {
                 errResponseHandler(error);
@@ -108,25 +88,39 @@ export default function MyOrderComponent(){
                 setRefresh(false);
             });
         }
-    },[filter, AxiosRequest, transaksi, refresh]);
+    },[filter, AxiosRequest, wish, refresh]);
+
+    const DeleteWish = (product_id) => {
+        setTimeout(()=>{
+            AxiosRequest('delete', 'api/wish/'+product_id)
+            .then(({data}) =>{
+                if(data.statusCode == 400){
+                    throw data;
+                }
+                setRefresh(true);
+            }).catch((err) => {
+                console.log('[ERROR] ', err);
+            }).finally(() => {
+                setRefresh(false);
+            });
+        }, 1500);
+    }
     
-
-    const batalkanPesanan = (dataOrder) => {
-        ShowSweetAlert({
-            title: 'Batalkan pesanan?',
-            confirmButtonText: 'Batalkan',
-
-        }, true).then((response) => {
-            if(response.isConfirmed){
-                AxiosRequest('post', 'api/order/abort/'+dataOrder.kode_transaksi)
-                .then(() => {
-                    document.location.reload();
-                })
-                .catch((error) => {
-                    console.log('ERROR BATAL PESANAN', error);
-                });
+    const moveItem = (item_id) => {
+        AxiosRequest('post',`api/wish/movetocart/${item_id}`)
+        .then(({data}) => {
+            if(data.statusCode == 400){
+                throw data;
             }
-        });
+            ShowSweetAlert({
+                icon: 'success',
+                title: 'Sukses',
+                text: 'item sudah dipindahkan'
+            });
+            setTimeout(() => {
+                navigate(0);
+            }, 1000);
+        });                
     }
     return (
         <>
@@ -135,9 +129,9 @@ export default function MyOrderComponent(){
                 className="mt-32 sm:mt-28 h-full min-h-screen"
             >
                 <div className="grid sm:grid-cols-4">
-                    <div className="relative sm:border-r border-gray-200 sm:h-screen">
+                    <div className="hidden sm:block relative sm:border-r border-gray-200 sm:h-screen">
                         {/* PROFILE */}
-                        <div className="hidden w-full sm:flex items-center justify-start px-4 py-2">
+                        <div className="w-full sm:flex items-center justify-start px-4 py-2">
                             <Link
                                 to={'/'}
                                 className="flex items-center justify-center"
@@ -152,9 +146,8 @@ export default function MyOrderComponent(){
                             </Link>
                         </div>
 
-                        {/* MENUS */}
-                        <div className="hidden sm:block w-full px-4 py-4">
-                            <div className="relative w-full sm:flex flex-col justify-between items-start border-t border-gray-300 cursor-pointer">
+                        <div className="w-full px-4 py-4">
+                            <div className="hidden relative w-full sm:flex flex-col justify-between items-start border-t border-gray-300 cursor-pointer">
                                 <h3 className="block relative font-bold text-lg leading-6 w-full">
                                     <button
                                         className="flex justify-between items-start w-full text-lg font-bold py-2"
@@ -177,11 +170,7 @@ export default function MyOrderComponent(){
                                                 <Link
                                                     to={item.to}
                                                     className="block -ml-4 hover:font-bold"
-                                                    onClick={() => {
-                                                        setFilter({...filter, status: item.status})
-                                                        setTitle(item.title)
-                                                        setRefresh(true);
-                                                    }}
+                                                    replace={true}
                                                 >
                                                     {item.title}
                                                 </Link>  
@@ -199,7 +188,7 @@ export default function MyOrderComponent(){
                                     <button
                                         className="flex justify-between items-start w-full text-lg font-bold py-2"
                                     >
-                                        <div>WISHLIST</div>
+                                        <div>Wishlist</div>
                                         <div>
                                             {CreateIcon('chevron-down','rounded-full')}
                                         </div>
@@ -226,33 +215,14 @@ export default function MyOrderComponent(){
                                 </div>
                             </div>
                         </div>
-
-                        {/* MENUS ON MOBILE */}
-                        <div className="w-screen px-4 pb-4 flex items-center justify-center sm:hidden">
-                            <div className="w-[400px] flex items-start justify-between overflow-x-auto py-2">
-                                {sideMenu.map((item, index) => (
-                                    <Link
-                                        key={index}
-                                        to={item.to}
-                                        className="rounded-md px-4 py-2 text-ellipsis min-h-[70px] flex items-center justify-center max-[200px] bg-gray-200 mr-2 border-2 border-gray-500 hover:bg-gray-300"
-                                        onClick={() => {
-                                            setFilter({...filter, status: item.status})
-                                            setTitle(item.title)
-                                            setRefresh(true);
-                                        }}
-                                    >
-                                        <div className="text-gray-600 font-semibold">{item.title}</div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
                     </div>
-                    <div className="w-full sm:col-span-3 px-4 py-4">
-                        <OrderTransaction
-                            title={title}
-                            dataOrder={transaksi}
+
+                    <div className="sm:col-span-3 px-4 py-4">
+                        <WishDataComponent 
+                            wishData={wish}
+                            deleteWish={DeleteWish}
                             CreateIcon={CreateIcon}
-                            batalkanPesanan={batalkanPesanan}
+                            moveItem={moveItem}
                         />
                     </div>
                 </div>

@@ -4,11 +4,8 @@ import Logout from "../../hooks/appLogout";
 
 export default function CommerceNavbar({
   token,
-  search,
-  setSearch,
   createIcon,
   showSidebar,
-  setRefreshProduct,
   profile,
   totalCart,
   RouteURL,
@@ -73,10 +70,10 @@ export default function CommerceNavbar({
               </div>
               
               {/* LOGOBAR */}
-              <div className="playfair-reg box-border py-3 sm:h-20">
-                <div className="relative mx-0 my-auto w-full">
+              <div className="playfair-reg box-border py-2">
+                <div className="relative mx-0 my-auto w-full flex items-start justify-between">
                   {/* LOGO */}
-                  <div className="sm:inline-block sm:w-1/5 sm:h-9 text-center mb-2 px-4 py-4">
+                  <div className="sm:h-9 text-center mb-2 px-4 py-2">
                     <Link
                       to={RouteURL.HOMEPAGE.PATH}
                       className="text-3xl leading-3 text-teal-500 font-bold"
@@ -85,33 +82,12 @@ export default function CommerceNavbar({
                     </Link>
                   </div>
 
-                  {currentPath.pathname == '/' && (
-                    <div className="sm:inline-block sm:w-3/5 px-5 sm:h-9 text-center">
-                      <input
-                        type="text"
-                        name="src"
-                        className="ring-1 ring-gray-300 px-2 py-3 w-4/5 outline-none"
-                        onChange={(e) => setSearch({...search, name: e.target.value})}
-                      />
-                      <button
-                        className="bg-teal-500 px-4 py-3 rounded-e-md hover:bg-teal-700"
-                        onClick={()=> {
-                          setSearch({...search, page: 1});
-                          setRefreshProduct(true);
-                        }}
-                      >
-                        {createIcon('magnifying-glass', 'text-white text-base leading-3')}
-                        
-                      </button>
-                    </div>
-                  )}
-
                   {token && profile && (
-                    <div className="float-right clear-both px-4 py-4 sm:inline-block sm:w-1/5 sm:h-9">
-                      <div className="hidden sm:flex w-full">
+                    <div className="px-4 py-2">
+                      <div className="hidden sm:flex sm:items-start sm:justify-between w-full">
                         <Link
                           to={RouteURL.CART.PATH}
-                          className="font-semibold w-1/3 text-slate-500 hover:text-slate-700 text-lg"
+                          className="font-semibold text-slate-500 hover:text-slate-700 text-lg mr-10"
                         >
                           {createIcon('shopping-cart', '')}
 
@@ -123,7 +99,7 @@ export default function CommerceNavbar({
                           ) : ''}
                         </Link>
                         <div
-                          className="font-semibold w-2/3 cursor-pointer text-slate-500 hover:text-slate-700 text-lg overflow-hidden text-ellipsis whitespace-nowrap"
+                          className="font-semibold cursor-pointer text-slate-500 hover:text-slate-700 text-lg overflow-hidden text-ellipsis whitespace-nowrap"
                           onClick={()=>setToggleProfile(toggleProfile ? false: true)}
                           title={profile?.username || ''}
                         >
@@ -137,39 +113,38 @@ export default function CommerceNavbar({
                       </div>
                     </div>
                   )}
-
+                  
+                  {/* SHOW ON MOBILE */}
+                  <div className="grid grid-cols-2 ml-5 text-2xl mr-5 sm:hidden">
+                      {token && profile && (
+                        <div className="text-right">
+                          <button
+                            onClick={()=>setToggleProfile(toggleProfile ? false: true)}
+                          >
+                            {createIcon('bars', 'text-slate-400 hover:text-slate-700')}
+                            
+                          </button>
+                        </div>
+                      )}
+                  </div>
                 </div>
               </div>
           </div>
 
-          {/* SHOW ON MOBILE */}
-          <div className="grid grid-cols-2 ml-5 text-2xl mr-5 sm:hidden">
-              <div>
-                {currentPath == '/' && (
-                  <button
-                    onClick={showSidebar}
-                  >
-                    {createIcon('bars', 'text-slate-400 mr-3 hover:text-slate-700')}
-                    Filter
-                  </button>
-                )}
-              </div>
-              {token && profile && (
-                <div className="text-right">
-                  <button
-                    onClick={()=>setToggleProfile(toggleProfile ? false: true)}
-                  >
-                    {createIcon('bars', 'text-slate-400 hover:text-slate-700')}
-                    
-                  </button>
-                </div>
-              )}
-          </div>
 
           {/* PROFILE DROPDOWN */}
           {token && profile && toggleProfile && (
             <div className="bg-white rounded-sm sm:absolute right-0 px-4 py-4 border border-slate-200 min-w-[200px]">
               <div className="text-slate-500 font-medium grid">
+                <div className="mb-5">
+                  {createIcon('shopping-cart', 'text-lg mr-2')}
+                  <Link
+                    to={RouteURL.CART.PATH}
+                    className="hover:font-bold"
+                  >
+                    KERANJANG
+                  </Link>
+                </div>
                 <div className="mb-5">
                   {createIcon('newspaper', 'text-lg mr-2')}
                   <Link

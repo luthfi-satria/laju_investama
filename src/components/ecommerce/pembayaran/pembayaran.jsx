@@ -148,7 +148,7 @@ export default function PembayaranComponent() {
                             <p className="text-gray-500 mt-2 px-4">Silahkan klik <b>selesaikan pembayaran</b> dan lakukan pembayaran langsung melalui staff yang bertugas</p>
                         )}
 
-                        {pembayaran.payment_method == 'SALARY DEDUCTION' && profile?.level != 'public' (
+                        {pembayaran.payment_method == 'SALARY DEDUCTION' && profile?.level != 'public' && (
                             <p className="text-gray-500 mt-2 px-4">Silahkan klik <b>selesaikan pembayaran</b> dan pembayaran akan langsung memotong gaji bulanan</p>
                         )}
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import imgDefault from '../../../assets/images/noproduct_img.png';
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import ShowSweetAlert from "../../../helpers/showAlert";
 import { IntlCurrency, NumericalOnly } from "../../../helpers/converterHelper";
 
@@ -166,6 +166,7 @@ export default function MyCart(){
                     throw data;
                 }
                 setProcessStatus(true);
+                navigate(0);
             }).catch((err) => {
                 console.log('[ERROR] ', err);
             }).finally(() => {
@@ -188,8 +189,9 @@ export default function MyCart(){
                 }).then(({data}) => {
                     if(data.statusCode == 400){
                         setProcessStatus(true);
-                        SetTotalCart(parseInt(TotalCart - TotalBarang));
                     }
+                })
+                .finally(()=>{
                     setTimeout(() => {
                         setIsProcessing(false);
                         navigate('/order', {replace: true});
@@ -198,11 +200,28 @@ export default function MyCart(){
             }
         });
     }
+
+    const moveItem = (item_id) => {
+        AxiosRequest('post',`api/wish/movetowish/${item_id}`)
+        .then(({data}) => {
+            if(data.statusCode == 400){
+                throw data;
+            }
+            ShowSweetAlert({
+                icon: 'success',
+                title: 'Sukses',
+                text: 'item sudah dipindahkan'
+            });
+            setTimeout(() => {
+                navigate(0);
+            }, 1000);
+        });                
+    }
     return (
         <>
             <div 
                 id="main_display"
-                className="mt-56 sm:mt-[4rem] px-4 py-4 h-[90vh] flex items-center justify-center"
+                className="mt-40 sm:mt-[4rem] px-4 py-4 h-[90vh] flex items-center justify-center"
             >
                 {isProcessing && (
                     <div className="fixed top-0 left-0 h-full w-full bg-black opacity-80 z-20 flex items-center justify-center">
@@ -335,12 +354,28 @@ export default function MyCart(){
                                                         {CreateIcon('plus')}
                                                     </button>
                                                 </div>
-                                                <div className="mt-5">
+                                                <div className="mt-5 flex items-start justify-stretch">
                                                     <button type="button"
-                                                    className="text-xs bg-red-500 text-white ring-1 ring-red-400 px-4 py-2 w-1/3 rounded-md hover:bg-red-600"
-                                                    onClick={() => sendDelete(index)}
+                                                        className="mr-2 text-xs bg-red-500 text-white ring-1 ring-red-400 px-4 py-2 rounded-md hover:bg-red-600"
+                                                        onClick={() => sendDelete(index)}
                                                     >
-                                                        Hapus
+                                                        <div className="inline-block w-1/3">
+                                                            {CreateIcon('trash','text-white text-sm')}
+                                                        </div>
+                                                        <div className="inline-block w-2/3">
+                                                            Hapus
+                                                        </div>
+                                                    </button>
+                                                    <button type="button"
+                                                        className="text-xs text-gray-500 ring-1 ring-gray-400 px-4 py-2 rounded-md hover:bg-gray-200"
+                                                        onClick={() => moveItem(items?.product_id)}
+                                                    >
+                                                        <div className="inline-block w-1/3">
+                                                            {CreateIcon('heart-circle-plus','text-red-500 text-sm')}
+                                                        </div>
+                                                        <div className="inline-block w-2/3">
+                                                            Pindahkan
+                                                        </div>
                                                     </button>
                                                 </div>
                                             </div>
@@ -376,12 +411,16 @@ export default function MyCart(){
                     </div>
                 )}
                 {listCart && listCart?.items.length == 0 && (
-                    <div className="relative w-full flex items-center justify-center bg-gray-200 min-h-screen overflow-hidden">
-                        <div className="text-3xl text-center font-bold w-2/3 -mt-20">
+                    <div className="relative w-full flex items-center justify-center bg-white min-h-screen overflow-hidden">
+                        <div className="text-3xl text-center font-bold w-2/3 h-60">
                             <h1 className="mb-10">
                                 {CreateIcon('shopping-cart','text-[200px] text-teal-400')}
                             </h1>
-                            <p className="text-gray-500">Mohon maaf, keranjang anda masih kosong!</p>
+                            <p className="text-gray-500">Mohon maaf, keranjang anda masih kosong!
+                                <Link to={'..'} replace={true} className="block text-md text-teal-400 mt-8 hover:text-teal-600">
+                                    Kembali
+                                </Link>
+                            </p>
                         </div>
                     </div>
                 )}

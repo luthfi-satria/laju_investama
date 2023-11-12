@@ -48,7 +48,7 @@ export default function OrderTransaction({
     return (
         <>
             <div>
-                <h2 className="text-2xl font-bold uppercase leading-6 mb-10">{title}</h2>
+                <h2 className="text-2xl font-bold uppercase leading-6 mb-10">{title || 'DAFTAR TRANSAKSI'}</h2>
 
                 {/* LIST TRANSAKSI */}
                 {dataOrder && dataOrder.map((items, index) => (

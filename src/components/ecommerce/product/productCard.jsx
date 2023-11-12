@@ -5,6 +5,7 @@ export default function ProductCard({
     productData,
     CreateIcon,
     AddToCart,
+    AddToWish,
 }){
     const baseUrl = import.meta.env.VITE_APIURL;
 
@@ -48,6 +49,7 @@ export default function ProductCard({
                         </button>
                         <button
                             className='text-gray ring-1 ring-slate-400 bg-white w-1/2 px-2 py-2 mt-2 hover:bg-slate-200'
+                            onClick={()=>AddToWish(productData)}
                         >
                             {CreateIcon('heart','text-red-500 mr-2')}
                             Wish

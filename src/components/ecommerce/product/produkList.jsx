@@ -36,6 +36,27 @@ export default function ProductList({
         }
     }
 
+    const addToWish = (items) => {
+        if(!profile){
+            navigate('/login',{replace:true})
+        }
+        else{
+            AxiosRequest('post','api/wish',{}, {
+                product_id: items?.id,
+                qty: 1,
+            })
+            .then(({data}) => {
+                if(data.statusCode == 400){
+                    throw data;
+                }
+                ShowSweetAlert({
+                    icon: 'success',
+                    title: 'Sukses',
+                    text: 'item sudah masuk wishlist'
+                });
+            });
+        }
+    }
     return(
         <>
             <div id="ProductList">
@@ -57,6 +78,7 @@ export default function ProductList({
                                     productData={items}
                                     CreateIcon={CreateIcon}
                                     AddToCart={addToCart}
+                                    AddToWish={addToWish}
                                 />
                             ))} 
                         </div>

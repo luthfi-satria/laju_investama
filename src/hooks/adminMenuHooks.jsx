@@ -27,10 +27,6 @@ export const FetchAdminMenu = (token) => {
           const listAccessMenu = [];
 
           resData.forEach(item => {
-            // listAccessMenu[item.id] = {
-            //   menus: item.menus,
-            //   permissions: item.permissions
-            // };
             listAccessMenu.push({
               menus: item.menus,
               permissions: item.permissions,
@@ -39,7 +35,6 @@ export const FetchAdminMenu = (token) => {
           
           window.localStorage.setItem('access_menu', JSON.stringify(listAccessMenu));
           setAccessMenu(listAccessMenu);
-          setNeedRequest(false);
         })
         .catch((error) => {
           if(error.response){
@@ -48,7 +43,11 @@ export const FetchAdminMenu = (token) => {
           else if(error.request){
             setAccessMenu({});
           }
-        });
+        })
+        .finally(()=>{
+          setNeedRequest(false);
+        })
+        ;
       }
     },[needRequest, token]);
 

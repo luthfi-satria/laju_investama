@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 export const ValidateToken = (token) => {
     
     const [validToken, setValidToken] = useState(false);
+    const [ServErr, setServErr] = useState(false);
 
     const requestValidToken = useCallback(() => {
         const APIURL = import.meta.env.VITE_APIURL+'/api/auth/validate-token';
@@ -15,7 +16,7 @@ export const ValidateToken = (token) => {
     },[token]);
 
     useEffect(()=>{
-        if(token && token != '' && token != null){
+        if(token && !ServErr){
             requestValidToken()
             .then(({data}) => {
                 if(data?.data){
@@ -24,10 +25,11 @@ export const ValidateToken = (token) => {
             })
             .catch((error) => {
                 setValidToken(false);
+                setServErr(true);
                 throw error;
             });
         }
-    },[token, requestValidToken]);
+    },[token, requestValidToken, ServErr]);
 
     return [validToken, setValidToken];
 }
