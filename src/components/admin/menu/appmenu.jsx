@@ -13,10 +13,10 @@ export default function AdminMenu({
                 </Helmet>
             </HelmetProvider>
             <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
-                <div className="flex flex-wrap items-center max-w-fit">
-                    <div className="relative w-full max-w-full flex-grow flex-1 border-2 border-white px-4 py-4">
-                        <h3 className="uppercase text-blueGray-400 text-sm text-white font-semibold">
-                        {RouteURL.MENU.HELMET.title}
+                <div className="flex flex-wrap items-center mb-10">
+                    <div className="relative w-full max-w-full flex-grow flex-1">
+                        <h3 className="uppercase text-blueGray-400 mb-1 text-2xl text-white font-semibold py-2 border-b border-white">
+                            HIERARKI MENU
                         </h3>
                     </div>
                 </div>
