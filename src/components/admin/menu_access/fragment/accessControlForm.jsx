@@ -1,5 +1,3 @@
-import CurrencyInput from 'react-currency-input-field';
-import DEFAULTIMG from '../../../../assets/images/defaultImg.svg';
 import Select from 'react-select';
 import { useEffect, useState } from 'react';
 
@@ -59,7 +57,7 @@ export default function AccessControlForm({
                     <div className="col-span-2">
                         <Select 
                             type="text" 
-                            id="inp_usergroup"
+                            inputId="inp_usergroup"
                             name="usergroup" 
                             className="w-full text-gray text-xs outline-none focus:border-gray-500"
                             onChange={(value) => setData({...data, usergroup_id: Number(value?.id)})}
@@ -87,7 +85,7 @@ export default function AccessControlForm({
                     <div className="col-span-2">
                         <Select 
                             type="text" 
-                            id="inp-menu"
+                            inputId="inp-menu"
                             name="menu" 
                             className="w-full text-gray text-xs outline-none focus:border-gray-500"
                             onChange={(value) => setData({...data, menu_id: Number(value?.id)})}

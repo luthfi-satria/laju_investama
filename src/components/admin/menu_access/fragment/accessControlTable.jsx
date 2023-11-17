@@ -13,7 +13,9 @@ export default function AccessControlTable({
     const [triggerFind, setTriggerFind] = useState(true);
     const [data, setData] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [formMethod, setFormMethod] = useState('post');
     const [successRes, setSuccessRes] = useState(false);
+    const [defaultId, setDefaultId] = useState(false);
 
     const defaultFilter = useCallback(() => ({
         page: 1,
@@ -69,12 +71,38 @@ export default function AccessControlTable({
         setTriggerFind(true);
     }    
 
-    const AddAccess = () => {
-
+    const AddNew = () => {
+        setAssignData(defaultForm);
+        setShowModal(true);
+        setDefaultId(false);
+        setFormMethod('post');
     }
 
-    const EditTable = () => {
+    const UpdateAccess = (id, data) => {
+        setAssignData({...assignData, ...data});
+        setShowModal(true);
+        setDefaultId(id);
+        setFormMethod('put');
+    }
 
+    const HandleAccess = () => {
+        console.log('default', assignData);
+        const path = formMethod == 'put' ? '/'+defaultId : '';
+        axiosRequest(formMethod, 'api/access'+path, {data: assignData})
+        .then(({data}) => {
+            if(data?.statusCode == 409){
+                throw data;
+            }
+            setShowModal(false);
+            setTriggerFind(true);
+        }).catch((err) => {
+            setSuccessRes(err?.error);
+            errorHandler(err?.error);
+        }).finally(() => {
+            setTimeout(() => {
+                setSuccessRes(false);
+            }, 1000);
+        });
     }
 
     return (
@@ -83,7 +111,7 @@ export default function AccessControlTable({
                 <div className="text-right mb-4 mt-3">
                     <button 
                         className="border-2 border-white uppercase px-2 py-2 rounded-md text-white hover:bg-teal-900 leading-4"
-                        onClick={()=>setShowModal(true)}
+                        onClick={()=>AddNew()}
                         >
                         <FontAwesomeIcon icon={'plus'} className="mr-2"/>
                         Pengaturan
@@ -135,7 +163,11 @@ export default function AccessControlTable({
                                             <ButtonAction
                                                 label='Edit'
                                                 type='edit'
-                                                handleClick={()=>EditTable(items)}
+                                                handleClick={()=>UpdateAccess(items?.id, {
+                                                    usergroup_id: items?.usergroup_id,
+                                                    menu_id: items?.menu_id,
+                                                    permissions: items?.permissions,
+                                                })}
                                             />
                                         </td>
                                         
@@ -143,7 +175,7 @@ export default function AccessControlTable({
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={7} className='px-4 py-4 text-center'>
+                                        <td colSpan={6} className='px-4 py-4 text-center'>
                                             Data tidak ditemukan...
                                         </td>
                                     </tr>
@@ -172,9 +204,10 @@ export default function AccessControlTable({
                         assignData={assignData}
                         setData={setAssignData}
                         handleClick={() => setShowModal(false)}
-                        handleSubmit={AddAccess}
+                        handleSubmit={HandleAccess}
                         successRes={successRes}
                         axiosRequest={axiosRequest}
+                        isSubmitted={isLoading}
                     />
                 )}   
             </div>         

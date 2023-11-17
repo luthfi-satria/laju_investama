@@ -143,8 +143,8 @@ export default function RegistrationPage({
     return(
         <>
             <div className="min-w-screen min-h-screen bg-gradient-to-b from-teal-400 to-transparent flex items-center justify-center">
-                <div className="w-full bg-gray-50 flex content-center justify-center shadow-inner shadow-gray-500">
-                    <div className="w-3/4 grid md:grid-cols-2">
+                <div className="w-full bg-gray-50 flex content-center justify-center shadow-inner shadow-gray-500 px-4">
+                    <div className="w-full grid md:grid-cols-2">
                         <div className="px-5 py-5">
                             <h1 className="font-bold text-gray-400 text-3xl text-center">PT. LAJU INVESTAMA</h1>
                             <div 
@@ -156,7 +156,7 @@ export default function RegistrationPage({
                             >
                             </div>
                         </div>
-                        <div className="bg-white px-10 py-5 mb-5 sm:mb-0 shadow-md shadow-teal-600">
+                        <div className="bg-white px-4 py-5 mb-5 sm:mb-0 shadow-md shadow-teal-600">
                             <h3 className="font-bold text-xl border-b border-gray-300 text-gray-600 px-2 py-2 mb-5">
                                 Register
                             </h3>
@@ -172,7 +172,7 @@ export default function RegistrationPage({
                                     name={field}
                                     type={['password', 'retypePassword'].includes(field) ? 'password' : 'text'}
                                     isRequired={true}
-                                    placeholder={'Type '+field+'...'}
+                                    placeholder={field}
                                     customClass=''
                                     errorMessage={validError[field]}
                                 />

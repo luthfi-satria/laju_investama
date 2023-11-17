@@ -11,7 +11,7 @@ export default function PembayaranComponent() {
     } = useOutletContext();
     const location = useLocation();
     const navigate = useNavigate();
-    const [kodeTransaksi, setKodeTransaksi] = useState(location.pathname.split('/')[2]);
+    const kodeTransaksi = location.pathname.split('/')[2];
     const [doSubmit, setDoSubmit] = useState(false);
 
     const [orderDetail, setOrderDetail] = useState(false);
@@ -74,7 +74,7 @@ export default function PembayaranComponent() {
         <>
             <div 
                 id="pembayaran"
-                className="grid sm:px-10 lg:px-20 lg:grid-cols-2 w-full mt-[200px] sm:mt-[150px]"
+                className="grid sm:px-10 lg:px-20 lg:grid-cols-2 w-full mt-[130px] sm:mt-[150px]"
             >
                 <div id="pembayaran-summary" className="px-4 pt-2">
                     <h2 className="text-xl font-medium">Ringkasan Pembelian</h2>
@@ -115,18 +115,18 @@ export default function PembayaranComponent() {
                 <div className="mt-10 bg-gray-50 px-4 py-8 lg:mt-0 border border-gray-300 rounded-md">
                     <p className="text-3xl font-medium">Detail Pembayaran</p>
                     <div>
-                        <div className="relative flex justify-start border-b border-b-gray-200 pb-5">
-                            <div className="w-1/3">
-                                <h3 className="mt-4 mb-2 block text-sm font-medium">Kode Transaksi</h3>
-                                <div className="w-auto px-4 uppercase font-bold">{orderDetail?.kode_transaksi}</div>
+                        <div className="relative flex flex-col md:flex-row items-center justify-center border-b border-b-gray-200 pb-5">
+                            <div className="w-full">
+                                <h3 className="mt-4 mb-2 block text-sm font-medium text-slate-400">Kode Transaksi</h3>
+                                <div className="text-2xl w-auto uppercase font-bold">{orderDetail?.kode_transaksi}</div>
                             </div>
-                            <div className="w-1/3">
-                                <h3 className="mt-4 mb-2 block text-sm font-medium">Total Barang</h3>
-                                <div className="font-bold">{orderDetail?.total_item}</div>
+                            <div className="w-full">
+                                <h3 className="mt-4 mb-2 block text-sm font-medium text-slate-400">Total Barang</h3>
+                                <div className="text-2xl font-bold">{orderDetail?.total_item}</div>
                             </div>
-                            <div className="w-1/3">
-                                <h3 className="mt-4 mb-2 block text-sm font-medium">Total Belanja</h3>
-                                <div className="font-bold">{IntlCurrency(orderDetail?.grand_total || 0)}</div>
+                            <div className="w-full">
+                                <h3 className="mt-4 mb-2 block text-sm font-medium text-slate-400">Total Belanja</h3>
+                                <div className="text-2xl font-bold">{IntlCurrency(orderDetail?.grand_total || 0)}</div>
                             </div>
                         </div>
 

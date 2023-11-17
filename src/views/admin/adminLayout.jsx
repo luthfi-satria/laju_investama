@@ -1,5 +1,5 @@
 import NavbarComponent from "../../components/admin/navbarComponents";
-import NavbarLogo from '../../assets/images/logo/sdit.svg';
+import NavbarLogo from '../../assets/images/logo/favico.png';
 import AsideComponent from "../../components/admin/asideComponent";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { FetchAdminMenu } from "../../hooks/adminMenuHooks";

@@ -31,6 +31,13 @@ export default function HomePage(){
     const [category, setCategory] = useState(false);
     const [product, setProduct] = useState(false);
     const [refreshProduct, setRefreshProduct] = useState(false);
+    const [scrollData, setScrollData] = useState({
+        innerHeight: 0,
+        screenTop: 0,
+        offsetHeight: 0,
+        innerScrollTop: 0,
+        maxOffset: 0,
+    });
 
     useEffect(()=>{},[srcField, TotalCart]);
 
@@ -55,7 +62,15 @@ export default function HomePage(){
 
     // SCROLL FUNCTION
     window.onscroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+        setScrollData({
+            ...scrollData, 
+            innerHeight: window.innerHeight, 
+            screenTop: document.documentElement.scrollTop,
+            offsetHeight: document.documentElement.offsetHeight,
+            innerScrollTop: window.innerHeight + document.documentElement.scrollTop,
+            maxOffset: document.documentElement.offsetHeight - 100,
+        });
+        if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100) {
             if(product){
                 const total = product?.total || 0;
                 const limit = product?.limit || 10;
@@ -129,18 +144,26 @@ export default function HomePage(){
                 setRefreshProduct={setRefreshProduct}
                 ResetFilter={resetFilter}
             />
+            {/* FOR DEBUGGING */}
+            {/* <div className="fixed left-0 w-full z-20 px-4 py-4 bg-slate-300 text-black">
+                <p>Inner Height: {scrollData.innerHeight}</p>
+                <p>screenTop: {scrollData.screenTop}</p>
+                <p>offsetHeight: {scrollData.offsetHeight}</p>
+                <p>InnerScrollTop: {scrollData.innerScrollTop}</p>
+                <p>MaxOffset: {scrollData.maxOffset}</p>
+            </div> */}
             <div 
                 id="main_display"
-                className="relative mt-28 -ml-1 sm:mt-28 sm:ml-[15rem] lg:ml-[16rem] px-4 h-full min-h-screen"
+                className="relative mt-28 -ml-1 sm:mt-28 sm:ml-0 md:ml-[17rem] lg:ml-[18rem] px-4 h-full min-h-screen"
             >
                 {/* ORDER SECTION */}
                 <div
-                    className="sticky top-[7rem] py-4 w-full mb-2 flex items-center justify-between z-20 bg-white border-b border-slate-200"
+                    className="sticky top-28 md:left-0 py-4 w-full mb-2 flex items-center justify-between z-10 bg-white border-b border-slate-200"
                 >
                     <div className="w-1/3">
                         <button
                           onClick={showSidebar}
-                          className="block sm:hidden text-slate-400 hover:text-slate-700"
+                          className="block md:hidden text-slate-400 hover:text-slate-700"
                         >
                           {CreateIcon('filter', 'text-2xl mr-3')}
                           Filter

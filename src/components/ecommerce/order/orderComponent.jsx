@@ -14,12 +14,14 @@ export default function MyOrderComponent(){
     const [title, setTitle] = useState(false);
     const [transaksi, setTransaksi] = useState(false);
     const [totalData, setTotalData] = useState(0);
-    const [refresh, setRefresh] = useState(false);    
+    const [refresh, setRefresh] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const defaultFilter = useMemo(() => ({
         page: 1,
         limit: 10,
         platform: 'ecommerce',
-        status: location[2] ? location[2] : '',
+        status: location[2] || '',
         kode_transaksi: '',
         payment_method: '',
         date_start: '',
@@ -32,7 +34,7 @@ export default function MyOrderComponent(){
     
     // SCROLL FUNCTION
     window.onscroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop + 1 === document.documentElement.offsetHeight) {
+        if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100) {
             if(transaksi){
                 const total = totalData || 0;
                 const limit = filter.limit;
@@ -87,6 +89,7 @@ export default function MyOrderComponent(){
 
     useEffect(() => {
         if(!transaksi || refresh){
+            setIsLoading(true);
             AxiosRequest('get','api/order', filter, {})
             .then(({data}) => {
                 if(data.statusCode == 400){
@@ -106,6 +109,9 @@ export default function MyOrderComponent(){
                 errResponseHandler(error);
             }).finally(()=>{
                 setRefresh(false);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 1000);
             });
         }
     },[filter, AxiosRequest, transaksi, refresh]);
@@ -178,7 +184,7 @@ export default function MyOrderComponent(){
                                                     to={item.to}
                                                     className="block -ml-4 hover:font-bold"
                                                     onClick={() => {
-                                                        setFilter({...filter, status: item.status})
+                                                        setFilter({...filter, page:1, status: item.status})
                                                         setTitle(item.title)
                                                         setRefresh(true);
                                                     }}
@@ -256,6 +262,14 @@ export default function MyOrderComponent(){
                         />
                     </div>
                 </div>
+
+                {isLoading && (
+                    <div className="bg-white opacity-80 z-50 w-full h-screen fixed top-0 flex items-center justify-center">
+                        <div className="w-1/2 text-center text-black font-bold text-2xl m-auto">
+                            LOADING...
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

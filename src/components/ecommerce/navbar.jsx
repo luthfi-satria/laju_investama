@@ -5,11 +5,9 @@ import Logout from "../../hooks/appLogout";
 export default function CommerceNavbar({
   token,
   createIcon,
-  showSidebar,
   profile,
   totalCart,
   RouteURL,
-  currentPath,
 }){
   const headerNavLink = [
     {
@@ -22,6 +20,12 @@ export default function CommerceNavbar({
       title: 'Login',
       path: 'login',
       loginRequired: false,
+      allowedUserLevel: ['owner','organisasi','public']
+    },
+    {
+      title: 'eCommerce',
+      path: '',
+      loginRequired: true,
       allowedUserLevel: ['owner','organisasi','public']
     },
     {
@@ -73,59 +77,61 @@ export default function CommerceNavbar({
               <div className="playfair-reg box-border py-2">
                 <div className="relative mx-0 my-auto w-full flex items-start justify-between">
                   {/* LOGO */}
-                  <div className="sm:h-9 text-center mb-2 px-4 py-2">
+                  <div className="sm:h-9 text-center mb-2 px-4 pt-3">
                     <Link
                       to={RouteURL.HOMEPAGE.PATH}
-                      className="text-3xl leading-3 text-teal-500 font-bold"
+                      className="text-2xl leading-3 text-teal-500 font-bold"
                     >
                       e-Grommerce
                     </Link>
                   </div>
 
-                  {token && profile && (
-                    <div className="px-4 py-2">
-                      <div className="hidden sm:flex sm:items-start sm:justify-between w-full">
-                        <Link
-                          to={RouteURL.CART.PATH}
-                          className="font-semibold text-slate-500 hover:text-slate-700 text-lg mr-10"
-                        >
-                          {createIcon('shopping-cart', '')}
+                  <div className="flex items-start justify-between">
+                    {token && profile && (
+                      <div className="px-4 py-2">
+                        <div className="flex sm:items-start sm:justify-between w-full">
+                          <Link
+                            to={RouteURL.CART.PATH}
+                            className="mr-2 font-semibold text-slate-500 hover:text-slate-700 text-lg sm:mr-10"
+                          >
+                            {createIcon('shopping-cart', '')}
 
-                          {/* TOTAL CART */}
-                          {totalCart && totalCart > 0 ? (
-                            <span className="px-1 py-1 bg-red-500 text-white absolute top-0 h-5 rounded-sm text-xs">
-                              {totalCart}
-                            </span>
-                          ) : ''}
-                        </Link>
-                        <div
-                          className="font-semibold cursor-pointer text-slate-500 hover:text-slate-700 text-lg overflow-hidden text-ellipsis whitespace-nowrap"
-                          onClick={()=>setToggleProfile(toggleProfile ? false: true)}
-                          title={profile?.username || ''}
-                        >
-                          {profile?.image ? (
-                            <img 
-                              src={import.meta.env.VITE_APIURL+`/api/user/${profile?.image}`}
-                            />
-                          ): (createIcon('user', 'mr-1'))}
-                          {profile?.username ? profile.username.substring(0,6) : 'Username'}
+                            {/* TOTAL CART */}
+                            {totalCart && totalCart > 0 ? (
+                              <span className="px-1 py-1 bg-red-500 text-white absolute top-0 h-5 rounded-sm text-xs">
+                                {totalCart}
+                              </span>
+                            ) : ''}
+                          </Link>
+                          <div
+                            className="hidden sm:block font-semibold cursor-pointer text-slate-500 hover:text-slate-700 text-lg overflow-hidden text-ellipsis whitespace-nowrap"
+                            onClick={()=>setToggleProfile(toggleProfile ? false: true)}
+                            title={profile?.username || ''}
+                          >
+                            {profile?.image ? (
+                              <img 
+                                src={import.meta.env.VITE_APIURL+`/api/user/${profile?.image}`}
+                              />
+                            ): (createIcon('user', 'mr-1'))}
+                            {profile?.username ? profile.username.substring(0,6) : 'Username'}
+                          </div>
                         </div>
                       </div>
+                    )}
+                    
+                    {/* SHOW ON MOBILE */}
+                    <div className="grid grid-cols-2 pt-1.5 ml-5 text-2xl mr-5 sm:hidden">
+                        {token && profile && (
+                          <div className="text-right">
+                            <button
+                              onClick={()=>setToggleProfile(toggleProfile ? false: true)}
+                            >
+                              {createIcon('bars', 'text-slate-400 hover:text-slate-700')}
+                              
+                            </button>
+                          </div>
+                        )}
                     </div>
-                  )}
-                  
-                  {/* SHOW ON MOBILE */}
-                  <div className="grid grid-cols-2 ml-5 text-2xl mr-5 sm:hidden">
-                      {token && profile && (
-                        <div className="text-right">
-                          <button
-                            onClick={()=>setToggleProfile(toggleProfile ? false: true)}
-                          >
-                            {createIcon('bars', 'text-slate-400 hover:text-slate-700')}
-                            
-                          </button>
-                        </div>
-                      )}
                   </div>
                 </div>
               </div>

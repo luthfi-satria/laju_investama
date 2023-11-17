@@ -26,6 +26,9 @@ export default function ReportComponent({
 
     const errorHandler = useCallback((msg)=>{
         setApiError({...apiError, error:true, message: msg});
+        setTimeout(() => {
+            setApiError(false);
+        }, 1000);
     },[apiError]);
 
     const errResponseHandler = useCallback((err) => {

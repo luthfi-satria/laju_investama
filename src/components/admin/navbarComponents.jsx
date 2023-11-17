@@ -109,7 +109,7 @@ export default function NavbarComponent({
                                 src={navbarImg}
                                 alt={appTitle}
                             />
-                            <span className="text-bold capitalize font-semibold leading-2 text-2xl font-serif -ml-4 text-yellow-200 tracking-widest">
+                            <span className="hidden md:block text-bold capitalize font-semibold leading-2 text-2xl font-serif -ml-4 text-yellow-200 tracking-widest">
                                 {appTitle}
                             </span>
                         </div>

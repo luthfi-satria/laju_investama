@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NumericalOnly } from "../../helpers/converterHelper";
 
 export default function EcommerceSidebar({
@@ -12,8 +13,17 @@ export default function EcommerceSidebar({
 }){
     return (
         <>
-            <div className={`${ToggleSidebar ? '': 'hidden '}bg-white fixed w-3/4 sm:block sm:fixed left-0 top-0 z-10 py-30 sm:w-1/4 h-full ring-1 ring-slate-200`}>
-                <div className="w-full bg-white px-4 pb-4 pl-2 mt-52 md:mt-32 sm:mt-28">
+            <div className={`${ToggleSidebar ? '': 'hidden '}bg-white fixed w-3/4 md:block md:fixed left-0 top-0 z-10 py-30 sm:w-2/5 md:w-1/3 lg:w-1/5 h-full ring-1 ring-slate-200`}>
+                <div className="w-full bg-white px-4 pb-4 pl-2 mt-36 sm:mt-32 md:mt-28">
+                    <div className="md:hidden w-full text-right text-slate-500">
+                        <button
+                            type="button"
+                            onClick={() => ShowSidebar()}
+                            className="pt-5 text-xl hover:text-slate-700"
+                        >
+                            <FontAwesomeIcon icon={'close'} />
+                        </button>
+                    </div>
                     {/* CARI */}
                     <h3 className="font-bold text-slate-500 text-xl py-3">
                         CARI PRODUK

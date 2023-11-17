@@ -74,7 +74,7 @@ export default function MyCart(){
 
     // SCROLL FUNCTION
     window.onscroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+        if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100) {
             if(listCart){
                 const total = listCart?.total || 0;
                 const limit = listCart?.limit || 10;
@@ -236,11 +236,11 @@ export default function MyCart(){
                     <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-2">
                         {/* CART CONTENT */}
                         <div id="detailCart" className="relative overflow-auto h-[70vh] col-span-2">
-                            <div id="cartContainer" className="relative px-2 py-2 border-2 border-gray-200 rounded-sm">
+                            <div id="cartContainer" className="relative px-2 py-2 rounded-sm">
                                 <div id="detailCart-title">
                                     <h2 className="font-bold text-lg text-gray-500 mb-2">KERANJANG</h2>
                                     {/* CHECK ALL */}
-                                    <div className="border-b-2 border-slate-200 py-2 px-2">
+                                    <div className="border-b-2 border-slate-200 py-2 px-4">
                                         <label className="w-full cursor-pointer" htmlFor="cart-slc-all">
                                             <input 
                                                 type="checkbox"
@@ -266,7 +266,7 @@ export default function MyCart(){
                                         <div 
                                             id={`cartItem${index}`}
                                             key={index}
-                                            className="flex w-full mt-2 border-b border-b-gray-200 pb-4">
+                                            className="flex flex-col sm:flex-row w-full px-2 py-2 mt-2 border border-gray-200 rounded-md pb-4">
                                             <div className="ml-2 mr-5">
                                                 <label htmlFor={`slc-${items?.id}`}>
                                                     <input 
@@ -287,13 +287,13 @@ export default function MyCart(){
                                                     />
                                                 </label>
                                             </div>
-                                            <div className="items-center content-center w-24 sm:w-44 h-20 bg-gray-100 rounded-md">
-                                                <img src={convImg(items?.product)} title={items?.product?.name} />
+                                            <div className="mt-5 sm:mt-0 w-full items-center justify-center sm:w-24 md:w-44 h-auto bg-gray-100 rounded-md">
+                                                <img src={convImg(items?.product)} title={items?.product?.name} className="m-auto" />
                                             </div>
-                                            <div className="ml-5 w-1/2">
-                                                <div className="text-md mb-1">{items?.product?.name}</div>
-                                                <div className="text-lg font-bold mb-1">{IntlCurrency(items?.product?.harga_jual)}</div>
-                                                <div className="text-md font-semibold mb-1 text-gray-500">Sisa: {items?.product?.stok - items?.product?.min_stok} unit</div>
+                                            <div className="mt-5 md:ml-5 md:mt-0">
+                                                <div className="text-lg text-center md:text-left md:text-md text-slate-500 mb-1 font-bold">{items?.product?.name}</div>
+                                                <div className="text-lg text-center md:text-left font-bold mb-1">Harga: {IntlCurrency(items?.product?.harga_jual)}</div>
+                                                <div className="text-md text-center md:text-left font-semibold mb-1 text-gray-500">Sisa: {items?.product?.stok - items?.product?.min_stok} unit</div>
                                                 {/* ADD CATATAN */}
                                                 <div className="block mb-2">
                                                     <textarea
@@ -307,54 +307,56 @@ export default function MyCart(){
                                                     </textarea>
                                                 </div>
                                                 {/* BUTTON INCREMENT DECREMENT */}
-                                                <div>
-                                                    <span className="mr-2 text-md text-gray-400 font-semibold">Qty</span>
-                                                    <button
-                                                        id={`qty_dec${items.id}`}
-                                                        className={`px-2 py-1 text-xs bg-green-700 focus:outline-none text-white rounded-full`}
-                                                        onClick={() => {
-                                                            let el = document.getElementById(`qty${items.id}`);
-                                                            if(el.value >= 2){
-                                                                let currenQty = parseInt(el.value) - 1;
-                                                                el.value = currenQty;
-                                                                updateCart(currenQty, index, 'qty');
-                                                                SetTotalCart(TotalCart - 1);
-                                                            }
-                                                        }}
-                                                    >
-                                                        {CreateIcon('minus')}
-                                                    </button>
-                                                    <input 
-                                                        type="text"
-                                                        id={`qty${items?.id}`}
-                                                        name="qty" 
-                                                        defaultValue={items?.qty || 1}
-                                                        placeholder="1"
-                                                        onChange={(e) => {
-                                                            e.target.value = NumericalOnly(e.target.value);
-                                                            if(e.target.value > 1){
-                                                                e.target.previousSibling.classList.toggle('disabled:opacity-25')
-                                                            }
-                                                            updateCart(Number(e.target.value), index, 'qty');
-                                                        }}
-                                                        className="mr-2 ml-2 w-10 ring-1 ring-gray-200 px-2 py-0 outline-0"
-                                                    />
-                                                    <button
-                                                        className="px-2 py-1 text-xs bg-green-700 text-white rounded-full"
-                                                        onClick={() => {
-                                                            let el = document.getElementById(`qty${items.id}`);
-                                                            let currenQty = parseInt(el.value) + 1;
-                                                            if(currenQty <= (items?.product?.stok - items?.product?.min_stok)){
-                                                                el.value = currenQty;
-                                                                updateCart(currenQty, index, 'qty');
-                                                                SetTotalCart(TotalCart + 1);
-                                                            }
-                                                        }}
-                                                    >
-                                                        {CreateIcon('plus')}
-                                                    </button>
+                                                <div className="flex items-center justify-between w-full">
+                                                    <div className="mr-2 text-md text-gray-400 font-semibold mb-2">Qty</div>
+                                                    <div>
+                                                        <button
+                                                            id={`qty_dec${items.id}`}
+                                                            className={`px-2 py-1 text-xs bg-green-700 focus:outline-none text-white rounded-full`}
+                                                            onClick={() => {
+                                                                let el = document.getElementById(`qty${items.id}`);
+                                                                if(el.value >= 2){
+                                                                    let currenQty = parseInt(el.value) - 1;
+                                                                    el.value = currenQty;
+                                                                    updateCart(currenQty, index, 'qty');
+                                                                    SetTotalCart(TotalCart - 1);
+                                                                }
+                                                            }}
+                                                        >
+                                                            {CreateIcon('minus')}
+                                                        </button>
+                                                        <input 
+                                                            type="text"
+                                                            id={`qty${items?.id}`}
+                                                            name="qty" 
+                                                            defaultValue={items?.qty || 1}
+                                                            placeholder="1"
+                                                            onChange={(e) => {
+                                                                e.target.value = NumericalOnly(e.target.value);
+                                                                if(e.target.value > 1){
+                                                                    e.target.previousSibling.classList.toggle('disabled:opacity-25')
+                                                                }
+                                                                updateCart(Number(e.target.value), index, 'qty');
+                                                            }}
+                                                            className="mr-2 ml-2 w-10 ring-1 ring-gray-200 px-2 py-0 outline-0"
+                                                        />
+                                                        <button
+                                                            className="px-2 py-1 text-xs bg-green-700 text-white rounded-full"
+                                                            onClick={() => {
+                                                                let el = document.getElementById(`qty${items.id}`);
+                                                                let currenQty = parseInt(el.value) + 1;
+                                                                if(currenQty <= (items?.product?.stok - items?.product?.min_stok)){
+                                                                    el.value = currenQty;
+                                                                    updateCart(currenQty, index, 'qty');
+                                                                    SetTotalCart(TotalCart + 1);
+                                                                }
+                                                            }}
+                                                        >
+                                                            {CreateIcon('plus')}
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div className="mt-5 flex items-start justify-stretch">
+                                                <div className="mt-5 grid grid-cols-2">
                                                     <button type="button"
                                                         className="mr-2 text-xs bg-red-500 text-white ring-1 ring-red-400 px-4 py-2 rounded-md hover:bg-red-600"
                                                         onClick={() => sendDelete(index)}

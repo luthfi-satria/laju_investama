@@ -4,7 +4,7 @@ import HomePage from './../views/ecommerce/homepage';
 import HomeLayout from '../views/ecommerce/homeLayout';
 import { useLocalStorage } from '../hooks/appHooks';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import icon from '../assets/images/logo/sdit.svg';
+import icon from '../assets/images/logo/favico.png';
 import { ValidateToken } from '../hooks/validateToken';
 import RouteURL from '../constants/routesConstant';
 import AdminLayout from '../views/admin/adminLayout';

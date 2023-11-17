@@ -10,7 +10,7 @@ COPY package.json .
 RUN npm install
 
 COPY . .
-COPY .env.local .env
+COPY .local.env .env
 
 ENV NODE_ENV=development
 CMD ["npm", "run", "dev"]
