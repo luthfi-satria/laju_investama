@@ -20,10 +20,10 @@ export default function HomePage(){
         name: '',
         status: 'publish',
         category_id: [],
-        harga_min: 0,
-        harga_max: null,
+        harga_min: '',
+        harga_max: '',
         stock_status: 'tersedia',
-        order_by: '',
+        order_by: 'name',
         orientation: 'ASC',
     }),[]);
     const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -113,18 +113,18 @@ export default function HomePage(){
 
     const orderProduct = (value) => {
         if(value == 'harga_terendah'){
-            setSearch({...search, order_by: 'harga', orientation: 'ASC'});
+            setSearch({...search, order_by: 'harga_jual', orientation: 'ASC', page: 1});
         }
         else if(value == 'harga_tertinggi'){
-            setSearch({...search, order_by: 'harga', orientation: 'DESC'});
+            setSearch({...search, order_by: 'harga_jual', orientation: 'DESC', page: 1});
         }else{
-            setSearch({...search, order_by: 'name', orientation: 'ASC'});
+            setSearch({...search, order_by: 'name', orientation: 'ASC', page: 1});
         }
+        setRefreshProduct(true);
     }
     
     const resetFilter = () => {
-        srcField.category_id = [];
-        setSearch({...search, ...srcField});
+        setSearch(srcField);
         setRefreshProduct(true);
     }
 

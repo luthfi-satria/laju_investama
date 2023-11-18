@@ -115,6 +115,7 @@ export default function EcommerceSidebar({
                                     id="src-harga-min"
                                     name="min_harga"
                                     className="w-4/5 ring-1 ring-slate-400 outline-none py-[7px] px-2"
+                                    value={Search?.harga_min}
                                     placeholder="1000"
                                     onChange={(e) => {
                                         e.target.value = NumericalOnly(e.target.value);
@@ -132,6 +133,7 @@ export default function EcommerceSidebar({
                                     name="max_harga"
                                     className="w-4/5 ring-1 ring-slate-400 outline-none py-[7px] px-2"
                                     placeholder="10000"
+                                    value={Search?.harga_max}
                                     onChange={(e) => {
                                         e.target.value = NumericalOnly(e.target.value);
                                         SetSearch({...Search, harga_max: Number(e.target.value)})
