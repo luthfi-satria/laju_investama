@@ -43,7 +43,7 @@ export default function InvestorFilterComponent({
                                     name='nama' 
                                     className='rounded-sm px-2 py-1 w-full text-gray-500'
                                     onKeyUp={(e)=>{
-                                        setFilter({...filter, ['name']: e.target.value});
+                                        setFilter({...filter, name: e.target.value});
                                     }}
                                     autoComplete='off'
                                 />
@@ -54,7 +54,7 @@ export default function InvestorFilterComponent({
                                     id="src-nilai" 
                                     name='src-nilai' 
                                     className='rounded-sm px-2 py-1 text-gray-600 w-full'
-                                    onChange={(e) => setFilter({...filter, ['nilai']: e.target.value})}
+                                    onChange={(e) => setFilter({...filter, nilai: e.target.value})}
                                 />
                             </div>
                             <div>
@@ -63,7 +63,7 @@ export default function InvestorFilterComponent({
                                     id="src-jangka_waktu" 
                                     name='src-jangka_waktu' 
                                     className='rounded-sm px-2 py-1 text-gray-600 w-full'
-                                    onChange={(e) => setFilter({...filter, ['jangka_waktu']: Number(e.target.value)})}
+                                    onChange={(e) => setFilter({...filter, jangka_waktu: Number(e.target.value)})}
                                 />
                             </div>
                             <div>
@@ -73,7 +73,7 @@ export default function InvestorFilterComponent({
                                     type="date" 
                                     name='src-tanggal_investasi' 
                                     className='rounded-sm px-2 py-1 text-gray-600 w-full'
-                                    onChange={(e) => setFilter({...filter, ['tanggal_investasi']: e.target.value})}
+                                    onChange={(e) => setFilter({...filter, tanggal_investasi: e.target.value})}
                                 />
                             </div>
                             <div>
@@ -82,7 +82,7 @@ export default function InvestorFilterComponent({
                                     id="src_new" 
                                     name='src_new' 
                                     className='rounded-sm px-2 py-1 text-gray-600 w-full h-7 overflow-hidden'
-                                    onChange={(e) => setFilter({...filter, ['is_verified']: e.target.value})}
+                                    onChange={(e) => setFilter({...filter, is_verified: e.target.value})}
                                 >
                                     <option value={'semua'}>Semua</option>
                                     <option value={'belum'}>Belum verifikasi</option>

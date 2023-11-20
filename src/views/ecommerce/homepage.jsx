@@ -107,7 +107,9 @@ export default function HomePage(){
                     setRefreshProduct(false);
                     setLoader(false);
                 });
+                return false;
             }, 1000);
+            setRefreshProduct(false);
         }
     }, [search, AxiosRequest, product, refreshProduct, setLoader]);
 

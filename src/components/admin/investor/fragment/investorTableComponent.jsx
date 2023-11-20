@@ -93,6 +93,9 @@ export default function InvestorTableComponent({
                             <thead>
                                 <tr>
                                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                        No Investasi
+                                    </th>
+                                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Nama
                                     </th>
                                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -121,13 +124,14 @@ export default function InvestorTableComponent({
                             <tbody className=''>
                                 {data?.items?.length ? (data.items.map((items, index) => (
                                     <tr className={`px-4 ${customClass(items)}`} key={index}>
-                                        <td className='px-4 py-2 min-w-[200px]'>{items?.profile?.name}</td>
-                                        <td className='px-4 py-2 min-w-[150px]'>{IntlCurrency(items?.nilai)}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{items?.no_investasi}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{items?.profile?.name}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{IntlCurrency(items?.nilai)}</td>
                                         <td className='px-4 py-2 min-w-[100px]'>{items?.jangka_waktu} Thn</td>
-                                        <td className='px-4 py-2 min-w-[200px]'>{UTCToLocaleDate(items?.tanggal_investasi)}</td>
-                                        <td className='px-4 py-2 min-w-[200px]'>{UTCToLocaleDate(items?.tanggal_kadaluarsa)}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{UTCToLocaleDate(items?.tanggal_investasi)}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{UTCToLocaleDate(items?.tanggal_kadaluarsa)}</td>
                                         <td className='px-4 py-2 min-w-[100px]'>{items?.bank}</td>
-                                        <td className='px-4 py-2 min-w-[200px]'>
+                                        <td className='px-4 py-2 min-w-[100px]'>
                                             {items?.verify_at ? 
                                                 <span className='text-white ring-2 ring-white px-2 rounded-md bg-green-400'>Terverifikasi</span> 
                                                 : <span className='bg-white text-gray-700 rounded-md px-2'>Belum Diverifikasi
@@ -168,7 +172,7 @@ export default function InvestorTableComponent({
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={8} className='px-4 py-4 text-center'>
+                                        <td colSpan={9} className='px-4 py-4 text-center'>
                                             Data tidak ditemukan...
                                         </td>
                                     </tr>

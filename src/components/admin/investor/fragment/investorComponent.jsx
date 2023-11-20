@@ -22,7 +22,12 @@ export default function InvestorComponent({
     
     const [filter, setFilter] = useState({
         page: 1,
-        limit: 10
+        limit: 10,
+        name: '',
+        nilai: null,
+        jangka_waktu: null,
+        tanggal_investasi: null,
+        is_verified: null,
     });
 
     const initialData = {
