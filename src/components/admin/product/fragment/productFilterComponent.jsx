@@ -46,7 +46,7 @@ export default function ProductFilterComponent({
                             <div>
                                 <label htmlFor='src-category' className='block'>Kategori</label>
                                 <Select 
-                                    id="src-category" 
+                                    inputId="src-category" 
                                     type="text" 
                                     name='kategori' 
                                     className='rounded-sm w-full text-gray-500'

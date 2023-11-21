@@ -73,7 +73,7 @@ export default function ProductFormComponent({
                     <div className="col-span-2">
                         <Select 
                             type="text" 
-                            id="inp-kategori"
+                            inputId="inp-kategori"
                             name="kategori" 
                             className="w-full text-gray text-xs outline-none focus:border-gray-500"
                             onChange={(value) => handleChange({...formData, category_id: Number(value?.id)})}

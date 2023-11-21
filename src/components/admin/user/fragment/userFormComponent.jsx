@@ -78,7 +78,7 @@ export default function UserForm({
                                 <div className='sm:col-span-2 '>
                                     <Select
                                         name={items.name}
-                                        id={`inp_${items.name}`}
+                                        inputId={`inp_${items.name}`}
                                         className="w-full text-xs"
                                         defaultValue={items?.option?.find(op => {
                                             return op.value == formData[items.name];
