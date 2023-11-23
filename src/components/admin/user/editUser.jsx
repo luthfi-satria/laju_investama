@@ -14,14 +14,15 @@ export default function AdminEditUser({
     const hashKey = import.meta.env.VITE_HASH_KEY;
     const {id} = useParams();
 
-    const decryptId = () => {
+    const decryptId = useCallback(() => {
         const decrypt = CryptoJS.DES.decrypt(decodeURIComponent(id), hashKey);
         const realId = JSON.parse(decrypt.toString(CryptoJS.enc.Utf8));
         return realId;
-    }
+    },[hashKey, id]);
 
-    const [userId, setUserId] = useState(()=>decryptId());
+    const userId = decryptId();
     const [account, setAccount] = useState(false);
+    const [errArray, setErrArray] = useState(false);
 
     const axiosHandler = useCallback((method, data = {}, path='', custHeaders = null) => {
         let headers = {
@@ -84,6 +85,11 @@ export default function AdminEditUser({
                         <h3 className="uppercase text-blueGray-400 mb-1 text-sm text-white font-semibold">EDIT USER</h3>
                     </div>
                 </div>
+                {errArray && (
+                <div className="absolute right-0 px-4 py-4 top-20 bg-red-500 text-white">
+                    {JSON.stringify(errArray)}
+                </div>
+            )}
                 <div className="p-4 flex-auto bg-white rounded-md">
                     <div className="grid sm:grid-cols-2 gap-2">
                         {/* FORM */}

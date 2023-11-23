@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import imgDefault from '../../../../assets/images/noproduct_img.png';
 import { IntlCurrency } from "../../../../helpers/converterHelper";
 import { UTCToLocaleDate } from "../../../../helpers/dateHelper";
 import KreditInfoDetail from "./kreditInfoDetail";
@@ -8,11 +7,11 @@ import KreditInfoDetail from "./kreditInfoDetail";
 export default function KreditDetailComponent({
     axiosRequest,
     errorHandler,
-    errResponseHandler,
 }){
     const baseUrl = import.meta.env.VITE_APIURL;
     const location = useLocation().pathname.split('/');
-    const [kodeTransaksi, setKodeTransaksi] = useState(location[4]);
+    // const [kodeTransaksi, setKodeTransaksi] = useState(location[4]);
+    const kodeTransaksi = location[4] || null;
     const [orderDetail, setOrderDetail] = useState(false);
 
     useEffect(() => {
@@ -28,10 +27,6 @@ export default function KreditDetailComponent({
         }
     },[orderDetail, axiosRequest, kodeTransaksi, errorHandler]);
 
-    const convImg = (data) => {
-        const baseUrl = import.meta.env.VITE_APIURL;
-        return data?.image ? baseUrl+'/api/kredit/'+data.id+'/image/'+data.image : imgDefault;
-    }
     return (
         <>         
             <div className="mt-10 mb-10">

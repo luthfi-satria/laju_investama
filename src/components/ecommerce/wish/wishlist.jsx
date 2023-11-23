@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import userDefault from '../../../assets/images/userDefault.png';
 import { useEffect, useMemo, useState } from "react";
 import ShowSweetAlert from "../../../helpers/showAlert";
@@ -11,9 +11,8 @@ export default function WishListComponent(){
         AxiosRequest,
     } = useOutletContext();
     const navigate = useNavigate();
-    const location = useLocation().pathname.split('/');
     const [wish, setWish] = useState(false);
-    const [totalData, setTotalData] = useState(0);
+    // const [totalData, setTotalData] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const sideMenu = useMemo(() => [
         {
@@ -53,7 +52,6 @@ export default function WishListComponent(){
         order_by: 'created_at',
         orientation: 'DESC',
     }),[]);
-    const [filter, setFilter] = useState(defaultFilter);
 
     const errResponseHandler = (err) => {
         console.log(err);
@@ -67,7 +65,7 @@ export default function WishListComponent(){
 
     useEffect(() => {
         if(!wish || refresh){
-            AxiosRequest('get','api/wish', filter, {})
+            AxiosRequest('get','api/wish', defaultFilter, {})
             .then(({data}) => {
                 if(data.statusCode == 400){
                     throw(data);
@@ -75,7 +73,6 @@ export default function WishListComponent(){
 
                 if(data?.data?.page == 1){
                     setWish(data?.data?.items);
-                    setTotalData(data?.data?.total);
                 }
                 else{
                     const newItems = data?.data?.items;
@@ -88,7 +85,7 @@ export default function WishListComponent(){
                 setRefresh(false);
             });
         }
-    },[filter, AxiosRequest, wish, refresh]);
+    },[defaultFilter, AxiosRequest, wish, refresh]);
 
     const DeleteWish = (product_id) => {
         setTimeout(()=>{

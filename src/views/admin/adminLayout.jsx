@@ -44,4 +44,4 @@ export default function AdminLayout({token, profile, RouteURL, setProfile}){
         </div>
     </> 
     )
-};
+}

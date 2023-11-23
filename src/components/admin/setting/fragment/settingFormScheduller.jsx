@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { TEInput } from "tw-elements-react";
 
 export default function SettingFormScheduller({token, formData}){
     const MySwal = withReactContent(Swal);

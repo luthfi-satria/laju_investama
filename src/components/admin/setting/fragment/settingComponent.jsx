@@ -15,6 +15,11 @@ export default function AdminSettingComponent({token}){
     const settings = apiRes && apiRes && Object.keys(apiRes.data).length > 0 ? apiRes.data.items : false;
     return (
         <>
+            {apiError.error && (
+                <div className="absolute right-0 px-4 py-4 top-20 bg-red-500 text-white">
+                    {JSON.stringify(apiError.message)}
+                </div>
+            )}
             <div id="accordionExample">
                 <div className="rounded-none border border-l-0 border-r-0 border-t-0 text-white border-neutral-200 dark:border-neutral-600 dark:bg-neutral-800">
                     {settings ? settings.map((items, keyItem)=> (

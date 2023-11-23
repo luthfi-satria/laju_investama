@@ -462,10 +462,9 @@ export default function EditUserFormComponent({
                                 id="inp_verifikasi"
                                 name="verify_at" 
                                 className="sr-only peer"
-                                value=''
-                                defaultChecked={account?.profile && typeof InitializeForm('verify_at') != 'undefined' ? true: false}
+                                checked={account?.profile?.verify_at ? true: false}
                                 onChange={(e)=>{
-                                    setAccount({...account, ['profile']: {...account.profile, ['verify_at']: String(e.target.checked)}})
+                                    setAccount({...account, profile: {...account.profile, verify_at: String(e.target.checked)}})
                                 }}
                             />
                             <div 

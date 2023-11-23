@@ -7,10 +7,9 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 export default function TransaksiDetailComponent({
     axiosRequest,
     errorHandler,
-    errResponseHandler,
 }){
     const location = useLocation().pathname.split('/');
-    const [kodeTransaksi, setKodeTransaksi] = useState(location[4]);
+    const kodeTransaksi = location[4] || null;
     const [orderDetail, setOrderDetail] = useState(false);
 
     useEffect(() => {

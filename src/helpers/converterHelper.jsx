@@ -17,7 +17,7 @@ export function Currencies(nStr, type=0, nflag = 0){
     }
     else{
         nStr += '';
-        nStr    = nStr.replace(/[\.]/,'');
+        nStr    = nStr.replace(/[/.]/,'');
         let x   = nStr.split(',');
         let x1  = x[0];
         let x2  = x.length > 1 ? ',' + x[1] : '';
