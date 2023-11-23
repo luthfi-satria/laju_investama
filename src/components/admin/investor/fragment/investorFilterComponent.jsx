@@ -33,7 +33,7 @@ export default function InvestorFilterComponent({
                         FILTER INVESTOR
                     </h3>
                     {/* FILTER */}
-                    <form name="src_usergroup" className='px-4 py-4'>
+                    <div name="src_usergroup" className='px-4 py-4'>
                         <div className='grid grid-cols-1 gap-2 sm:grid-cols-3 '>
                             <div>
                                 <label htmlFor='src-nama' className='block'>Nama</label>
@@ -92,7 +92,7 @@ export default function InvestorFilterComponent({
                             <div>
                                 <button 
                                     id="src_clear" 
-                                    type='reset'
+                                    type='button'
                                     className='border border-white bg-red-500 px-2 py-1 rounded-l-md mt-5 w-1/2 hover:bg-red-600'
                                     onClick={()=>{
                                         setFilter({
@@ -117,7 +117,7 @@ export default function InvestorFilterComponent({
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>        
         </>

@@ -12,7 +12,7 @@ export default function AccessControlFilter({
                         FILTER AKSES MENU
                     </h3>
                     {/* FILTER */}
-                    <form name="src-kredit" className='px-4 py-4'>
+                    <div name="src-kredit" className='px-4 py-4'>
                         <div className='grid grid-cols-1 gap-2 sm:grid-cols-3 '>
                             <div>
                                 <label htmlFor='src-group' className='block'>group</label>
@@ -61,7 +61,7 @@ export default function AccessControlFilter({
                             <div>
                                 <button 
                                     id="src_clear" 
-                                    type='reset'
+                                    type='button'
                                     className='border border-white bg-red-500 px-2 py-1 rounded-l-md mt-5 w-1/2 hover:bg-red-600'
                                     onClick={()=>{
                                         setFilter(defaultFilter);
@@ -83,7 +83,7 @@ export default function AccessControlFilter({
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>        
         </>

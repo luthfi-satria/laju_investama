@@ -12,7 +12,7 @@ export default function TransaksiFilterComponent({
                         FILTER ORDER
                     </h3>
                     {/* FILTER */}
-                    <form name="src-order" className='px-4 py-4'>
+                    <div name="src-order" className='px-4 py-4'>
                         <div className='grid grid-cols-1 gap-2 sm:grid-cols-3 '>
                             <div>
                                 <label htmlFor='src-kode' className='block'>kode transaksi</label>
@@ -21,9 +21,10 @@ export default function TransaksiFilterComponent({
                                     type="text" 
                                     name='kode' 
                                     className='rounded-sm px-2 py-1 w-full text-gray-500'
-                                    onKeyUp={(e)=>{
+                                    onChange={(e)=>{
                                         setFilter({...filter, kode_transaksi: e.target.value});
                                     }}
+                                    placeholder="Kode transaksi..."
                                     autoComplete='off'
                                 />
                             </div>
@@ -42,8 +43,9 @@ export default function TransaksiFilterComponent({
                                     <option value={''}>SEMUA STATUS</option>
                                     <option value={'WAITING'}>BELUM BAYAR</option>
                                     <option value={'PAID'}>MENUNGGU KONFIRMASI</option>
-                                    <option value={'SUCCESS'}>BERHASIL</option>
-                                    <option value={'CANCELED'}>GAGAL</option>
+                                    <option value={'PROCEED'}>DIPROSES</option>
+                                    <option value={'SUCCESS'}>SELESAI</option>
+                                    <option value={'CANCELED'}>BATAL</option>
                                 </select>
                             </div>
                             <div>
@@ -87,7 +89,7 @@ export default function TransaksiFilterComponent({
                             <div>
                                 <button 
                                     id="src_clear" 
-                                    type='reset'
+                                    type='button'
                                     className='border border-white bg-red-500 px-2 py-1 rounded-l-md mt-5 w-1/2 hover:bg-red-600'
                                     onClick={()=>{
                                         setFilter(defaultFilter);
@@ -109,7 +111,7 @@ export default function TransaksiFilterComponent({
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>        
         </>

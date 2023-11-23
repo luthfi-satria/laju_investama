@@ -29,7 +29,7 @@ export default function KreditFilterComponent({
                         FILTER PENGAJUAN KREDIT
                     </h3>
                     {/* FILTER */}
-                    <form name="src-kredit" className='px-4 py-4'>
+                    <div name="src-kredit" className='px-4 py-4'>
                         <div className='grid grid-cols-1 gap-2 sm:grid-cols-3 '>
                             <div>
                                 <label htmlFor='src-kode' className='block'>Kode</label>
@@ -102,7 +102,7 @@ export default function KreditFilterComponent({
                             <div>
                                 <button 
                                     id="src_clear" 
-                                    type='reset'
+                                    type='button'
                                     className='border border-white bg-red-500 px-2 py-1 rounded-l-md mt-5 w-1/2 hover:bg-red-600'
                                     onClick={()=>{
                                         setFilter(defaultFilter);
@@ -124,7 +124,7 @@ export default function KreditFilterComponent({
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>        
         </>

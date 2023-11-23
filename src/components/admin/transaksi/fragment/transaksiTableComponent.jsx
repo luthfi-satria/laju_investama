@@ -108,6 +108,30 @@ export default function TransaksiTableComponent({
         )
     }
 
+    const paymentMethod = (status) => {
+        let title = '';
+        let style = 'text-gray-500 border-gray-200 bg-gray-200';
+        switch(status){
+            case 'TRANSFER' : 
+                style = 'text-emerald-700 border-emerald-200 bg-emerald-200';
+                title = 'TRANSFER';
+                break;                
+            case 'SALARY DEDUCTION' : 
+                style = 'text-yellow-700 border-yellow-200 bg-yellow-100';
+                title = 'POTONG GAJI';
+                break;
+            default: 
+                title = 'TUNAI';
+                break;
+        }
+
+        return (
+            <div className={`mr-2 font-semibold text-center border px-[4px] py-[1px] rounded-md ${style}`}>
+                {title}
+            </div>
+        )
+    }
+
     const handleStatusOrder = (type, kode_transaksi) => {
         let title = '';
         switch(type){
@@ -197,7 +221,7 @@ export default function TransaksiTableComponent({
                                             {conditionalStatus(items?.status)}
                                         </td>
                                         <td className='px-4 py-2 min-w-[100px] text-right'>{IntlCurrency(items?.grand_total)}</td>
-                                        <td className='px-4 py-2 min-w-[100px]'>{items?.payment_method}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{paymentMethod(items?.payment_method)}</td>
                                         <td className='px-4 py-2 min-w-[100px] whitespace-nowrap'>{items?.payment_date && UTCToLocaleDate(items?.payment_date)}</td>
                                         <td className='px-4 py-2 min-w-[200px]'>
                                             <Link
