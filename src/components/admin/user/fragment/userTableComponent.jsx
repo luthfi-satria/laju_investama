@@ -11,6 +11,7 @@ export default function UserTableComponent({
     token,
     apiErrorHandling,
     deleteTable,
+    restoreTable,
     successRes=false,
     setSuccessRes,
     filter,
@@ -122,14 +123,14 @@ export default function UserTableComponent({
                             </thead>
                             <tbody className=''>
                                 {data?.items?.length ? (data.items.map((items, index) => (
-                                    <tr className='px-4' key={index}>
+                                    <tr className={items?.deleted_at ? 'px-4 text-red-400' : ''} key={index}>
                                         <td className='px-4 py-2 min-w-[200px]'>{items?.profile?.name}</td>
                                         <td className='px-4 py-2 min-w-[150px]'>{items?.username}</td>
                                         <td className='px-4 py-2 min-w-[150px]'>{items?.profile?.email}</td>
                                         <td className='px-4 py-2 min-w-[200px]'>{items?.profile?.phone}</td>
                                         <td className='px-4 py-2 min-w-[100px]'>{items?.profile?.gender}</td>
                                         <td className='px-4 py-2 min-w-[100px]'>{items?.usergroup?.name}</td>
-                                        <td className='px-4 py-2 min-w-[100px]'>{items?.usergroup?.level}</td>
+                                        <td className='px-4 py-2 min-w-[100px]'>{items?.usergroup?.level} {items?.profile?.deleted_at}</td>
                                         <td className='px-4 py-2 min-w-[200px]'>
                                             {items?.profile?.verify_at ? <span className='text-white ring-2 ring-white px-2 rounded-md bg-green-400'>Terverifikasi</span> : <span className='bg-white text-gray-700 rounded-md px-2'>Belum Diverifikasi</span>}
                                         </td>
@@ -141,12 +142,20 @@ export default function UserTableComponent({
                                             >
                                                 <FontAwesomeIcon icon={'edit'}/>
                                             </Link>
-                                            
-                                            <ButtonAction
-                                                label='delete'
-                                                type='delete'
-                                                handleClick={()=>deleteTable(items)}
-                                            />
+                                            {!items?.deleted_at ? (
+                                                <ButtonAction
+                                                    label='delete'
+                                                    type='delete'
+                                                    handleClick={()=>deleteTable(items)}
+                                                />
+                                            ):''}
+                                            {items?.deleted_at ? (
+                                                <ButtonAction
+                                                    label='restore'
+                                                    type='reactivate'
+                                                    handleClick={()=>restoreTable(items)}
+                                                />
+                                            ):''}
                                         </td>
                                     </tr>
                                     ))

@@ -34,34 +34,12 @@ export default function UserComponent({token, usergroup}){
         usergroup_id: '1',
     });
 
-    const addNewFunc = (title) => {
-        setSuccessRes(false);
-        setErrArray(false);
-        setAssignData({
-            email: '',
-            username: '',
-            phone: '',
-            password: '',
-            usergroup_id: '1',
-        });
-        setShowModal(true);
-        setFormMethod({
-            method: 'post',
-            path: '/register'
-        });
-        setModalTitle(title);
-    }
-
-    const deleteFunc = (data) => {
-        setSuccessRes(false);
-        setFormMethod({...formMethod, method: 'delete', path: '/'+data.id});
-        setSubmmited(true);
-    }
-
-    const axiosSubmit = useCallback(() => {
+    const axiosSubmit = useCallback((method, url) => {
+        const baseUrl = import.meta.env.VITE_APIURL+'/api/user';
+        const apiUrl = url ? baseUrl+url : baseUrl+formMethod.path;
         axios({
-            method: formMethod.method,
-            url: import.meta.env.VITE_APIURL+'/api/user'+formMethod.path,
+            method: method ?? formMethod.method,
+            url: apiUrl,
             headers: {
                 Authorization: 'Bearer '+token
             },
@@ -102,6 +80,46 @@ export default function UserComponent({token, usergroup}){
             // setShowModal(false);
         });
     },[formMethod, token, assignData]);
+
+    const addNewFunc = (title) => {
+        setSuccessRes(false);
+        setErrArray(false);
+        setAssignData({
+            email: '',
+            username: '',
+            phone: '',
+            password: '',
+            usergroup_id: '1',
+        });
+        setShowModal(true);
+        setFormMethod({
+            method: 'post',
+            path: '/register'
+        });
+        setModalTitle(title);
+    }
+
+    const deleteFunc = (data) => {
+        setSuccessRes(false);
+        ShowSweetAlert({
+            title: `Delete user ${data?.username}?`
+        }, true).then((response) => {
+            if(response.isConfirmed){
+                axiosSubmit('delete', '/'+data?.id);
+            }
+        });
+    }
+
+    const restoreFunc = (data) => {
+        setSuccessRes(false);
+        ShowSweetAlert({
+            title: `Restore user ${data?.username}?`
+        }, true).then((response) => {
+            if(response.isConfirmed){
+                axiosSubmit('put', `/${data?.id}/restore`);
+            }
+        });
+    }
 
     const errorHandler = useCallback((msg)=>{
         setApiError({...apiError, error:true, message: msg});
@@ -152,6 +170,7 @@ export default function UserComponent({token, usergroup}){
                     token={token} 
                     apiErrorHandling={errorHandler}
                     deleteTable={(data) => deleteFunc(data)} 
+                    restoreTable={(data) => restoreFunc(data)} 
                     successRes={successRes}
                     setSuccessRes={setSuccessRes}
                     filter={filter}
