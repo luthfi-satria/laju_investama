@@ -14,6 +14,7 @@ import PembayaranComponent from '../components/ecommerce/pembayaran/pembayaran';
 import PengaturanProfile from '../components/ecommerce/pengaturan/pengaturan';
 import RegistrationPage from '../views/registration';
 import WishListComponent from '../components/ecommerce/wish/wishlist';
+import KreditComponent from '../components/ecommerce/kredit/kreditComponent';
 
 export default function AppRouter(){
     const [token, setToken] = useLocalStorage('token',null);
@@ -42,6 +43,7 @@ export default function AppRouter(){
                             <Route path={RouteURL.ORDER.PATH+'/*'} element={<MyOrderComponent/>}/>
                             <Route path={'pembayaran/*'} element={<PembayaranComponent/>}/>
                             <Route path={RouteURL.PENGATURAN.PATH} element={<PengaturanProfile/>}/>
+                            <Route path={RouteURL.CREDIT_HISTORY.PATH} element={<KreditComponent/>}/>
                         </Route>
                         <Route path='/dashboard/*' element={
                             <AdminLayout 

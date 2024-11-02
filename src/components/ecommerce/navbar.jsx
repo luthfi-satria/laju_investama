@@ -161,6 +161,15 @@ export default function CommerceNavbar({
                   </Link>
                 </div>
                 <div className="mb-5">
+                  {createIcon('money-bill', 'text-lg mr-2')}
+                  <Link
+                    to={RouteURL.CREDIT_HISTORY.PATH}
+                    className="hover:font-bold"
+                  >
+                    KREDIT
+                  </Link>
+                </div>
+                <div className="mb-5">
                   {createIcon('heart', 'text-lg mr-2')}
                   
                   <Link

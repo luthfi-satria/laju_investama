@@ -21,4 +21,7 @@ $ cd C://Windows/System32/driver/etc
 $ cat hosts
 # example
 $ add 192.168.x.x egrommerce.internal
+# or open with
+# http://[hostname]
+# to find hostname, kindly type hostname on cmd
 ```

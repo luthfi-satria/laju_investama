@@ -40,14 +40,20 @@ export default function KreditFormComponent({
     }),[]);
     const [noHP, setNoHP] = useState(query.get('hp') || '');
     const [Konsumen, setKonsumen] = useState(false);
+    const [Profit, setProfit] = useState(false);
+    const [Kalkulasi, setKalkulasi] = useState(false);
     const [field, setField] = useState(defaultField);
     const [error, setError] = useState(defaultField);
     const [loadFirst, setLoadFirst] = useState(true);
 
-    useEffect(() => {},[field]);
-    useEffect(() => {},[Konsumen]);
-    useEffect(() => {},[error]);
+    useEffect(() => {},[field, Konsumen, error, Profit]);
     
+    useEffect(() => {
+        if(Kalkulasi){
+            kalkulasiKredit();
+        }
+    }, [Kalkulasi]);
+
     const cariKonsumen = useCallback(() => {
         axiosRequest('post','api/user/find_profile/complete',{
             data: {
@@ -90,6 +96,8 @@ export default function KreditFormComponent({
                     surat_pernyataan: data?.data?.document?.surat_pernyataan,
                     down_payment: data?.data?.document?.down_payment,
                 });
+                const profit = (data?.data?.dp + (data?.data?.cicilan * data?.data?.tenor)) - data?.data?.harga_produk ?? 0;
+                setKalkulasi(profit);
                 // console.log(data);
             })
             .catch((error) => {
@@ -163,6 +171,19 @@ export default function KreditFormComponent({
             }
         });
     }
+
+    const kalkulasiKredit = useCallback(() => {
+        const harga_produk = field?.harga_produk ?? 0;
+        let harga_penjualan = harga_produk;
+        if(Profit == 0){
+            harga_penjualan = (harga_produk + (harga_produk * (Profit / 100))) ?? 0;
+        }
+        const dp = field?.dp || 0;
+        const tenor = field?.tenor || 1;
+        const cicilan = Math.round((((harga_penjualan - dp) / tenor) / 1000)) * 1000;
+        setField({...field, cicilan: Number(cicilan)});
+        setKalkulasi(false);
+    });
 
     return (
         <>
@@ -422,7 +443,10 @@ export default function KreditFormComponent({
                                                     locale: 'id-ID',
                                                     currency: 'IDR',
                                                 }}
-                                                onValueChange={(value) => setField({...field, harga_produk: Number(value)})}
+                                                onValueChange={(value) => {
+                                                    setField({...field, harga_produk: Number(value)});
+                                                    setKalkulasi(1);
+                                                }}
                                                 placeholder="32000000"
                                                 autoComplete='off'
                                             />
@@ -431,6 +455,60 @@ export default function KreditFormComponent({
                                                     {error?.harga_produk}
                                                 </div>
                                             )}
+                                        </div>
+
+                                        {/* DP */}
+                                        <label
+                                            htmlFor="dp"
+                                            className="font-semibold text-gray-500"
+                                        >
+                                            Down Payment (DP)
+                                        </label>
+                                        <div className="md:col-span-2 mb-5">
+                                            <CurrencyInput 
+                                                id="dp"
+                                                name="dp" 
+                                                className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-700 rounded-md leading-3"
+                                                value={field?.dp || ''}
+                                                decimalsLimit={0}
+                                                groupSeparator="."
+                                                decimalSeparator=","
+                                                intlConfig={{
+                                                    locale: 'id-ID',
+                                                    currency: 'IDR',
+                                                }}
+                                                onValueChange={(value) => {
+                                                    setField({...field, dp: Number(value)});
+                                                    setKalkulasi(1);
+                                                }}
+                                                placeholder="1000000"
+                                                autoComplete='off'
+                                            />
+                                            {error?.dp !='' && (
+                                                <div className="text-red-500 text-xs w-full first-letter:uppercase">
+                                                    {error?.dp}
+                                                </div>
+                                            )}
+                                        </div>                                        
+
+                                        {/* PROFIT */}
+                                        <label htmlFor="profit" className="font-semibold text-gray-500">
+                                                Profit Perusahaan (%)
+                                        </label>
+                                        <div className="md:col-span-2 mb-5">
+                                            <input 
+                                                type="number"
+                                                id="profit_perusahaan"
+                                                name="profit_perusahaan" 
+                                                className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-700 rounded-md leading-3"
+                                                defaultValue={field?.profit}
+                                                onChange={(e) => {
+                                                    setProfit(Number(e.target.value));
+                                                    setKalkulasi(1);
+                                                }}
+                                                placeholder="10"
+                                                autoComplete='off'
+                                            />
                                         </div>
 
                                         {/* Tenor */}
@@ -447,7 +525,10 @@ export default function KreditFormComponent({
                                                 name="tenor" 
                                                 className="w-1/2 text-gray text-xs px-2 py-2 outline-none border focus:border-gray-700 rounded-md leading-3"
                                                 value={field?.tenor || ''}
-                                                onChange={(e) => setField({...field, tenor: Number(e.target.value)})}
+                                                onChange={(e) => {
+                                                    setField({...field, tenor: Number(e.target.value)});
+                                                    setKalkulasi(1);
+                                                }}
                                                 placeholder="12"
                                                 autoComplete='off'
                                             />
@@ -480,43 +561,12 @@ export default function KreditFormComponent({
                                                     currency: 'IDR',
                                                 }}
                                                 onValueChange={(value) => setField({...field, cicilan: Number(value)})}
-                                                placeholder="1000000"
+                                                readOnly={true}
                                                 autoComplete='off'
                                             />
                                             {error?.cicilan !='' && (
                                                 <div className="text-red-500 text-xs w-full first-letter:uppercase">
                                                     {error?.cicilan}
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* DP */}
-                                        <label
-                                            htmlFor="dp"
-                                            className="font-semibold text-gray-500"
-                                        >
-                                            Down Payment (DP)
-                                        </label>
-                                        <div className="md:col-span-2 mb-5">
-                                            <CurrencyInput 
-                                                id="dp"
-                                                name="dp" 
-                                                className="w-full text-gray text-xs px-2 py-2 outline-none border focus:border-gray-700 rounded-md leading-3"
-                                                value={field?.dp || ''}
-                                                decimalsLimit={0}
-                                                groupSeparator="."
-                                                decimalSeparator=","
-                                                intlConfig={{
-                                                    locale: 'id-ID',
-                                                    currency: 'IDR',
-                                                }}
-                                                onValueChange={(value) => setField({...field, dp: Number(value)})}
-                                                placeholder="1000000"
-                                                autoComplete='off'
-                                            />
-                                            {error?.dp !='' && (
-                                                <div className="text-red-500 text-xs w-full first-letter:uppercase">
-                                                    {error?.dp}
                                                 </div>
                                             )}
                                         </div>

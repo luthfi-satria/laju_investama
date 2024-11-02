@@ -132,6 +132,13 @@ const RouteURL = {
         },
         AUTHORIZE: true,
     },
+    CREDIT_HISTORY: {
+        PATH: 'credit_history',
+        HELMET: {
+            title: 'Riwayat Kredit',
+        },
+        AUTHORIZE: true,
+    },
     REGISTER: {
         PATH: 'register',
         HELMET: {
